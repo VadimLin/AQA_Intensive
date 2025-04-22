@@ -17,3 +17,6 @@ jobs:
       # Step 3: Run Checkstyle
       - name: Run Checkstyle (Fail on violations)
         run: mvn checkstyle:check
+          # Step 4: Generate Checkstyle Report
+               - name: Generate Checkstyle Report
+               run: mvn checkstyle:checkstyle
