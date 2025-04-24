@@ -8,9 +8,6 @@
     <suppress checks="JavadocPackage" files=""/>
     <suppress checks="FinalParameters" files=""/>
     <suppress checks="HideUtilityClassConstructor" files=""/>
-    <suppress checks="WhitespaceAfter" files=""/>
-    <suppress checks="WhitespaceAround" files=""/>
-    <suppress checks="MagicNumber" files=""/>
     <!--    <suppress files="" checks="JavadocMethod"/>-->
     <!--    <suppress files="" checks="JavadocType"/>-->
     <!--    <suppress files="" checks="JavadocVariable"/>-->
