@@ -24,7 +24,7 @@ public class AppTest {
 
     System.out.println("Browser is opened");
 
-    final int durationSec = 100;
+    final int durationSec = 10;
 
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(durationSec));
     wait.until(
