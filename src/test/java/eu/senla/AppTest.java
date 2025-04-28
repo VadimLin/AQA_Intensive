@@ -1,14 +1,12 @@
 package eu.senla;
 
 import java.time.Duration;
-import java.util.List;
 import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 /** Unit test for simple App. */
@@ -17,7 +15,8 @@ public class AppTest {
   public void testApp() {
 
     Random rand = new Random();
-    int randomIntBounded = rand.nextInt(100);
+    final int num = 100;
+    int randomIntBounded = rand.nextInt(num);
 
     WebDriver driver = new ChromeDriver();
 
@@ -25,7 +24,9 @@ public class AppTest {
 
     System.out.println("Browser is opened");
 
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+    final int durationSec = 100;
+
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(durationSec));
     wait.until(
             d -> driver.findElement((By.xpath("//input[@name='username']")))
                             .isDisplayed());
@@ -68,10 +69,7 @@ public class AppTest {
                     .isDisplayed());
 
     driver.findElement(By.xpath("//input[@class='oxd-input oxd-input--active orangehrm-lastname']"))
-            .sendKeys("Do" + + randomIntBounded);
-
-
-   wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//button[@class='oxd-button oxd-button--medium oxd-button--secondary orangehrm-left-space']"))));
+            .sendKeys("Do" + randomIntBounded);
 
       driver.findElement(By.xpath("//button[@class='oxd-button oxd-button--medium oxd-button--secondary orangehrm-left-space']")).click();
 
