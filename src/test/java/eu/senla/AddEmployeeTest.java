@@ -2,38 +2,39 @@ package eu.senla;
 
 import java.time.Duration;
 import java.util.Random;
+
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
 
 public class AddEmployeeTest extends BaseTest {
  private WebDriver driver = getDriver();
-  @BeforeTest
-  @Override
-  public void setUp() {
 
-    super.setUp();
-  }
 
-  @Test
+    @BeforeEach
+    @Override
+    public void loginAsUser() {
+        super.loginAsUser();
+    }
+
+    @Test
   public void testAddEmployee() {
 
     Random rand = new Random();
     final int num = 1000;
     int randomIntBounded = rand.nextInt(num);
 
-    final int durationSec = 5;
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(getDurationSec()));
+    wait.until(d -> driver.findElement((By.xpath("//span[text()='PIM']"))).isDisplayed());
+    driver.findElement(By.xpath("//span[text()='PIM']")).click();
 
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(durationSec));
-    wait.until(d -> driver.findElement((By.xpath(".//span[text()='PIM']"))).isDisplayed());
-    driver.findElement(By.xpath(".//span[text()='PIM']")).click();
+    wait.until(d -> driver.findElement((By.xpath("//button[text()=' Add ']"))).isDisplayed());
 
-    wait.until(d -> driver.findElement((By.xpath(".//button[text()=' Add ']"))).isDisplayed());
-
-    driver.findElement(By.xpath(".//button[text()=' Add ']")).click();
+    driver.findElement(By.xpath("//button[text()=' Add ']")).click();
 
     wait.until(
         d ->
@@ -80,8 +81,7 @@ public class AddEmployeeTest extends BaseTest {
                 .findElement((By.xpath("//h6[@class='oxd-text oxd-text--h6 --strong']")))
                 .isDisplayed());
   }
-
-  @AfterTest
+  @AfterEach
   @Override
   public void tearDown() {
     super.tearDown();

@@ -1,14 +1,20 @@
 package eu.senla;
 
 import java.time.Duration;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 
 public class BaseTest {
-  private WebDriver driver = new ChromeDriver();
+  private WebDriver driver;
+
+  public BaseTest() {
+    driver = new ChromeDriver();
+  }
+  private final int durationSec = 5;
   private String login = "Admin";
   private String password = "admin123";
 
@@ -16,6 +22,9 @@ public class BaseTest {
     return driver;
   }
 
+  public int getDurationSec() {
+    return durationSec;
+  }
 
   public String getLogin() {
     return login;
@@ -25,21 +34,18 @@ public class BaseTest {
     return password;
   }
 
-  @BeforeTest
-  public void setUp() {
-    final int duration = 3;
-    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(duration));
-    driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
-    loginAsUser();
-  }
 
-  protected void loginAsUser() {
+
+  public void loginAsUser() {
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(durationSec));
+    driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+    wait.until(d -> driver.findElement(By.xpath("//input[@name='username']"))
+            .isDisplayed());
     driver.findElement(By.xpath("//input[@name='username']")).sendKeys(login);
     driver.findElement(By.xpath("//input[@name='password']")).sendKeys(password);
     driver.findElement(By.tagName("button")).click();
   }
 
-  @AfterTest
   public void tearDown() {
     driver.quit();
   }
