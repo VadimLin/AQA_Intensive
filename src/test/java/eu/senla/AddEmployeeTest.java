@@ -1,90 +1,115 @@
 package eu.senla;
 
-import java.time.Duration;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.util.Random;
-
-
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.WebElement;
 
 public class AddEmployeeTest extends BaseTest {
- private WebDriver driver = getDriver();
 
-
-    @BeforeEach
-    @Override
-    public void loginAsUser() {
-        super.loginAsUser();
-    }
-
-    @Test
+  @Test
+  @DisplayName("Проверка успешного добавления сотрудника")
   public void testAddEmployee() {
-
+    loginAsUser();
     Random rand = new Random();
     final int num = 1000;
     int randomIntBounded = rand.nextInt(num);
+    getWait().until(d -> getDriver().findElement((By.xpath("//span[text()='PIM']"))).isDisplayed());
+    getDriver().findElement(By.xpath("//span[text()='PIM']")).click();
 
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(getDurationSec()));
-    wait.until(d -> driver.findElement((By.xpath("//span[text()='PIM']"))).isDisplayed());
-    driver.findElement(By.xpath("//span[text()='PIM']")).click();
+    assertEquals(
+        "https://opensource-demo.orangehrmlive.com/web/index.php/pim/viewEmployeeList",
+        getDriver().getCurrentUrl(),
+        "Incorrect Url");
 
-    wait.until(d -> driver.findElement((By.xpath("//button[text()=' Add ']"))).isDisplayed());
+    getWait()
+        .until(d -> getDriver().findElement((By.xpath("//button[text()=' Add ']"))).isDisplayed());
 
-    driver.findElement(By.xpath("//button[text()=' Add ']")).click();
+    getDriver().findElement(By.xpath("//button[text()=' Add ']")).click();
 
-    wait.until(
-        d ->
-            driver
-                .findElement(
-                    (By.xpath("//input[@class='oxd-input oxd-input--active orangehrm-firstname']")))
-                .isDisplayed());
+    getWait()
+        .until(
+            d ->
+                getDriver()
+                    .findElement(
+                        (By.xpath(
+                            "//input[@class='oxd-input oxd-input--active orangehrm-firstname']")))
+                    .isDisplayed());
 
-    driver
-        .findElement(By.xpath("//input[@class='oxd-input oxd-input--active orangehrm-firstname']"))
-        .sendKeys("Leo");
-    wait.until(
-        d ->
-            driver
-                .findElement(
-                    (By.xpath(
-                        "//input[@class='oxd-input oxd-input--active orangehrm-middlename']")))
-                .isDisplayed());
+    WebElement fName;
+    fName =
+        getDriver()
+            .findElement(
+                By.xpath("//input[@class='oxd-input oxd-input--active orangehrm-firstname']"));
+    fName.sendKeys("Leo");
 
-    driver
-        .findElement(By.xpath("//input[@class='oxd-input oxd-input--active orangehrm-middlename']"))
-        .sendKeys("Nar");
+    getWait()
+        .until(
+            d ->
+                getDriver()
+                    .findElement(
+                        (By.xpath(
+                            "//input[@class='oxd-input oxd-input--active orangehrm-middlename']")))
+                    .isDisplayed());
 
-    wait.until(
-        d ->
-            driver
-                .findElement(
-                    (By.xpath("//input[@class='oxd-input oxd-input--active orangehrm-lastname']")))
-                .isDisplayed());
+    WebElement mName;
+    mName =
+        getDriver()
+            .findElement(
+                By.xpath("//input[@class='oxd-input oxd-input--active orangehrm-middlename']"));
+    mName.sendKeys("Nar");
 
-    driver
-        .findElement(By.xpath("//input[@class='oxd-input oxd-input--active orangehrm-lastname']"))
-        .sendKeys("Do" + randomIntBounded);
+    getWait()
+        .until(
+            d ->
+                getDriver()
+                    .findElement(
+                        (By.xpath(
+                            "//input[@class='oxd-input oxd-input--active orangehrm-lastname']")))
+                    .isDisplayed());
 
-    driver
+    WebElement lName;
+    lName =
+        getDriver()
+            .findElement(
+                By.xpath("//input[@class='oxd-input oxd-input--active orangehrm-lastname']"));
+    lName.sendKeys("Do" + randomIntBounded);
+
+    assertAll(
+        () -> assertNotNull(fName),
+        () -> assertNotNull(mName),
+        () -> assertNotNull(lName),
+        () ->
+            assertEquals(
+                "https://opensource-demo.orangehrmlive.com/web/index.php/pim/addEmployee",
+                getDriver().getCurrentUrl(),
+                "Incorrect Url"),
+        () ->
+            assertTrue(
+                getDriver()
+                    .findElement(
+                        By.xpath(
+                            "//button[@class='oxd-button oxd-button--medium oxd-button--secondary orangehrm-left-space']"))
+                    .isEnabled(),
+                "Button is disabled"));
+
+    getDriver()
         .findElement(
             By.xpath(
                 "//button[@class='oxd-button oxd-button--medium oxd-button--secondary orangehrm-left-space']"))
         .click();
 
-    wait.until(
-        d ->
-            driver
-                .findElement((By.xpath("//h6[@class='oxd-text oxd-text--h6 --strong']")))
-                .isDisplayed());
-  }
-  @AfterEach
-  @Override
-  public void tearDown() {
-    super.tearDown();
-
+    getWait()
+        .until(
+            d ->
+                getDriver()
+                    .findElement((By.xpath("//h6[@class='oxd-text oxd-text--h6 --strong']")))
+                    .isDisplayed());
   }
 }
