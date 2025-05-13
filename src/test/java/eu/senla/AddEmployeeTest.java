@@ -3,7 +3,6 @@ package eu.senla;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.Random;
 import org.junit.jupiter.api.DisplayName;
@@ -20,8 +19,11 @@ public class AddEmployeeTest extends BaseTest {
     Random rand = new Random();
     final int num = 1000;
     int randomIntBounded = rand.nextInt(num);
-    getWait().until(d -> getDriver().findElement((By.xpath("//span[text()='PIM']"))).isDisplayed());
-    getDriver().findElement(By.xpath("//span[text()='PIM']")).click();
+    getWait()
+        .until(d -> getDriver().findElement(By.cssSelector("a[href$='viewPimModule']")))
+        .isDisplayed();
+
+    getDriver().findElement(By.cssSelector("a[href$='viewPimModule']")).click();
 
     assertEquals(
         "https://opensource-demo.orangehrmlive.com/web/index.php/pim/viewEmployeeList",
@@ -29,9 +31,18 @@ public class AddEmployeeTest extends BaseTest {
         "Incorrect Url");
 
     getWait()
-        .until(d -> getDriver().findElement((By.xpath("//button[text()=' Add ']"))).isDisplayed());
+        .until(
+            d ->
+                getDriver()
+                    .findElement(
+                        (By.xpath(
+                            "//button[@class='oxd-button oxd-button--medium oxd-button--secondary']")))
+                    .isDisplayed());
 
-    getDriver().findElement(By.xpath("//button[text()=' Add ']")).click();
+    getDriver()
+        .findElement(
+            By.xpath("//button[@class='oxd-button oxd-button--medium oxd-button--secondary']"))
+        .click();
 
     getWait()
         .until(
@@ -43,11 +54,17 @@ public class AddEmployeeTest extends BaseTest {
                     .isDisplayed());
 
     WebElement fName;
+
     fName =
         getDriver()
             .findElement(
                 By.xpath("//input[@class='oxd-input oxd-input--active orangehrm-firstname']"));
-    fName.sendKeys("Leo");
+
+    String inputFirstName = "Leo";
+
+    fName.sendKeys(inputFirstName);
+
+    String actualFirstName = fName.getAttribute("value");
 
     getWait()
         .until(
@@ -59,11 +76,17 @@ public class AddEmployeeTest extends BaseTest {
                     .isDisplayed());
 
     WebElement mName;
+
     mName =
         getDriver()
             .findElement(
                 By.xpath("//input[@class='oxd-input oxd-input--active orangehrm-middlename']"));
-    mName.sendKeys("Nar");
+
+    String inputMiddleName = "Nar";
+
+    mName.sendKeys(inputMiddleName);
+
+    String actualMiddleName = mName.getAttribute("value");
 
     getWait()
         .until(
@@ -75,16 +98,21 @@ public class AddEmployeeTest extends BaseTest {
                     .isDisplayed());
 
     WebElement lName;
+
     lName =
         getDriver()
             .findElement(
                 By.xpath("//input[@class='oxd-input oxd-input--active orangehrm-lastname']"));
-    lName.sendKeys("Do" + randomIntBounded);
+
+    String inputLastName = "Do" + randomIntBounded;
+    lName.sendKeys(inputLastName);
+
+    String actualLastName = lName.getAttribute("value");
 
     assertAll(
-        () -> assertNotNull(fName),
-        () -> assertNotNull(mName),
-        () -> assertNotNull(lName),
+        () -> assertEquals(inputFirstName, actualFirstName, "The first name does not match"),
+        () -> assertEquals(inputMiddleName, actualMiddleName, "The middle name does not match"),
+        () -> assertEquals(inputLastName, actualLastName, "The last name does not match"),
         () ->
             assertEquals(
                 "https://opensource-demo.orangehrmlive.com/web/index.php/pim/addEmployee",
