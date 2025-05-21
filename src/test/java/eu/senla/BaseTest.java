@@ -1,30 +1,30 @@
 package eu.senla;
 
 import java.time.Duration;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class BaseTest {
-  private WebDriver driver;
+  private static WebDriver driver;
+  private static WebDriverWait wait;
 
-  public BaseTest() {
-    driver = new ChromeDriver();
+  public static WebDriverWait getWait() {
+    return wait;
   }
-  private final int durationSec = 5;
-  private String login = "Admin";
-  private String password = "admin123";
 
-  public WebDriver getDriver() {
+  public static WebDriver getDriver() {
     return driver;
   }
 
-  public int getDurationSec() {
-    return durationSec;
-  }
+  private static String login = "Admin";
+  private static String password = "admin123";
 
   public String getLogin() {
     return login;
@@ -34,19 +34,27 @@ public class BaseTest {
     return password;
   }
 
+  static final int DURATION_SEC = 5;
 
+  static final String LOGIN_URL =
+      "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login";
 
-  public void loginAsUser() {
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(durationSec));
-    driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
-    wait.until(d -> driver.findElement(By.xpath("//input[@name='username']"))
-            .isDisplayed());
+  @BeforeEach
+  void setUp() {
+    driver = new ChromeDriver();
+    wait = new WebDriverWait(driver, Duration.ofSeconds(DURATION_SEC));
+  }
+
+  void loginAsUser() {
+    driver.get(LOGIN_URL);
+    wait.until(d -> driver.findElement(By.xpath("//input[@name='username']")).isDisplayed());
     driver.findElement(By.xpath("//input[@name='username']")).sendKeys(login);
     driver.findElement(By.xpath("//input[@name='password']")).sendKeys(password);
     driver.findElement(By.tagName("button")).click();
   }
 
-  public void tearDown() {
+  @AfterEach
+  void tearDown() {
     driver.quit();
   }
 }
