@@ -8,14 +8,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class Waits {
 
   private final WebDriver driver;
-  private final WebDriverWait wait;
+  private static WebDriverWait wait;
 
   public Waits(int timeoutSeconds) {
     this.driver = Driver.getDriver();
     this.wait = new WebDriverWait(this.driver, Duration.ofSeconds(timeoutSeconds));
   }
 
-  public WebDriverWait getWait() {
+  public static WebDriverWait getWait() {
     return wait;
   }
 }

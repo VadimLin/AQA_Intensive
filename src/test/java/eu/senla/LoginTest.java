@@ -22,14 +22,18 @@ public class LoginTest extends BaseTest {
   @Tag("smoke")
   @DisplayName("Check Sign In with valid credentials")
   public void testValidLogin() {
-    LoginPage loginPage = new LoginPage(waits);
-    loginPage.open();
-    loginPage.login(login, password);
-    assertTrue(loginPage.isLoginSuccessful(), "Unsuccessful Login");
-    assertEquals(
+
+    new LoginPage().open();
+    new LoginPage().login(login, password);
+
+    assertAll(
+
+            () -> assertTrue(new LoginPage().isLoginSuccessful(), "Unsuccessful Login"),
+            () -> assertEquals(
         "https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index",
         driver.getCurrentUrl(),
-        "Unsuccessful Login");
+        "Unsuccessful Login")
+    );
   }
 
   @ParameterizedTest(name = "Check Sign In with invalid {0}")
@@ -37,11 +41,9 @@ public class LoginTest extends BaseTest {
   @Tag("extended")
   @MethodSource("getCredentials")
   public void testInvalidLogin(String description, String username, String pwd) {
-    LoginPage loginPage = new LoginPage(waits);
-    loginPage.open();
-    loginPage.login(username, pwd);
-    String alertText = loginPage.getAlertText();
-    assertEquals("Invalid credentials", alertText);
+    new LoginPage().open();
+    new LoginPage().login(username, pwd);
+    assertEquals("Invalid credentials", new LoginPage().getAlertText());
     assertEquals(
         "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login",
         driver.getCurrentUrl(),
@@ -53,20 +55,21 @@ public class LoginTest extends BaseTest {
   @Tag("extended")
   @MethodSource("getEmptyCredentials")
   public void testEmptyLogin(String description, String username, String pwd) {
-    LoginPage loginPage = new LoginPage(waits);
-    loginPage.open();
-    loginPage.login(username, pwd);
-    String requiredText = loginPage.getErrorText();
-    String color = loginPage.getErrorColor();
+    new LoginPage().open();
+    new LoginPage().login(username, pwd);
 
     assertAll(
-        () -> assertEquals("Required", requiredText),
-        () -> assertEquals("rgba(235, 9, 16, 1)", color, "Color value doesn't match"),
+        () -> assertEquals("Required", new LoginPage().getErrorText()),
+        () -> assertEquals("rgba(235, 9, 16, 1)", new LoginPage().getErrorColor(), "Color value doesn't match"),
         () ->
             assertEquals(
                 "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login",
                 driver.getCurrentUrl(),
                 "Url doesn't match"));
+  }
+  public void loginAsUser() {
+    new LoginPage().open();
+    new LoginPage().login(login, password);
   }
 
   private static Stream<Arguments> getCredentials() {

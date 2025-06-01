@@ -7,9 +7,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import static eu.senla.Waits.Waits.getWait;
+
 public class PimPage extends BasePage {
   private final WebDriver driver;
-  private final Waits waits;
   private final By pimModuleLink = By.cssSelector("a[href$='viewPimModule']");
   private final By addEmployeeButton =
       By.xpath("//button[@class='oxd-button oxd-button--medium oxd-button--secondary']");
@@ -24,35 +25,31 @@ public class PimPage extends BasePage {
           "//button[@class='oxd-button oxd-button--medium oxd-button--secondary orangehrm-left-space']");
   private final By employeeListUrl = By.xpath("//h6[@class='oxd-text oxd-text--h6 --strong']");
 
-  public PimPage(Waits waits) {
+  public PimPage() {
     this.driver = Driver.getDriver();
-    this.waits = waits;
+
   }
 
   public void navigateToPimModule() {
-    waits.getWait().until(d -> driver.findElement(pimModuleLink).isDisplayed());
+    getWait().until(d -> driver.findElement(pimModuleLink).isDisplayed());
     driver.findElement(pimModuleLink).click();
   }
 
   public void clickAddEmployee() {
-    waits.getWait().until(d -> driver.findElement(addEmployeeButton).isDisplayed());
+    getWait().until(d -> driver.findElement(addEmployeeButton).isDisplayed());
     driver.findElement(addEmployeeButton).click();
   }
 
   public void fillEmployeeDetails(String firstName, String middleName, String lastName) {
-    waits.getWait().until(d -> driver.findElement(firstNameInput).isDisplayed());
-    WebElement fName = driver.findElement(firstNameInput);
-    fName.sendKeys(firstName);
+    getWait().until(d -> driver.findElement(firstNameInput).isDisplayed());
+    driver.findElement(firstNameInput).sendKeys(firstName);
+    driver.findElement(middleNameInput).sendKeys(middleName);
+    driver.findElement(lastNameInput).sendKeys(lastName);
 
-    WebElement mName = driver.findElement(middleNameInput);
-    mName.sendKeys(middleName);
-
-    WebElement lName = driver.findElement(lastNameInput);
-    lName.sendKeys(lastName);
   }
 
   public void saveEmployee() {
     driver.findElement(saveButton).click();
-    waits.getWait().until(d -> d.findElement(employeeListUrl).isDisplayed());
+    getWait().until(d -> d.findElement(employeeListUrl).isDisplayed());
   }
 }

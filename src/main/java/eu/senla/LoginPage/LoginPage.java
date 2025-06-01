@@ -6,10 +6,13 @@ import eu.senla.Waits.Waits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.bidi.log.Log;
+
+import static eu.senla.Waits.Waits.getWait;
 
 public class LoginPage extends BasePage {
   private final WebDriver driver;
-  private final Waits waits;
+
 
   private final By usernameField = By.xpath("//input[@name='username']");
   private final By passwordField = By.xpath("//input[@name='password']");
@@ -21,29 +24,30 @@ public class LoginPage extends BasePage {
       By.xpath(
           "//a[@class='oxd-main-menu-item active']/span[@class='oxd-text oxd-text--span oxd-main-menu-item--name']");
 
-  public LoginPage(Waits waits) {
+  public LoginPage() {
     this.driver = Driver.getDriver();
-    this.waits = waits;
   }
 
-  public void open() {
+  public LoginPage open() {
     driver.get(LOGIN_URL);
+    return new LoginPage();
   }
 
-  public void login(String username, String password) {
-    waits.getWait().until(d -> driver.findElement(usernameField).isDisplayed());
+  public LoginPage login(String username, String password) {
+    getWait().until(d -> driver.findElement(usernameField).isDisplayed());
     driver.findElement(usernameField).sendKeys(username);
     driver.findElement(passwordField).sendKeys(password);
     driver.findElement(submitButton).click();
+    return new LoginPage();
   }
 
   public String getAlertText() {
-    waits.getWait().until(d -> driver.findElement(alertMessage).isDisplayed());
+    getWait().until(d -> driver.findElement(alertMessage).isDisplayed());
     return driver.findElement(alertMessage).getText();
   }
 
   public String getErrorText() {
-    waits.getWait().until(d -> driver.findElement(errorColor).isDisplayed());
+    getWait().until(d -> driver.findElement(errorColor).isDisplayed());
     return driver.findElement(errorColor).getText();
   }
 
@@ -53,7 +57,7 @@ public class LoginPage extends BasePage {
   }
 
   public boolean isLoginSuccessful() {
-    waits.getWait().until(d -> driver.findElement(dashboardIndicator).isDisplayed());
+    getWait().until(d -> driver.findElement(dashboardIndicator).isDisplayed());
     return driver.findElement(dashboardIndicator).isDisplayed();
   }
 }
