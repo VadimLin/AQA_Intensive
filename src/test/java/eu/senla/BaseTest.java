@@ -11,7 +11,7 @@ import org.openqa.selenium.WebDriver;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class BaseTest {
   public static final String LOGIN_URL =
-          "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login";
+      "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login";
 
   protected WebDriver driver;
   protected Waits waits;

@@ -1,18 +1,15 @@
 package eu.senla.LoginPage;
 
+import static eu.senla.Waits.Waits.getWait;
+
 import eu.senla.BasePage.BasePage;
 import eu.senla.Driver.Driver;
-import eu.senla.Waits.Waits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.bidi.log.Log;
-
-import static eu.senla.Waits.Waits.getWait;
 
 public class LoginPage extends BasePage {
   private final WebDriver driver;
-
 
   private final By usernameField = By.xpath("//input[@name='username']");
   private final By passwordField = By.xpath("//input[@name='password']");

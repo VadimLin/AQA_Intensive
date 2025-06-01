@@ -1,9 +1,7 @@
 package eu.senla;
 
-
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import eu.senla.LoginPage.LoginPage;
 import eu.senla.PimPage.PimPage;
 import java.util.Random;
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +16,6 @@ public class AddEmployeeTest extends BaseTest {
     new PimPage().navigateToPimModule();
     new PimPage().clickAddEmployee();
 
-
     final int num = 1000;
     String firstName = "Leo";
     String middleName = "Nar";
@@ -29,5 +26,4 @@ public class AddEmployeeTest extends BaseTest {
 
     assertTrue(driver.getCurrentUrl().contains("viewPersonalDetails/empNumber"), "Incorrect Url");
   }
-
 }

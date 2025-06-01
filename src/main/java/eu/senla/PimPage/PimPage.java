@@ -1,13 +1,11 @@
 package eu.senla.PimPage;
 
+import static eu.senla.Waits.Waits.getWait;
+
 import eu.senla.BasePage.BasePage;
 import eu.senla.Driver.Driver;
-import eu.senla.Waits.Waits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-
-import static eu.senla.Waits.Waits.getWait;
 
 public class PimPage extends BasePage {
   private final WebDriver driver;
@@ -27,7 +25,6 @@ public class PimPage extends BasePage {
 
   public PimPage() {
     this.driver = Driver.getDriver();
-
   }
 
   public void navigateToPimModule() {
@@ -45,7 +42,6 @@ public class PimPage extends BasePage {
     driver.findElement(firstNameInput).sendKeys(firstName);
     driver.findElement(middleNameInput).sendKeys(middleName);
     driver.findElement(lastNameInput).sendKeys(lastName);
-
   }
 
   public void saveEmployee() {

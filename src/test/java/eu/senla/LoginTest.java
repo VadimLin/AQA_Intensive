@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
 import eu.senla.LoginPage.LoginPage;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -27,13 +26,12 @@ public class LoginTest extends BaseTest {
     new LoginPage().login(login, password);
 
     assertAll(
-
-            () -> assertTrue(new LoginPage().isLoginSuccessful(), "Unsuccessful Login"),
-            () -> assertEquals(
-        "https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index",
-        driver.getCurrentUrl(),
-        "Unsuccessful Login")
-    );
+        () -> assertTrue(new LoginPage().isLoginSuccessful(), "Unsuccessful Login"),
+        () ->
+            assertEquals(
+                "https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index",
+                driver.getCurrentUrl(),
+                "Unsuccessful Login"));
   }
 
   @ParameterizedTest(name = "Check Sign In with invalid {0}")
@@ -60,13 +58,18 @@ public class LoginTest extends BaseTest {
 
     assertAll(
         () -> assertEquals("Required", new LoginPage().getErrorText()),
-        () -> assertEquals("rgba(235, 9, 16, 1)", new LoginPage().getErrorColor(), "Color value doesn't match"),
+        () ->
+            assertEquals(
+                "rgba(235, 9, 16, 1)",
+                new LoginPage().getErrorColor(),
+                "Color value doesn't match"),
         () ->
             assertEquals(
                 "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login",
                 driver.getCurrentUrl(),
                 "Url doesn't match"));
   }
+
   public void loginAsUser() {
     new LoginPage().open();
     new LoginPage().login(login, password);
