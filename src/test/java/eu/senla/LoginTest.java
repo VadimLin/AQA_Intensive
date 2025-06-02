@@ -4,7 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import eu.senla.Driver.Driver;
 import eu.senla.LoginPage.LoginPage;
+import eu.senla.PropertyFile.ReadPropertyFile;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
@@ -22,15 +24,15 @@ public class LoginTest extends BaseTest {
   @DisplayName("Check Sign In with valid credentials")
   public void testValidLogin() {
 
-    new LoginPage().open();
-    new LoginPage().login(login, password);
+    LoginPage loginPage = new LoginPage();
+    loginPage.open().login(login, password);
 
     assertAll(
         () -> assertTrue(new LoginPage().isLoginSuccessful(), "Unsuccessful Login"),
         () ->
             assertEquals(
-                "https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index",
-                driver.getCurrentUrl(),
+                ReadPropertyFile.getProperty("DASHBOARDURL"),
+                Driver.getDriver().getCurrentUrl(),
                 "Unsuccessful Login"));
   }
 
@@ -39,12 +41,12 @@ public class LoginTest extends BaseTest {
   @Tag("extended")
   @MethodSource("getCredentials")
   public void testInvalidLogin(String description, String username, String pwd) {
-    new LoginPage().open();
-    new LoginPage().login(username, pwd);
-    assertEquals("Invalid credentials", new LoginPage().getAlertText());
+    LoginPage loginPage = new LoginPage();
+    loginPage.open().login(username, pwd);
+    assertEquals("Invalid credentials", loginPage.getAlertText());
     assertEquals(
-        "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login",
-        driver.getCurrentUrl(),
+        ReadPropertyFile.getProperty("BASEURL"),
+        Driver.getDriver().getCurrentUrl(),
         "Url doesn't match");
   }
 
@@ -53,26 +55,19 @@ public class LoginTest extends BaseTest {
   @Tag("extended")
   @MethodSource("getEmptyCredentials")
   public void testEmptyLogin(String description, String username, String pwd) {
-    new LoginPage().open();
-    new LoginPage().login(username, pwd);
+    LoginPage loginPage = new LoginPage();
+    loginPage.open().login(username, pwd);
 
     assertAll(
-        () -> assertEquals("Required", new LoginPage().getErrorText()),
+        () -> assertEquals("Required", loginPage.getErrorText()),
         () ->
             assertEquals(
-                "rgba(235, 9, 16, 1)",
-                new LoginPage().getErrorColor(),
-                "Color value doesn't match"),
+                "rgba(235, 9, 16, 1)", loginPage.getErrorColor(), "Color value doesn't match"),
         () ->
             assertEquals(
-                "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login",
-                driver.getCurrentUrl(),
+                ReadPropertyFile.getProperty("BASEURL"),
+                Driver.getDriver().getCurrentUrl(),
                 "Url doesn't match"));
-  }
-
-  public void loginAsUser() {
-    new LoginPage().open();
-    new LoginPage().login(login, password);
   }
 
   private static Stream<Arguments> getCredentials() {

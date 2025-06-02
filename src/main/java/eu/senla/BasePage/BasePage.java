@@ -1,16 +1,14 @@
 package eu.senla.BasePage;
 
 import eu.senla.Driver.Driver;
+import eu.senla.PropertyFile.ReadPropertyFile;
 import org.openqa.selenium.WebDriver;
 
 public class BasePage {
-
-  public static final String LOGIN_URL =
-      "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login";
-
-  private final WebDriver driver;
+  protected WebDriver driver;
+  public static final String LOGIN_URL = ReadPropertyFile.getProperty("BASEURL");
 
   public BasePage() {
-    this.driver = Driver.getDriver();
+    this.driver = Driver.getDriver(); // инициализация драйвера
   }
 }
