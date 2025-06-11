@@ -3,6 +3,7 @@ package eu.senla.PimPage;
 import eu.senla.BasePage.BasePage;
 import eu.senla.Waits.Waits;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 
 public class PimPage extends BasePage {
   private final By pimModuleLink = By.cssSelector("a[href$='viewPimModule']");
@@ -17,9 +18,12 @@ public class PimPage extends BasePage {
           "//div[@class='oxd-input-group oxd-input-field-bottom-space']//div//input[@class='oxd-input oxd-input--active']");
   private final By saveButton = By.cssSelector("button[type='submit']");
   private final By employeeListUrl = By.xpath("//h6[@class='oxd-text oxd-text--h6 --strong']");
+  private final By dashboardIndicator =
+      By.xpath(
+          "//a[@class='oxd-main-menu-item active']/span[@class='oxd-text oxd-text--span oxd-main-menu-item--name']");
 
-  public PimPage() {
-    super();
+  public PimPage(WebDriver driver) {
+    super(driver);
   }
 
   public PimPage navigateToPimModule() {
@@ -40,6 +44,11 @@ public class PimPage extends BasePage {
     Waits.waitVisibilityOfElementLocated(middleNameInput).sendKeys(middleName);
     Waits.waitVisibilityOfElementLocated(lastNameInput).sendKeys(lastName);
     return this;
+  }
+
+  public String getTitle() {
+    Waits.waitVisibilityOfElementLocated(dashboardIndicator).isDisplayed();
+    return driver.findElement(dashboardIndicator).getText();
   }
 
   public PimPage saveEmployee() {

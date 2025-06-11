@@ -24,15 +24,16 @@ public class LoginTest extends BaseTest {
   @DisplayName("Check Sign In with valid credentials")
   public void testValidLogin() {
 
-    LoginPage loginPage = new LoginPage();
-    loginPage.open().login(login, password);
+    LoginPage loginPage = new LoginPage(driver);
+    loginPage.load().login(login, password);
 
     assertAll(
-        () -> assertTrue(new LoginPage().isLoginSuccessful(), "Unsuccessful Login"),
+        () -> assertTrue(loginPage.isLoginSuccessful(), "Unsuccessful Login"),
         () ->
             assertEquals(
-                ReadPropertyFile.getProperty("DASHBOARDURL"),
-                Driver.getDriver().getCurrentUrl(),
+                ReadPropertyFile.getProperty("BASEURL")
+                    + ReadPropertyFile.getProperty("DASHBOARD_ENDPOINT"),
+                Driver.initializeDriver().getCurrentUrl(),
                 "Unsuccessful Login"));
   }
 
@@ -41,12 +42,12 @@ public class LoginTest extends BaseTest {
   @Tag("extended")
   @MethodSource("getCredentials")
   public void testInvalidLogin(String description, String username, String pwd) {
-    LoginPage loginPage = new LoginPage();
-    loginPage.open().login(username, pwd);
+    LoginPage loginPage = new LoginPage(driver);
+    loginPage.load().login(username, pwd);
     assertEquals("Invalid credentials", loginPage.getAlertText());
     assertEquals(
-        ReadPropertyFile.getProperty("BASEURL"),
-        Driver.getDriver().getCurrentUrl(),
+        ReadPropertyFile.getProperty("BASEURL") + ReadPropertyFile.getProperty("AUTH_ENDPOINT"),
+        Driver.initializeDriver().getCurrentUrl(),
         "Url doesn't match");
   }
 
@@ -55,8 +56,8 @@ public class LoginTest extends BaseTest {
   @Tag("extended")
   @MethodSource("getEmptyCredentials")
   public void testEmptyLogin(String description, String username, String pwd) {
-    LoginPage loginPage = new LoginPage();
-    loginPage.open().login(username, pwd);
+    LoginPage loginPage = new LoginPage(driver);
+    loginPage.load().login(username, pwd);
 
     assertAll(
         () -> assertEquals("Required", loginPage.getErrorText()),
@@ -65,8 +66,9 @@ public class LoginTest extends BaseTest {
                 "rgba(235, 9, 16, 1)", loginPage.getErrorColor(), "Color value doesn't match"),
         () ->
             assertEquals(
-                ReadPropertyFile.getProperty("BASEURL"),
-                Driver.getDriver().getCurrentUrl(),
+                ReadPropertyFile.getProperty("BASEURL")
+                    + ReadPropertyFile.getProperty("AUTH_ENDPOINT"),
+                Driver.initializeDriver().getCurrentUrl(),
                 "Url doesn't match"));
   }
 

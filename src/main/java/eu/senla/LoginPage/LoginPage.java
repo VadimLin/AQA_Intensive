@@ -1,8 +1,10 @@
 package eu.senla.LoginPage;
 
 import eu.senla.BasePage.BasePage;
+import eu.senla.PropertyFile.ReadPropertyFile;
 import eu.senla.Waits.Waits;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class LoginPage extends BasePage {
@@ -17,13 +19,13 @@ public class LoginPage extends BasePage {
       By.xpath(
           "//a[@class='oxd-main-menu-item active']/span[@class='oxd-text oxd-text--span oxd-main-menu-item--name']");
 
-  public LoginPage() {
-    super();
+  public LoginPage(WebDriver driver) {
+    super(driver);
   }
 
-  public LoginPage open() {
-    driver.get(LOGIN_URL);
-    return new LoginPage();
+  public LoginPage load() {
+    load(ReadPropertyFile.getProperty("AUTH_ENDPOINT"));
+    return this;
   }
 
   public final LoginPage enterUserName(String userName) {
@@ -43,7 +45,7 @@ public class LoginPage extends BasePage {
 
   public LoginPage login(String username, String password) {
     enterUserName(username).enterPassword(password).clickSubmitButton();
-    return new LoginPage();
+    return new LoginPage(driver);
   }
 
   public String getAlertText() {

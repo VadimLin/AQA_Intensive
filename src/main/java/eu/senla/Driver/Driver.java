@@ -3,16 +3,17 @@ package eu.senla.Driver;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public final class Driver {
+public class Driver {
   private static WebDriver driver;
 
-  private Driver() {
+  public Driver() {
 
   }
 
-  public static WebDriver getDriver() {
+  public static WebDriver initializeDriver() {
     if (driver == null) {
       driver = new ChromeDriver();
+      driver.manage().window().maximize();
     }
     return driver;
   }
