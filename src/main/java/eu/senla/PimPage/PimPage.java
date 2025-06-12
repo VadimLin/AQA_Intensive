@@ -12,10 +12,6 @@ public class PimPage extends BasePage {
   private final By firstNameInput = By.xpath("//input[@placeholder='First Name']");
   private final By middleNameInput = By.xpath("//input[@placeholder='Middle Name']");
   private final By lastNameInput = By.xpath("//input[@placeholder='Last Name']");
-
-  private final By employeeIdInput =
-      By.xpath(
-          "//div[@class='oxd-input-group oxd-input-field-bottom-space']//div//input[@class='oxd-input oxd-input--active']");
   private final By saveButton = By.cssSelector("button[type='submit']");
   private final By employeeListUrl = By.xpath("//h6[@class='oxd-text oxd-text--h6 --strong']");
   private final By dashboardIndicator =

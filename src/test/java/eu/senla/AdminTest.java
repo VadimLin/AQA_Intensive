@@ -44,6 +44,7 @@ public class AdminTest extends BaseTest {
         .clickAddButton()
         .fillJobTitlefield(randomJobTitle)
         .saveJobTitle()
+        .isConfirmedMessage()
         .getJobTitle();
     assertAll(
         () -> assertEquals(adminPage.getJobTitle(), "Job Titles"),
@@ -53,5 +54,23 @@ public class AdminTest extends BaseTest {
                     + ReadPropertyFile.getProperty("JOB_ENDPOINT"),
                 Driver.initializeDriver().getCurrentUrl(),
                 "Incorrect URL"));
+  }
+
+  @Test
+  public void deleteJobTitle() {
+    Faker faker = new Faker();
+    String randomJobTitle = faker.job().title();
+    AdminPage adminPage = new AdminPage(driver);
+    loginAsUser();
+    adminPage
+            .navigateToAdminModule()
+            .clickDropDownMenu()
+            .clickJobTitlesOption()
+            .clickAddButton()
+            .fillJobTitlefield(randomJobTitle)
+            .saveJobTitle()
+            .isConfirmedMessage();
+
+    adminPage.deleteExistingJobTitle(randomJobTitle).confirmDelete().isConfirmDeleteMessage();
   }
 }

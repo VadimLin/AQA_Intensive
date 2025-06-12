@@ -18,9 +18,11 @@ public class AdminPage extends BasePage {
           "//div[@class='oxd-input-group oxd-input-field-bottom-space']"
               + "//div//input[@class='oxd-input oxd-input--active']");
   private final By saveButton = By.cssSelector("button[type='submit']");
+  private final By confirmationMessage = By.xpath("//div[@id='oxd-toaster_1']//p[text()='Success']");
   private final By adminTitle =
       By.cssSelector(".oxd-text.oxd-text--h6.oxd-topbar-header-breadcrumb-module");
-  private final By rowTable = By.xpath("//div[@role='rowgroup']");
+  private final By confirmDeleteButton = By.xpath("//button[normalize-space()='Yes, Delete']");
+  private final By confirmDeleteMessage = By.xpath("//div[@id='oxd-toaster_1']//p[text()='Success']");
 
   public AdminPage(WebDriver driver) {
     super(driver);
@@ -66,5 +68,26 @@ public class AdminPage extends BasePage {
   public String getJobTitle() {
     Waits.waitVisibilityOfElementLocated(jobTitle).isDisplayed();
     return driver.findElement(jobTitle).getText();
+  }
+
+  public AdminPage isConfirmedMessage() {
+    Waits.waitVisibilityOfElementLocated(confirmationMessage).isDisplayed();
+    return this;
+  }
+
+  public AdminPage deleteExistingJobTitle(String jobTitle) {
+    By deleteJobButton = By.xpath("//div[contains(text(),\"" + jobTitle + "\")]/../..//i[@class='oxd-icon bi-trash']");
+    Waits.waitVisibilityOfElementLocated(deleteJobButton).click();
+    return this;
+  }
+
+  public AdminPage confirmDelete() {
+    Waits.waitVisibilityOfElementLocated(confirmDeleteButton).click();
+    return this;
+  }
+
+  public AdminPage isConfirmDeleteMessage() {
+    Waits.waitVisibilityOfElementLocated(confirmDeleteMessage).isDisplayed();
+    return this;
   }
 }

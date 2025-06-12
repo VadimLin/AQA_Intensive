@@ -63,7 +63,7 @@ public class LoginTest extends BaseTest {
         () -> assertEquals("Required", loginPage.getErrorText()),
         () ->
             assertEquals(
-                "rgba(235, 9, 16, 1)", loginPage.getErrorColor(), "Color value doesn't match"),
+                    ReadPropertyFile.getProperty("COLOR"), loginPage.getErrorColor(), "Color value doesn't match"),
         () ->
             assertEquals(
                 ReadPropertyFile.getProperty("BASEURL")
