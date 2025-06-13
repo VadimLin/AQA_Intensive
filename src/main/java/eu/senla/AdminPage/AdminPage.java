@@ -61,7 +61,6 @@ public class AdminPage extends BasePage {
 
   public AdminPage saveJobTitle() {
     Waits.waitVisibilityOfElementLocated(saveButton).click();
-    Waits.waitVisibilityOfElementLocated(jobTitle).isDisplayed();
     return this;
   }
 
@@ -72,11 +71,12 @@ public class AdminPage extends BasePage {
 
   public AdminPage isConfirmedMessage() {
     Waits.waitVisibilityOfElementLocated(confirmationMessage).isDisplayed();
-    return this;
+    return new AdminPage(driver);
   }
 
   public AdminPage deleteExistingJobTitle(String jobTitle) {
-    By deleteJobButton = By.xpath("//div[contains(text(),\"" + jobTitle + "\")]/../..//i[@class='oxd-icon bi-trash']");
+    By deleteJobButton = By.xpath("//div[contains(text(),\"" + jobTitle + "\")]"
+            + "/parent::div/following-sibling::div//child::i[@class='oxd-icon bi-trash']");
     Waits.waitVisibilityOfElementLocated(deleteJobButton).click();
     return this;
   }

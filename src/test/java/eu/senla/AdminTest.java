@@ -1,14 +1,15 @@
 package eu.senla;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import eu.senla.AdminPage.AdminPage;
 import eu.senla.Driver.Driver;
 import eu.senla.PropertyFile.ReadPropertyFile;
 import net.datafaker.Faker;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class AdminTest extends BaseTest {
 
@@ -44,8 +45,7 @@ public class AdminTest extends BaseTest {
         .clickAddButton()
         .fillJobTitlefield(randomJobTitle)
         .saveJobTitle()
-        .isConfirmedMessage()
-        .getJobTitle();
+        .isConfirmedMessage();
     assertAll(
         () -> assertEquals(adminPage.getJobTitle(), "Job Titles"),
         () ->
@@ -57,6 +57,7 @@ public class AdminTest extends BaseTest {
   }
 
   @Test
+  @DisplayName("Delete existing Job Title")
   public void deleteJobTitle() {
     Faker faker = new Faker();
     String randomJobTitle = faker.job().title();
@@ -69,8 +70,17 @@ public class AdminTest extends BaseTest {
             .clickAddButton()
             .fillJobTitlefield(randomJobTitle)
             .saveJobTitle()
-            .isConfirmedMessage();
-
-    adminPage.deleteExistingJobTitle(randomJobTitle).confirmDelete().isConfirmDeleteMessage();
+            .isConfirmedMessage()
+            .deleteExistingJobTitle(randomJobTitle)
+            .confirmDelete()
+            .isConfirmDeleteMessage();
+    assertAll(
+            () -> assertEquals(adminPage.getJobTitle(), "Job Titles"),
+            () ->
+                    assertEquals(
+                            ReadPropertyFile.getProperty("BASEURL")
+                                    + ReadPropertyFile.getProperty("JOB_ENDPOINT"),
+                            Driver.initializeDriver().getCurrentUrl(),
+                            "Incorrect URL"));
   }
 }
