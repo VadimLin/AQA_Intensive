@@ -1,28 +1,132 @@
 package eu.senla;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import eu.senla.Driver.Driver;
 import eu.senla.PropertyFile.ReadPropertyFile;
 import eu.senla.RecruitmentPage.RecruitmentPage;
+import net.datafaker.Faker;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class RecruitmentTest extends BaseTest {
 
   @Test
-  public void recruitTest() {
+  @DisplayName("Successful add candidate with all fields")
+  public void addCandidateTest() {
+    Faker faker = new Faker();
+    final int words = 5;
+    String firstName = faker.name().firstName();
+    String middleName = faker.name().nameWithMiddle();
+    String lastName = faker.name().lastName();
+    String email = faker.internet().emailAddress();
+    String contactNumber = faker.phoneNumber().phoneNumber();
+    String keywords = faker.lorem().words(words).toString();
+    String notes = faker.lorem().sentence();
+
     RecruitmentPage recruitmentPage = new RecruitmentPage(driver);
     loginAsUser();
-    recruitmentPage.navigateToRecruitModule();
+    recruitmentPage
+            .navigateToRecruitModule()
+            .clickAddButton()
+            .enterFirstName(firstName)
+            .enterMiddleName(middleName)
+            .enterLastName(lastName)
+            .openDropDownMenu()
+            .chooseFromListVacancies()
+            .enterEmail(email)
+            .enterContactNumber(contactNumber)
+            .enterKeywords(keywords)
+            .enterNotes(notes)
+            .clickSaveButton()
+            .isConfimed();
+
+assertAll(
+        () -> assertEquals(recruitmentPage.getTitle(), "Recruitment"),
+        () -> assertTrue(
+                Driver.initializeDriver().getCurrentUrl().contains(ReadPropertyFile.getProperty("BASEURL")
+                        + ReadPropertyFile.getProperty("CANDIDATE_ENDPOINT")),
+                "Incorrect Url"));
+  }
+
+  @Test
+  @DisplayName("Successful adding only with required fields")
+  public void successfulAddCandidateOnlyWithRequiredFields() {
+    Faker faker = new Faker();
+    String firstName = faker.name().firstName();
+    String lastName = faker.name().lastName();
+    String email = faker.internet().emailAddress();
+
+    RecruitmentPage recruitmentPage = new RecruitmentPage(driver);
+    loginAsUser();
+    recruitmentPage
+            .navigateToRecruitModule()
+            .clickAddButton()
+            .fillOnlyRequiredCandidateFields(firstName, lastName, email)
+            .isConfimed();
+    assertAll(
+            () -> assertEquals(recruitmentPage.getTitle(), "Recruitment"),
+            () -> assertTrue(
+                    Driver.initializeDriver().getCurrentUrl().contains(ReadPropertyFile.getProperty("BASEURL")
+                            + ReadPropertyFile.getProperty("CANDIDATE_ENDPOINT")),
+                    "Incorrect Url"));
+  }
+  @ParameterizedTest(name = "Check adding candidate with valid firstName and lastName, and invalid email in {0}")
+  @MethodSource("getCredentials")
+  public void addCandidateWithInvalidData(String description, String firstname, String lastname, String email) {
+    RecruitmentPage recruitmentPage = new RecruitmentPage(driver);
+    loginAsUser();
+    recruitmentPage
+            .navigateToRecruitModule()
+            .clickAddButton()
+            .fillOnlyRequiredCandidateFields(firstname, lastname, email);
 
     assertAll(
-        () -> assertEquals(recruitmentPage.getTitle(), "Recruitment"),
-        () ->
-            assertEquals(
-                ReadPropertyFile.getProperty("BASEURL")
-                    + ReadPropertyFile.getProperty("RECRUITMENT_ENDPOINT"),
-                Driver.initializeDriver().getCurrentUrl(),
-                "Incorrect URL"));
+            () -> assertEquals(ReadPropertyFile.getProperty("EMAIL_ALERT"), recruitmentPage.getEmailAlertText()),
+            () -> assertEquals(
+                    ReadPropertyFile.getProperty("BASEURL") + ReadPropertyFile.getProperty("CANDIDATE_ENDPOINT"),
+                    Driver.initializeDriver().getCurrentUrl(),
+                    "Url doesn't match"));
+  }
+
+  @ParameterizedTest(name = "Check adding candidate with empty {0}")
+  @MethodSource("getEmptyCredentials")
+  public void addCandidateWithEmptyData(String description, String firstname, String lastname, String email) {
+    RecruitmentPage recruitmentPage = new RecruitmentPage(driver);
+    loginAsUser();
+    recruitmentPage
+            .navigateToRecruitModule()
+            .clickAddButton()
+            .fillOnlyRequiredCandidateFields(firstname, lastname, email);
+
+    assertAll(
+            () -> assertEquals(ReadPropertyFile.getProperty("REQUIRED_ALERT"), recruitmentPage.getRequiredAlert()),
+            () -> assertEquals(
+                    ReadPropertyFile.getProperty("BASEURL") + ReadPropertyFile.getProperty("CANDIDATE_ENDPOINT"),
+                    Driver.initializeDriver().getCurrentUrl(),
+                    "Url doesn't match"));
+  }
+
+  private static Stream<Arguments> getCredentials() {
+    return Stream.of(
+            Arguments.of("without @", "John", "Lee", "test.com"),
+            Arguments.of("without comma", "Jack", "Low", "test@testcom"),
+            Arguments.of("with dots in a row", "Adam", "Saimons", "test@test..com"),
+            Arguments.of("with @ in a row", "Charlie", "Coyle", "test@@test.com"));
+  }
+
+  private static Stream<Arguments> getEmptyCredentials() {
+    return Stream.of(
+            Arguments.of("firstname", "", "Lee", "test@test.com"),
+            Arguments.of("lastname", "John", "", "test2@test.com"),
+            Arguments.of("email", "John", "Lee", ""),
+            Arguments.of("all fields", "", "", ""));
   }
 }

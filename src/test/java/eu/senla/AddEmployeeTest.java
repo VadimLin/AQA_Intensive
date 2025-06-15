@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import eu.senla.Driver.Driver;
 import eu.senla.PimPage.PimPage;
+import eu.senla.PropertyFile.ReadPropertyFile;
 import net.datafaker.Faker;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,7 +30,8 @@ public class AddEmployeeTest extends BaseTest {
         .saveEmployee();
 
     assertTrue(
-        Driver.initializeDriver().getCurrentUrl().contains("viewPersonalDetails/empNumber"),
+        Driver.initializeDriver().getCurrentUrl().contains(ReadPropertyFile.getProperty("BASEURL")
+                + ReadPropertyFile.getProperty("PIM_ENDPOINT")),
         "Incorrect Url");
     assertEquals(pimPage.getTitle(), "PIM");
   }
