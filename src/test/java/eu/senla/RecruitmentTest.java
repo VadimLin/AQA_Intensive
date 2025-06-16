@@ -1,9 +1,9 @@
 package eu.senla;
 
+import com.github.javafaker.Faker;
 import eu.senla.Driver.Driver;
 import eu.senla.PropertyFile.ReadPropertyFile;
 import eu.senla.RecruitmentPage.RecruitmentPage;
-import net.datafaker.Faker;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -31,6 +31,8 @@ public class RecruitmentTest extends BaseTest {
     String keywords = faker.lorem().words(words).toString();
     String notes = faker.lorem().sentence();
 
+    String correctContactNumber = contactNumber.replaceAll("[^0-9+\\-\\/()]", "");
+
     RecruitmentPage recruitmentPage = new RecruitmentPage(driver);
     loginAsUser();
     recruitmentPage
@@ -42,7 +44,7 @@ public class RecruitmentTest extends BaseTest {
             .openDropDownMenu()
             .chooseFromListVacancies()
             .enterEmail(email)
-            .enterContactNumber(contactNumber)
+            .enterContactNumber(correctContactNumber)
             .enterKeywords(keywords)
             .enterNotes(notes)
             .clickSaveButton()

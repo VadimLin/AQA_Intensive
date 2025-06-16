@@ -1,9 +1,9 @@
 package eu.senla;
 
+import com.github.javafaker.Faker;
 import eu.senla.AdminPage.AdminPage;
 import eu.senla.Driver.Driver;
 import eu.senla.PropertyFile.ReadPropertyFile;
-import net.datafaker.Faker;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

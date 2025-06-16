@@ -19,8 +19,8 @@
     <spotless-maven-plugin.version>2.44.3</spotless-maven-plugin.version>
     <selenium.version>4.32.0</selenium.version>
     <junit.suite.version>1.12.1</junit.suite.version>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
+    <maven.compiler.source>8</maven.compiler.source>
+    <maven.compiler.target>8</maven.compiler.target>
   </properties>
 
   <dependencies>
@@ -31,9 +31,9 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>net.datafaker</groupId>
-      <artifactId>datafaker</artifactId>
-      <version>2.4.3</version>
+      <groupId>com.github.javafaker</groupId>
+      <artifactId>javafaker</artifactId>
+      <version>1.0.2</version>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
