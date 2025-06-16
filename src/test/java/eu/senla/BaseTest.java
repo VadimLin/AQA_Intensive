@@ -2,6 +2,7 @@ package eu.senla;
 
 import eu.senla.Driver.Driver;
 import eu.senla.LoginPage.LoginPage;
+import eu.senla.LogoutPage.LogoutPage;
 import eu.senla.PropertyFile.ReadPropertyFile;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,5 +29,10 @@ public class BaseTest {
   public void loginAsUser() {
     LoginPage loginPage = new LoginPage(driver);
     loginPage.load().login(login, password);
+  }
+
+  public void logoutUser() {
+    LogoutPage logoutPage = new LogoutPage(driver);
+    logoutPage.openDropDownMenu().clickLogoutButton();
   }
 }

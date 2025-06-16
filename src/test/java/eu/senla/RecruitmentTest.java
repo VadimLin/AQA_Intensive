@@ -2,6 +2,7 @@ package eu.senla;
 
 import com.github.javafaker.Faker;
 import eu.senla.Driver.Driver;
+import eu.senla.Endpoints.Endpoints;
 import eu.senla.PropertyFile.ReadPropertyFile;
 import eu.senla.RecruitmentPage.RecruitmentPage;
 import org.junit.jupiter.api.DisplayName;
@@ -54,8 +55,9 @@ assertAll(
         () -> assertEquals(recruitmentPage.getTitle(), "Recruitment"),
         () -> assertTrue(
                 Driver.initializeDriver().getCurrentUrl().contains(ReadPropertyFile.getProperty("BASEURL")
-                        + ReadPropertyFile.getProperty("CANDIDATE_ENDPOINT")),
+                        + Endpoints.CANDIDATE_ENDPOINT),
                 "Incorrect Url"));
+logoutUser();
   }
 
   @Test
@@ -77,8 +79,9 @@ assertAll(
             () -> assertEquals(recruitmentPage.getTitle(), "Recruitment"),
             () -> assertTrue(
                     Driver.initializeDriver().getCurrentUrl().contains(ReadPropertyFile.getProperty("BASEURL")
-                            + ReadPropertyFile.getProperty("CANDIDATE_ENDPOINT")),
+                            + Endpoints.CANDIDATE_ENDPOINT),
                     "Incorrect Url"));
+    logoutUser();
   }
   @ParameterizedTest(name = "Check adding candidate with valid firstName and lastName, and invalid email in {0}")
   @MethodSource("getCredentials")
@@ -93,9 +96,10 @@ assertAll(
     assertAll(
             () -> assertEquals(ReadPropertyFile.getProperty("EMAIL_ALERT"), recruitmentPage.getEmailAlertText()),
             () -> assertEquals(
-                    ReadPropertyFile.getProperty("BASEURL") + ReadPropertyFile.getProperty("CANDIDATE_ENDPOINT"),
+                    ReadPropertyFile.getProperty("BASEURL") + Endpoints.CANDIDATE_ENDPOINT,
                     Driver.initializeDriver().getCurrentUrl(),
                     "Url doesn't match"));
+    logoutUser();
   }
 
   @ParameterizedTest(name = "Check adding candidate with empty {0}")
@@ -111,9 +115,10 @@ assertAll(
     assertAll(
             () -> assertEquals(ReadPropertyFile.getProperty("REQUIRED_ALERT"), recruitmentPage.getRequiredAlert()),
             () -> assertEquals(
-                    ReadPropertyFile.getProperty("BASEURL") + ReadPropertyFile.getProperty("CANDIDATE_ENDPOINT"),
+                    ReadPropertyFile.getProperty("BASEURL") + Endpoints.CANDIDATE_ENDPOINT,
                     Driver.initializeDriver().getCurrentUrl(),
                     "Url doesn't match"));
+    logoutUser();
   }
 
   private static Stream<Arguments> getCredentials() {

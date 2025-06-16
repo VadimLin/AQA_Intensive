@@ -3,6 +3,7 @@ package eu.senla;
 import com.github.javafaker.Faker;
 import eu.senla.AdminPage.AdminPage;
 import eu.senla.Driver.Driver;
+import eu.senla.Endpoints.Endpoints;
 import eu.senla.PropertyFile.ReadPropertyFile;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,9 +27,10 @@ public class AdminTest extends BaseTest {
         () ->
             assertEquals(
                 ReadPropertyFile.getProperty("BASEURL")
-                    + ReadPropertyFile.getProperty("ADMIN_ENDPOINT"),
+                    + Endpoints.ADMIN_ENDPOINT,
                 Driver.initializeDriver().getCurrentUrl(),
                 "Incorrect URL"));
+    logoutUser();
   }
 
   @Test
@@ -51,9 +53,10 @@ public class AdminTest extends BaseTest {
         () ->
             assertEquals(
                 ReadPropertyFile.getProperty("BASEURL")
-                    + ReadPropertyFile.getProperty("JOB_ENDPOINT"),
+                    + Endpoints.JOB_ENDPOINT,
                 Driver.initializeDriver().getCurrentUrl(),
                 "Incorrect URL"));
+    logoutUser();
   }
 
   @Test
@@ -79,8 +82,9 @@ public class AdminTest extends BaseTest {
             () ->
                     assertEquals(
                             ReadPropertyFile.getProperty("BASEURL")
-                                    + ReadPropertyFile.getProperty("JOB_ENDPOINT"),
+                                    + Endpoints.JOB_ENDPOINT,
                             Driver.initializeDriver().getCurrentUrl(),
                             "Incorrect URL"));
+    logoutUser();
   }
 }

@@ -1,7 +1,7 @@
 package eu.senla.LoginPage;
 
 import eu.senla.BasePage.BasePage;
-import eu.senla.PropertyFile.ReadPropertyFile;
+import eu.senla.Endpoints.Endpoints;
 import eu.senla.Waits.Waits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -24,7 +24,7 @@ public class LoginPage extends BasePage {
   }
 
   public LoginPage load() {
-    load(ReadPropertyFile.getProperty("AUTH_ENDPOINT"));
+    load(Endpoints.AUTH_ENDPOINT);
     return this;
   }
 

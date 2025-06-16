@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import eu.senla.Driver.Driver;
+import eu.senla.Endpoints.Endpoints;
 import eu.senla.LoginPage.LoginPage;
 import eu.senla.PropertyFile.ReadPropertyFile;
 import java.util.stream.Stream;
@@ -32,7 +33,7 @@ public class LoginTest extends BaseTest {
         () ->
             assertEquals(
                 ReadPropertyFile.getProperty("BASEURL")
-                    + ReadPropertyFile.getProperty("DASHBOARD_ENDPOINT"),
+                    + Endpoints.DASHBOARD_ENDPOINT,
                 Driver.initializeDriver().getCurrentUrl(),
                 "Unsuccessful Login"));
   }
@@ -46,7 +47,7 @@ public class LoginTest extends BaseTest {
     loginPage.load().login(username, pwd);
     assertEquals("Invalid credentials", loginPage.getAlertText());
     assertEquals(
-        ReadPropertyFile.getProperty("BASEURL") + ReadPropertyFile.getProperty("AUTH_ENDPOINT"),
+        ReadPropertyFile.getProperty("BASEURL") + Endpoints.AUTH_ENDPOINT,
         Driver.initializeDriver().getCurrentUrl(),
         "Url doesn't match");
   }
@@ -59,6 +60,7 @@ public class LoginTest extends BaseTest {
     LoginPage loginPage = new LoginPage(driver);
     loginPage.load().login(username, pwd);
 
+
     assertAll(
         () -> assertEquals("Required", loginPage.getErrorText()),
         () ->
@@ -67,7 +69,7 @@ public class LoginTest extends BaseTest {
         () ->
             assertEquals(
                 ReadPropertyFile.getProperty("BASEURL")
-                    + ReadPropertyFile.getProperty("AUTH_ENDPOINT"),
+                    + Endpoints.AUTH_ENDPOINT,
                 Driver.initializeDriver().getCurrentUrl(),
                 "Url doesn't match"));
   }
