@@ -29,8 +29,7 @@ public class AdminPage extends BasePage {
   }
 
   public AdminPage navigateToAdminModule() {
-    Waits.waitVisibilityOfElementLocated(adminModuleLink).isDisplayed();
-    driver.findElement(adminModuleLink).click();
+    Waits.waitVisibilityOfElementLocated(adminModuleLink).click();
     return this;
   }
 

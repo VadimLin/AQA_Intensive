@@ -1,6 +1,5 @@
 package eu.senla;
 
-import eu.senla.Driver.Driver;
 import eu.senla.Endpoints.Endpoints;
 import eu.senla.LogoutPage.LogoutPage;
 import eu.senla.PropertyFile.ReadPropertyFile;
@@ -16,7 +15,7 @@ public class LogoutTest extends BaseTest {
         logoutPage.openDropDownMenu().clickLogoutButton().getLoginTitle();
         assertEquals(
                 ReadPropertyFile.getProperty("BASEURL") + Endpoints.AUTH_ENDPOINT,
-                Driver.initializeDriver().getCurrentUrl(),
+                driver.getCurrentUrl(),
                 "Url doesn't match");
     }
 }

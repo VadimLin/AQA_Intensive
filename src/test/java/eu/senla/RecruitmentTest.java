@@ -78,7 +78,7 @@ logoutUser();
     assertAll(
             () -> assertEquals(recruitmentPage.getTitle(), "Recruitment"),
             () -> assertTrue(
-                    Driver.initializeDriver().getCurrentUrl().contains(ReadPropertyFile.getProperty("BASEURL")
+                    driver.getCurrentUrl().contains(ReadPropertyFile.getProperty("BASEURL")
                             + Endpoints.CANDIDATE_ENDPOINT),
                     "Incorrect Url"));
     logoutUser();
@@ -97,7 +97,7 @@ logoutUser();
             () -> assertEquals(ReadPropertyFile.getProperty("EMAIL_ALERT"), recruitmentPage.getEmailAlertText()),
             () -> assertEquals(
                     ReadPropertyFile.getProperty("BASEURL") + Endpoints.CANDIDATE_ENDPOINT,
-                    Driver.initializeDriver().getCurrentUrl(),
+                    driver.getCurrentUrl(),
                     "Url doesn't match"));
     logoutUser();
   }
@@ -116,7 +116,7 @@ logoutUser();
             () -> assertEquals(ReadPropertyFile.getProperty("REQUIRED_ALERT"), recruitmentPage.getRequiredAlert()),
             () -> assertEquals(
                     ReadPropertyFile.getProperty("BASEURL") + Endpoints.CANDIDATE_ENDPOINT,
-                    Driver.initializeDriver().getCurrentUrl(),
+                    driver.getCurrentUrl(),
                     "Url doesn't match"));
     logoutUser();
   }

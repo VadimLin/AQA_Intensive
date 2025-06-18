@@ -2,7 +2,6 @@ package eu.senla;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import eu.senla.Driver.Driver;
 import eu.senla.Endpoints.Endpoints;
 import eu.senla.LoginPage.LoginPage;
 import eu.senla.PropertyFile.ReadPropertyFile;
@@ -29,7 +28,7 @@ public class LoginTest extends BaseTest {
             assertEquals(
                 ReadPropertyFile.getProperty("BASEURL")
                     + Endpoints.DASHBOARD_ENDPOINT,
-                Driver.initializeDriver().getCurrentUrl(),
+                driver.getCurrentUrl(),
                 "Unsuccessful Login");
   }
 
@@ -43,7 +42,7 @@ public class LoginTest extends BaseTest {
     assertEquals("Invalid credentials", loginPage.getAlertText());
     assertEquals(
         ReadPropertyFile.getProperty("BASEURL") + Endpoints.AUTH_ENDPOINT,
-        Driver.initializeDriver().getCurrentUrl(),
+        driver.getCurrentUrl(),
         "Url doesn't match");
   }
 
@@ -65,7 +64,7 @@ public class LoginTest extends BaseTest {
             assertEquals(
                 ReadPropertyFile.getProperty("BASEURL")
                     + Endpoints.AUTH_ENDPOINT,
-                Driver.initializeDriver().getCurrentUrl(),
+                driver.getCurrentUrl(),
                 "Url doesn't match"));
   }
 

@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import eu.senla.DashboardPage.DashboardPage;
-import eu.senla.Driver.Driver;
 import eu.senla.Endpoints.Endpoints;
 import eu.senla.PropertyFile.ReadPropertyFile;
 import org.junit.jupiter.api.DisplayName;
@@ -32,7 +31,7 @@ public class DashBoardTest extends BaseTest {
             assertEquals(
                 ReadPropertyFile.getProperty("BASEURL")
                     + Endpoints.DASHBOARD_ENDPOINT,
-                Driver.initializeDriver().getCurrentUrl(),
+                driver.getCurrentUrl(),
                 "Incorrect URL"));
     logoutUser();
   }

@@ -3,7 +3,9 @@ package eu.senla.PimPage;
 import eu.senla.BasePage.BasePage;
 import eu.senla.Waits.Waits;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class PimPage extends BasePage {
   private final By pimModuleLink = By.cssSelector("a[href$='viewPimModule']");
@@ -17,7 +19,10 @@ public class PimPage extends BasePage {
   private final By dashboardIndicator =
       By.xpath(
           "//a[@class='oxd-main-menu-item active']/span[@class='oxd-text oxd-text--span oxd-main-menu-item--name']");
-
+  private final By personalDetailTitle = By.xpath("//h6[text()='Personal Details']");
+  private final By alertMessage = By.xpath("//span[contains(@class, 'oxd-input-group__message')]");
+  private final By saveDetailFormButton = By.xpath("//div[@class='orangehrm-horizontal-padding orangehrm-vertical-padding']"
+          + "//button[@type='submit']");
   public PimPage(WebDriver driver) {
     super(driver);
   }
@@ -46,6 +51,39 @@ public class PimPage extends BasePage {
   public PimPage saveEmployee() {
     Waits.waitVisibilityOfElementLocated(saveButton).click();
     Waits.waitVisibilityOfElementLocated(employeeListUrl);
+    return this;
+  }
+
+  public PimPage fillFirstName(String firstName) {
+    Waits.waitVisibilityOfElementLocated(firstNameInput).sendKeys(firstName);
+    return this;
+  }
+  public PimPage fillLastName(String lastName) {
+    Waits.waitVisibilityOfElementLocated(lastNameInput).sendKeys(lastName);
+    return this;
+  }
+  public PimPage clearFirstName() {
+    WebElement firstNameElement = Waits.waitVisibilityOfElementLocated(firstNameInput);
+    firstNameElement.click();
+    firstNameElement.sendKeys(Keys.CONTROL, "a");
+    firstNameElement.sendKeys(Keys.BACK_SPACE);
+    return this;
+  }
+  public PimPage clearLastName() {
+    WebElement lastNameElement = Waits.waitVisibilityOfElementLocated(lastNameInput);
+    lastNameElement.click();
+    lastNameElement.sendKeys(Keys.CONTROL, "a");
+    lastNameElement.sendKeys(Keys.BACK_SPACE);
+    return this;
+  }
+  public String getRequiredAlert() {
+    return Waits.waitVisibilityOfElementLocated(alertMessage).getText();
+  }
+  public String getPersonalDetailTitle() {
+    return Waits.waitVisibilityOfElementLocated(personalDetailTitle).getText();
+  }
+  public PimPage clickSaveDetailFormButton() {
+    Waits.waitVisibilityOfElementLocated(saveDetailFormButton).click();
     return this;
   }
 }
