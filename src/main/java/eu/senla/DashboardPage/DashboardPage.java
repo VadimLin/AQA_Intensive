@@ -28,36 +28,35 @@ public class DashboardPage extends BasePage {
     super(driver);
   }
   public DashboardPage timeAtWorkWidgetIsExists() {
-    Waits.waitVisibilityOfElementLocated(timeAtWorkWidget).isDisplayed();
+    Waits.waitVisibilityOfElementLocated(timeAtWorkWidget);
     return this;
   }
   public DashboardPage myActionsWidgetIsExists() {
-    Waits.waitVisibilityOfElementLocated(myActionsWidget).isDisplayed();
+    Waits.waitVisibilityOfElementLocated(myActionsWidget);
     return this;
   }
   public DashboardPage quickLaunchWidgetIsExists() {
-    Waits.waitVisibilityOfElementLocated(quickLaunchWidget).isDisplayed();
+    Waits.waitVisibilityOfElementLocated(quickLaunchWidget);
     return this;
   }
   public DashboardPage buzzLatestPostsWidgetIsExists() {
-    Waits.waitVisibilityOfElementLocated(buzzLatestPostsWidget).isDisplayed();
+    Waits.waitVisibilityOfElementLocated(buzzLatestPostsWidget);
     return this;
   }
   public DashboardPage employeesOnLeaveTodayWidgetIsExists() {
-    Waits.waitVisibilityOfElementLocated(employeesOnLeaveTodayWidget).isDisplayed();
+    Waits.waitVisibilityOfElementLocated(employeesOnLeaveTodayWidget);
     return this;
   }
   public DashboardPage employeeDistributionBySubWidgetIsExists() {
-    Waits.waitVisibilityOfElementLocated(employeeDistributionBySubWidget).isDisplayed();
+    Waits.waitVisibilityOfElementLocated(employeeDistributionBySubWidget);
     return this;
   }
   public DashboardPage employeeDistributionByLocationWidgetIsExists() {
-    Waits.waitVisibilityOfElementLocated(employeeDistributionByLocationWidget).isDisplayed();
+    Waits.waitVisibilityOfElementLocated(employeeDistributionByLocationWidget);
     return this;
   }
 
   public String getTitle() {
-    Waits.waitVisibilityOfElementLocated(title).isDisplayed();
-    return driver.findElement(title).getText();
+    return Waits.waitVisibilityOfElementLocated(title).getText();
   }
 }

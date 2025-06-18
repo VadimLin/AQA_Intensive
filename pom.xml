@@ -19,6 +19,7 @@
     <spotless-maven-plugin.version>2.44.3</spotless-maven-plugin.version>
     <selenium.version>4.32.0</selenium.version>
     <junit.suite.version>1.12.1</junit.suite.version>
+    <javafaker.version>1.0.2</javafaker.version>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
   </properties>
@@ -33,7 +34,7 @@
     <dependency>
       <groupId>com.github.javafaker</groupId>
       <artifactId>javafaker</artifactId>
-      <version>1.0.2</version>
+      <version>${javafaker.version}</version>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>

@@ -49,13 +49,11 @@ public class LoginPage extends BasePage {
   }
 
   public String getAlertText() {
-    Waits.waitVisibilityOfElementLocated(alertMessage).isDisplayed();
-    return driver.findElement(alertMessage).getText();
+    return Waits.waitVisibilityOfElementLocated(alertMessage).getText();
   }
 
   public String getErrorText() {
-    Waits.waitVisibilityOfElementLocated(errorColor).isDisplayed();
-    return driver.findElement(errorColor).getText();
+   return Waits.waitVisibilityOfElementLocated(errorColor).getText();
   }
 
   public String getErrorColor() {
@@ -63,8 +61,8 @@ public class LoginPage extends BasePage {
     return color.getCssValue("color");
   }
 
-  public boolean isLoginSuccessful() {
-    Waits.waitVisibilityOfElementLocated(dashboardIndicator).isDisplayed();
-    return driver.findElement(dashboardIndicator).isDisplayed();
+  public LoginPage isLoginSuccessful() {
+    Waits.waitVisibilityOfElementLocated(dashboardIndicator);
+    return this;
   }
 }

@@ -2,8 +2,6 @@ package eu.senla;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import eu.senla.Driver.Driver;
 import eu.senla.Endpoints.Endpoints;
 import eu.senla.LoginPage.LoginPage;
@@ -26,16 +24,13 @@ public class LoginTest extends BaseTest {
   public void testValidLogin() {
 
     LoginPage loginPage = new LoginPage(driver);
-    loginPage.load().login(login, password);
+    loginPage.load().login(login, password).isLoginSuccessful();
 
-    assertAll(
-        () -> assertTrue(loginPage.isLoginSuccessful(), "Unsuccessful Login"),
-        () ->
             assertEquals(
                 ReadPropertyFile.getProperty("BASEURL")
                     + Endpoints.DASHBOARD_ENDPOINT,
                 Driver.initializeDriver().getCurrentUrl(),
-                "Unsuccessful Login"));
+                "Unsuccessful Login");
   }
 
   @ParameterizedTest(name = "Check Sign In with invalid {0}")

@@ -23,7 +23,6 @@ public class LogoutPage extends BasePage {
         return this;
     }
     public String getLoginTitle() {
-        Waits.waitVisibilityOfElementLocated(loginTitle).isDisplayed();
-        return driver.findElement(loginTitle).getText();
+       return Waits.waitVisibilityOfElementLocated(loginTitle).getText();
     }
 }

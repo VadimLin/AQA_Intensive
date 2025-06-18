@@ -32,7 +32,6 @@ public class BaseTest {
   }
 
   public void logoutUser() {
-    LogoutPage logoutPage = new LogoutPage(driver);
-    logoutPage.openDropDownMenu().clickLogoutButton();
+    new LogoutPage(driver).openDropDownMenu().clickLogoutButton();
   }
 }

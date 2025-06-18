@@ -35,8 +35,7 @@ public class AdminPage extends BasePage {
   }
 
   public String getAdminTitle() {
-    Waits.waitVisibilityOfElementLocated(adminTitle).isDisplayed();
-    return driver.findElement(adminTitle).getText();
+    return Waits.waitVisibilityOfElementLocated(adminTitle).getText();
   }
 
   public AdminPage clickDropDownMenu() {
@@ -65,12 +64,11 @@ public class AdminPage extends BasePage {
   }
 
   public String getJobTitle() {
-    Waits.waitVisibilityOfElementLocated(jobTitle).isDisplayed();
-    return driver.findElement(jobTitle).getText();
+    return Waits.waitVisibilityOfElementLocated(jobTitle).getText();
   }
 
   public AdminPage isConfirmedMessage() {
-    Waits.waitVisibilityOfElementLocated(confirmationMessage).isDisplayed();
+    Waits.waitVisibilityOfElementLocated(confirmationMessage);
     return new AdminPage(driver);
   }
 
@@ -87,7 +85,7 @@ public class AdminPage extends BasePage {
   }
 
   public AdminPage isConfirmDeleteMessage() {
-    Waits.waitVisibilityOfElementLocated(confirmDeleteMessage).isDisplayed();
+    Waits.waitVisibilityOfElementLocated(confirmDeleteMessage);
     return this;
   }
 }

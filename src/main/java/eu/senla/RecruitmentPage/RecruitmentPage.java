@@ -35,14 +35,12 @@ public class RecruitmentPage extends BasePage {
   }
 
   public RecruitmentPage navigateToRecruitModule() {
-    Waits.waitVisibilityOfElementLocated(recruitModuleLink).isDisplayed();
-    driver.findElement(recruitModuleLink).click();
+    Waits.waitVisibilityOfElementLocated(recruitModuleLink).click();
     return this;
   }
 
   public String getTitle() {
-    Waits.waitVisibilityOfElementLocated(recruitTitle).isDisplayed();
-    return driver.findElement(recruitTitle).getText();
+   return Waits.waitVisibilityOfElementLocated(recruitTitle).getText();
   }
 
   public RecruitmentPage clickAddButton() {
@@ -87,7 +85,7 @@ public class RecruitmentPage extends BasePage {
     return this;
   }
   public RecruitmentPage isConfimed() {
-    Waits.waitVisibilityOfElementLocated(confirmMessage).isDisplayed();
+    Waits.waitVisibilityOfElementLocated(confirmMessage);
     return this;
   }
   public RecruitmentPage clickSaveButton() {
@@ -104,12 +102,10 @@ public class RecruitmentPage extends BasePage {
   }
 
   public String getEmailAlertText() {
-    Waits.waitVisibilityOfElementLocated(alertEmailMessage).isDisplayed();
-    return driver.findElement(alertEmailMessage).getText();
+    return Waits.waitVisibilityOfElementLocated(alertEmailMessage).getText();
   }
   public String getRequiredAlert() {
-    Waits.waitVisibilityOfElementLocated(alertMessage).isDisplayed();
-    return driver.findElement(alertMessage).getText();
+    return Waits.waitVisibilityOfElementLocated(alertMessage).getText();
   }
 
 }

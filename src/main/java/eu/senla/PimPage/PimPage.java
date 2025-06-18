@@ -23,19 +23,16 @@ public class PimPage extends BasePage {
   }
 
   public PimPage navigateToPimModule() {
-    Waits.waitVisibilityOfElementLocated(pimModuleLink).isDisplayed();
-    driver.findElement(pimModuleLink).click();
+    Waits.waitVisibilityOfElementLocated(pimModuleLink).click();
     return this;
   }
 
   public PimPage clickAddEmployee() {
-    Waits.waitVisibilityOfElementLocated(addEmployeeButton).isDisplayed();
-    driver.findElement(addEmployeeButton).click();
+    Waits.waitVisibilityOfElementLocated(addEmployeeButton).click();
     return this;
   }
 
   public PimPage fillEmployeeDetails(String firstName, String middleName, String lastName) {
-    Waits.waitVisibilityOfElementLocated(firstNameInput).isDisplayed();
     Waits.waitVisibilityOfElementLocated(firstNameInput).sendKeys(firstName);
     Waits.waitVisibilityOfElementLocated(middleNameInput).sendKeys(middleName);
     Waits.waitVisibilityOfElementLocated(lastNameInput).sendKeys(lastName);
@@ -43,13 +40,12 @@ public class PimPage extends BasePage {
   }
 
   public String getTitle() {
-    Waits.waitVisibilityOfElementLocated(dashboardIndicator).isDisplayed();
-    return driver.findElement(dashboardIndicator).getText();
+    return Waits.waitVisibilityOfElementLocated(dashboardIndicator).getText();
   }
 
   public PimPage saveEmployee() {
     Waits.waitVisibilityOfElementLocated(saveButton).click();
-    Waits.waitVisibilityOfElementLocated(employeeListUrl).isDisplayed();
+    Waits.waitVisibilityOfElementLocated(employeeListUrl);
     return this;
   }
 }
