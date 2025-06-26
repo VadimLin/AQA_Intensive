@@ -2,9 +2,11 @@ package eu.senla;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import eu.senla.Driver.Driver;
+import eu.senla.LoginPage.LoginPage;
+import eu.senla.PropertyFile.ReadPropertyFile;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
@@ -13,8 +15,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 public class LoginTest extends BaseTest {
 
@@ -23,121 +23,51 @@ public class LoginTest extends BaseTest {
   @Tag("smoke")
   @DisplayName("Check Sign In with valid credentials")
   public void testValidLogin() {
-    getDriver().get(LOGIN_URL);
 
-    getWait()
-        .until(d -> getDriver().findElement(By.xpath("//input[@name='username']")).isDisplayed());
+    LoginPage loginPage = new LoginPage();
+    loginPage.open().login(login, password);
 
-    getDriver().findElement((By.xpath("//input[@name='username']"))).sendKeys(getLogin());
-
-    getDriver().findElement(By.xpath("//input[@name='password']")).sendKeys(getPassword());
-
-    getDriver().findElement(By.tagName("button")).click();
-    getWait()
-        .until(
-            d ->
-                getDriver()
-                    .findElement(
-                        (By.xpath(
-                            "//a[@class='oxd-main-menu-item active']/span[@class='oxd-text oxd-text--span oxd-main-menu-item--name']")))
-                    .isDisplayed());
-    assertTrue(
-        getDriver()
-            .findElement(
-                By.xpath(
-                    "//a[@class='oxd-main-menu-item active']/span[@class='oxd-text oxd-text--span oxd-main-menu-item--name']"))
-            .isDisplayed(),
-        "Unsuccessful Login");
-    assertEquals(
-        "https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index",
-        getDriver().getCurrentUrl(),
-        "Unsuccessful Login");
+    assertAll(
+        () -> assertTrue(new LoginPage().isLoginSuccessful(), "Unsuccessful Login"),
+        () ->
+            assertEquals(
+                ReadPropertyFile.getProperty("DASHBOARDURL"),
+                Driver.getDriver().getCurrentUrl(),
+                "Unsuccessful Login"));
   }
 
   @ParameterizedTest(name = "Check Sign In with invalid {0}")
   @Order(1)
   @Tag("extended")
   @MethodSource("getCredentials")
-  public void testInvalidLogin(String description, String name, String password) {
-
-    getDriver().get(LOGIN_URL);
-
-    getWait()
-        .until(d -> getDriver().findElement(By.xpath("//input[@name='username']")).isDisplayed());
-
-    getDriver().findElement((By.xpath("//input[@name='username']"))).sendKeys(name);
-
-    getDriver().findElement(By.xpath("//input[@name='password']")).sendKeys(password);
-
-    getDriver().findElement(By.tagName("button")).click();
-
-    getWait()
-        .until(
-            d ->
-                getDriver()
-                    .findElement(
-                        (By.xpath(
-                            "//div/div/p[@class='oxd-text oxd-text--p oxd-alert-content-text']")))
-                    .isDisplayed());
-
-    String alert =
-        getDriver()
-            .findElement(
-                (By.xpath("//div/div/p[@class='oxd-text oxd-text--p oxd-alert-content-text']")))
-            .getText();
-
-    assertAll(
-        () -> assertNotNull(LOGIN_URL),
-        () ->
-            assertEquals(
-                "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login",
-                getDriver().getCurrentUrl(),
-                "Incorrect loginUrl"),
-        () -> assertEquals("Invalid credentials", alert));
+  public void testInvalidLogin(String description, String username, String pwd) {
+    LoginPage loginPage = new LoginPage();
+    loginPage.open().login(username, pwd);
+    assertEquals("Invalid credentials", loginPage.getAlertText());
+    assertEquals(
+        ReadPropertyFile.getProperty("BASEURL"),
+        Driver.getDriver().getCurrentUrl(),
+        "Url doesn't match");
   }
 
   @ParameterizedTest(name = "Check Sign In with empty {0}")
   @Order(2)
   @Tag("extended")
   @MethodSource("getEmptyCredentials")
-  public void testEmptyLogin(String description, String name, String password) {
+  public void testEmptyLogin(String description, String username, String pwd) {
+    LoginPage loginPage = new LoginPage();
+    loginPage.open().login(username, pwd);
 
-    getDriver().get(LOGIN_URL);
-
-    getWait()
-        .until(d -> getDriver().findElement(By.xpath("//input[@name='username']")).isDisplayed());
-
-    getDriver().findElement((By.xpath("//input[@name='username']"))).sendKeys(name);
-
-    getDriver().findElement(By.xpath("//input[@name='password']")).sendKeys(password);
-
-    getDriver().findElement(By.tagName("button")).click();
-
-    getWait()
-        .until(
-            d ->
-                getDriver()
-                    .findElement((By.xpath("//input[@name='username']/following::span")))
-                    .isDisplayed());
-
-    String err =
-        getDriver().findElement((By.xpath("//input[@name='username']/following::span"))).getText();
-
-    WebElement element =
-        getDriver().findElement((By.xpath("//input[@name='username']/following::span")));
-
-    String colorValue = element.getCssValue("color");
-    System.out.println("Element color is " + colorValue);
-    String expectedColor = "rgba(235, 9, 16, 1)";
     assertAll(
-        () -> assertNotNull(LOGIN_URL),
+        () -> assertEquals("Required", loginPage.getErrorText()),
         () ->
             assertEquals(
-                "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login",
-                getDriver().getCurrentUrl(),
-                "Incorrect loginUrl"),
-        () -> assertEquals("Required", err),
-        () -> assertEquals(expectedColor, colorValue, "Color value doesn't match"));
+                "rgba(235, 9, 16, 1)", loginPage.getErrorColor(), "Color value doesn't match"),
+        () ->
+            assertEquals(
+                ReadPropertyFile.getProperty("BASEURL"),
+                Driver.getDriver().getCurrentUrl(),
+                "Url doesn't match"));
   }
 
   private static Stream<Arguments> getCredentials() {
