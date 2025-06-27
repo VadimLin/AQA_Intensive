@@ -9,10 +9,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Waits {
-  static final Duration TIMEOUT = Duration.ofSeconds(5);
+  static final Duration TIMEOUT = Duration.ofSeconds(10);
 
   public static WebElement wait(final ExpectedCondition<WebElement> expectedCondition) {
-    return new WebDriverWait(Driver.getDriver(), TIMEOUT)
+    return new WebDriverWait(Driver.initializeDriver(), TIMEOUT)
         .withMessage("The element isn't visible")
         .until(expectedCondition);
   }

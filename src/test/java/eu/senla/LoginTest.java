@@ -2,9 +2,7 @@ package eu.senla;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import eu.senla.Driver.Driver;
+import eu.senla.Endpoints.Endpoints;
 import eu.senla.LoginPage.LoginPage;
 import eu.senla.PropertyFile.ReadPropertyFile;
 import java.util.stream.Stream;
@@ -24,16 +22,14 @@ public class LoginTest extends BaseTest {
   @DisplayName("Check Sign In with valid credentials")
   public void testValidLogin() {
 
-    LoginPage loginPage = new LoginPage();
-    loginPage.open().login(login, password);
+    LoginPage loginPage = new LoginPage(driver);
+    loginPage.load().login(login, password).isLoginSuccessful();
 
-    assertAll(
-        () -> assertTrue(new LoginPage().isLoginSuccessful(), "Unsuccessful Login"),
-        () ->
             assertEquals(
-                ReadPropertyFile.getProperty("DASHBOARDURL"),
-                Driver.getDriver().getCurrentUrl(),
-                "Unsuccessful Login"));
+                ReadPropertyFile.getProperty("BASEURL")
+                    + Endpoints.DASHBOARD_ENDPOINT,
+                driver.getCurrentUrl(),
+                "Unsuccessful Login");
   }
 
   @ParameterizedTest(name = "Check Sign In with invalid {0}")
@@ -41,12 +37,12 @@ public class LoginTest extends BaseTest {
   @Tag("extended")
   @MethodSource("getCredentials")
   public void testInvalidLogin(String description, String username, String pwd) {
-    LoginPage loginPage = new LoginPage();
-    loginPage.open().login(username, pwd);
+    LoginPage loginPage = new LoginPage(driver);
+    loginPage.load().login(username, pwd);
     assertEquals("Invalid credentials", loginPage.getAlertText());
     assertEquals(
-        ReadPropertyFile.getProperty("BASEURL"),
-        Driver.getDriver().getCurrentUrl(),
+        ReadPropertyFile.getProperty("BASEURL") + Endpoints.AUTH_ENDPOINT,
+        driver.getCurrentUrl(),
         "Url doesn't match");
   }
 
@@ -55,18 +51,20 @@ public class LoginTest extends BaseTest {
   @Tag("extended")
   @MethodSource("getEmptyCredentials")
   public void testEmptyLogin(String description, String username, String pwd) {
-    LoginPage loginPage = new LoginPage();
-    loginPage.open().login(username, pwd);
+    LoginPage loginPage = new LoginPage(driver);
+    loginPage.load().login(username, pwd);
+
 
     assertAll(
         () -> assertEquals("Required", loginPage.getErrorText()),
         () ->
             assertEquals(
-                "rgba(235, 9, 16, 1)", loginPage.getErrorColor(), "Color value doesn't match"),
+                    ReadPropertyFile.getProperty("COLOR"), loginPage.getErrorColor(), "Color value doesn't match"),
         () ->
             assertEquals(
-                ReadPropertyFile.getProperty("BASEURL"),
-                Driver.getDriver().getCurrentUrl(),
+                ReadPropertyFile.getProperty("BASEURL")
+                    + Endpoints.AUTH_ENDPOINT,
+                driver.getCurrentUrl(),
                 "Url doesn't match"));
   }
 

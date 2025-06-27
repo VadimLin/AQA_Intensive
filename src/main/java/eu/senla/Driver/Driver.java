@@ -7,12 +7,12 @@ public final class Driver {
   private static WebDriver driver;
 
   private Driver() {
-
   }
 
-  public static WebDriver getDriver() {
+  public static WebDriver initializeDriver() {
     if (driver == null) {
       driver = new ChromeDriver();
+      driver.manage().window().maximize();
     }
     return driver;
   }

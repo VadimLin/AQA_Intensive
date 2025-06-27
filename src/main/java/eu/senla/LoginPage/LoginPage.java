@@ -1,8 +1,10 @@
 package eu.senla.LoginPage;
 
 import eu.senla.BasePage.BasePage;
+import eu.senla.Endpoints.Endpoints;
 import eu.senla.Waits.Waits;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class LoginPage extends BasePage {
@@ -17,13 +19,13 @@ public class LoginPage extends BasePage {
       By.xpath(
           "//a[@class='oxd-main-menu-item active']/span[@class='oxd-text oxd-text--span oxd-main-menu-item--name']");
 
-  public LoginPage() {
-    super();
+  public LoginPage(WebDriver driver) {
+    super(driver);
   }
 
-  public LoginPage open() {
-    driver.get(LOGIN_URL);
-    return new LoginPage();
+  public LoginPage load() {
+    load(Endpoints.AUTH_ENDPOINT);
+    return this;
   }
 
   public final LoginPage enterUserName(String userName) {
@@ -43,17 +45,15 @@ public class LoginPage extends BasePage {
 
   public LoginPage login(String username, String password) {
     enterUserName(username).enterPassword(password).clickSubmitButton();
-    return new LoginPage();
+    return new LoginPage(driver);
   }
 
   public String getAlertText() {
-    Waits.waitVisibilityOfElementLocated(alertMessage).isDisplayed();
-    return driver.findElement(alertMessage).getText();
+    return Waits.waitVisibilityOfElementLocated(alertMessage).getText();
   }
 
   public String getErrorText() {
-    Waits.waitVisibilityOfElementLocated(errorColor).isDisplayed();
-    return driver.findElement(errorColor).getText();
+   return Waits.waitVisibilityOfElementLocated(errorColor).getText();
   }
 
   public String getErrorColor() {
@@ -61,8 +61,8 @@ public class LoginPage extends BasePage {
     return color.getCssValue("color");
   }
 
-  public boolean isLoginSuccessful() {
-    Waits.waitVisibilityOfElementLocated(dashboardIndicator).isDisplayed();
-    return driver.findElement(dashboardIndicator).isDisplayed();
+  public LoginPage isLoginSuccessful() {
+    Waits.waitVisibilityOfElementLocated(dashboardIndicator);
+    return this;
   }
 }
