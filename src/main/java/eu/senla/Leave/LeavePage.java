@@ -3,11 +3,11 @@ package eu.senla.Leave;
 import eu.senla.Waits.Waits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 
 public class LeavePage {
 private final By leaveModuleLink = By.xpath("//a[@href='/web/index.php/leave/viewLeaveModule']");
 private final By assignLeaveMenu = By.xpath("//a[@class='oxd-topbar-body-nav-tab-item'][text()='Assign Leave']");
-private final By leaveTitle = By.xpath("//p[@class='oxd-text oxd-text--p orangehrm-main-title']");
 private final By assignEmployeeNameField = By.xpath("//div[@class='oxd-autocomplete-text-input--before']/following::input[1]");
 private final By assignEmployeeSearchBox = By.cssSelector("div[role='listbox'] div:nth-of-type(1) span");
 
@@ -24,6 +24,8 @@ private final  By confirmButton = By.xpath("//button[normalize-space()='Confirm'
     private final By toDateInput = By.xpath("//div[@class='oxd-autocomplete-text-input--before']/following::input[3]");
     private final By assignButton = By.xpath("//button[@type='submit']");
     private final By confirmationMessage = By.id("oxd-toaster_1");
+    private final By titleLeave = By.xpath("//h6[normalize-space()='Assign Leave']");
+    private final By alertMessage = By.xpath("//span[contains(@class, 'oxd-input-group__message')]");
 
 public LeavePage navigateToLeavePage() {
     Waits.waitVisibilityOfElementLocated(leaveModuleLink).click();
@@ -47,9 +49,9 @@ public LeavePage clickSaveButton() {
     Waits.waitVisibilityOfElementLocated(saveButton).click();
     return this;
 }
-//public LeavePage getTotalDays() {
-//
-//}
+    public String getLeaveTitle() {
+    return Waits.waitVisibilityOfElementLocated(titleLeave).getText();
+    }
 
 public LeavePage clickConfirmButton() {
     Waits.waitVisibilityOfElementLocated(confirmButton).click();
@@ -93,5 +95,14 @@ public LeavePage openLeaveTypeDropDown(String leaveType) {
         Waits.waitVisibilityOfElementLocated(confirmationMessage).isDisplayed();
         return this;
     }
-
+    public LeavePage clearEmployeeName() {
+        WebElement employeeElement = Waits.waitVisibilityOfElementLocated(assignEmployeeNameField);
+        employeeElement.click();
+        employeeElement.sendKeys(Keys.CONTROL, "a");
+        employeeElement.sendKeys(Keys.BACK_SPACE);
+        return this;
+    }
+    public String getRequiredAlert() {
+        return Waits.waitVisibilityOfElementLocated(alertMessage).getText();
+    }
 }
