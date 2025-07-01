@@ -60,6 +60,7 @@ public class LeaveTest extends BaseTest {
                                 + Endpoints.LEAVE_ENDPOINT),
                         "Incorrect Url"),
                 () ->    assertEquals(leavePage.getLeaveTitle(), "Assign Leave"));
+        logoutUser();
     }
 
     @Test
