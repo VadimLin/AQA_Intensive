@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 public class DashBoardTest extends BaseTest {
 
+
   @Test
   @DisplayName("Check existing widgets on DashboardPage")
   public void dashboardTest() {

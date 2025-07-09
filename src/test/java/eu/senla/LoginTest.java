@@ -19,6 +19,7 @@ public class LoginTest extends BaseTest {
   @Test
   @Order(0)
   @Tag("smoke")
+  @Tag("login")
   @DisplayName("Check Sign In with valid credentials")
   public void testValidLogin() {
 
@@ -35,6 +36,7 @@ public class LoginTest extends BaseTest {
   @ParameterizedTest(name = "Check Sign In with invalid {0}")
   @Order(1)
   @Tag("extended")
+  @Tag("login")
   @MethodSource("getCredentials")
   public void testInvalidLogin(String description, String username, String pwd) {
     LoginPage loginPage = new LoginPage(driver);
@@ -49,6 +51,7 @@ public class LoginTest extends BaseTest {
   @ParameterizedTest(name = "Check Sign In with empty {0}")
   @Order(2)
   @Tag("extended")
+  @Tag("login")
   @MethodSource("getEmptyCredentials")
   public void testEmptyLogin(String description, String username, String pwd) {
     LoginPage loginPage = new LoginPage(driver);
