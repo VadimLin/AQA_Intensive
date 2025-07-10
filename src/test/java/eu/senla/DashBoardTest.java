@@ -16,7 +16,7 @@ public class DashBoardTest extends BaseTest {
   @DisplayName("Check existing widgets on DashboardPage")
   public void dashboardTest() {
     DashboardPage dashboardPage = new DashboardPage(driver);
-    loginAsUser();
+//    loginAsUser();
     assertEquals(dashboardPage.getTitle(), "Dashboard");
     dashboardPage
             .timeAtWorkWidgetIsExists()
