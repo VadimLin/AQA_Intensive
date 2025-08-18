@@ -6,6 +6,7 @@ import eu.senla.PimPage.PimPage;
 import org.junit.jupiter.api.Test;
 
 public class LeaveTest extends BaseTest {
+
     @Test
     public void addAssignLeaveTest() throws InterruptedException {
 

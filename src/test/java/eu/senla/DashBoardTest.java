@@ -11,11 +11,12 @@ import org.junit.jupiter.api.Test;
 
 public class DashBoardTest extends BaseTest {
 
+
   @Test
   @DisplayName("Check existing widgets on DashboardPage")
   public void dashboardTest() {
     DashboardPage dashboardPage = new DashboardPage(driver);
-    loginAsUser();
+//    loginAsUser();
     assertEquals(dashboardPage.getTitle(), "Dashboard");
     dashboardPage
             .timeAtWorkWidgetIsExists()
