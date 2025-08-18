@@ -8,9 +8,16 @@ import eu.senla.PropertyFile.ReadPropertyFile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertAll;
+=======
+public class LeaveTest extends BaseTest {
+
+    @Test
+    public void addAssignLeaveTest() throws InterruptedException {
+
 
 public class LeaveTest extends BaseTest {
     private Faker faker = new Faker();
