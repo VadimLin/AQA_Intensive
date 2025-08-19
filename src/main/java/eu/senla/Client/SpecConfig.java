@@ -9,8 +9,14 @@ import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import lombok.experimental.UtilityClass;
 
+
+
+
+
+
 @UtilityClass
-public class SpecConfig {
+public class
+SpecConfig {
     private final int statusCode = 200;
     public static RequestSpecification requestSpecification() {
         return new RequestSpecBuilder()

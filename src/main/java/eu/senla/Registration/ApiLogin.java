@@ -5,6 +5,8 @@ import eu.senla.Driver.Driver;
 import org.openqa.selenium.Cookie;
 
 
+
+
 public class ApiLogin {
 
     private String targetUrl;
