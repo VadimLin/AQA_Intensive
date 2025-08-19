@@ -2,6 +2,7 @@ package eu.senla;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import eu.senla.Endpoints.Endpoints;
 import eu.senla.LoginPage.LoginPage;
 import eu.senla.PropertyFile.ReadPropertyFile;
@@ -25,11 +26,10 @@ public class LoginTest extends BaseTest {
     LoginPage loginPage = new LoginPage(driver);
     loginPage.load().login(login, password).isLoginSuccessful();
 
-            assertEquals(
-                ReadPropertyFile.getProperty("BASEURL")
-                    + Endpoints.DASHBOARD_ENDPOINT,
-                driver.getCurrentUrl(),
-                "Unsuccessful Login");
+    assertEquals(
+        ReadPropertyFile.getProperty("BASEURL") + Endpoints.DASHBOARD_ENDPOINT,
+        driver.getCurrentUrl(),
+        "Unsuccessful Login");
   }
 
   @ParameterizedTest(name = "Check Sign In with invalid {0}")
@@ -54,16 +54,16 @@ public class LoginTest extends BaseTest {
     LoginPage loginPage = new LoginPage(driver);
     loginPage.load().login(username, pwd);
 
-
     assertAll(
         () -> assertEquals("Required", loginPage.getErrorText()),
         () ->
             assertEquals(
-                    ReadPropertyFile.getProperty("COLOR"), loginPage.getErrorColor(), "Color value doesn't match"),
+                ReadPropertyFile.getProperty("COLOR"),
+                loginPage.getErrorColor(),
+                "Color value doesn't match"),
         () ->
             assertEquals(
-                ReadPropertyFile.getProperty("BASEURL")
-                    + Endpoints.AUTH_ENDPOINT,
+                ReadPropertyFile.getProperty("BASEURL") + Endpoints.AUTH_ENDPOINT,
                 driver.getCurrentUrl(),
                 "Url doesn't match"));
   }

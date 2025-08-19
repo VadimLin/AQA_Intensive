@@ -1,16 +1,15 @@
 package eu.senla;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import com.github.javafaker.Faker;
 import eu.senla.Endpoints.Endpoints;
 import eu.senla.PimPage.PimPage;
 import eu.senla.PropertyFile.ReadPropertyFile;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertAll;
-
 
 public class PimTest extends BaseTest {
 
@@ -32,13 +31,15 @@ public class PimTest extends BaseTest {
         .saveEmployee();
 
     assertTrue(
-        driver.getCurrentUrl().contains(ReadPropertyFile.getProperty("BASEURL")
-                + Endpoints.PIM_ENDPOINT),
+        driver
+            .getCurrentUrl()
+            .contains(ReadPropertyFile.getProperty("BASEURL") + Endpoints.PIM_ENDPOINT),
         "Incorrect Url");
     assertEquals(pimPage.getTitle(), "PIM");
 
     logoutUser();
   }
+
   @Test
   public void testEmptyFirstNameField() {
     PimPage pimPage = new PimPage(driver);
@@ -49,20 +50,25 @@ public class PimTest extends BaseTest {
 
     loginAsUser();
     pimPage
-            .navigateToPimModule()
-            .clickAddEmployee()
-            .fillEmployeeDetails(firstName, middleName, lastName)
-            .saveEmployee()
-            .clearFirstName();
+        .navigateToPimModule()
+        .clickAddEmployee()
+        .fillEmployeeDetails(firstName, middleName, lastName)
+        .saveEmployee()
+        .clearFirstName();
 
     assertAll(
-    () -> assertEquals(ReadPropertyFile.getProperty("REQUIRED_ALERT"), pimPage.getRequiredAlert()),
-            () -> assertTrue(
-                    driver.getCurrentUrl().contains(ReadPropertyFile.getProperty("BASEURL")
-                            + Endpoints.PIM_ENDPOINT),
-                    "Incorrect Url"),
-            () ->    assertEquals(pimPage.getPersonalDetailTitle(), "Personal Details"));
+        () ->
+            assertEquals(
+                ReadPropertyFile.getProperty("REQUIRED_ALERT"), pimPage.getRequiredAlert()),
+        () ->
+            assertTrue(
+                driver
+                    .getCurrentUrl()
+                    .contains(ReadPropertyFile.getProperty("BASEURL") + Endpoints.PIM_ENDPOINT),
+                "Incorrect Url"),
+        () -> assertEquals(pimPage.getPersonalDetailTitle(), "Personal Details"));
   }
+
   @Test
   public void testEmptyLastNameField() {
     PimPage pimPage = new PimPage(driver);
@@ -73,20 +79,23 @@ public class PimTest extends BaseTest {
 
     loginAsUser();
     pimPage
-            .navigateToPimModule()
-            .clickAddEmployee()
-            .fillEmployeeDetails(firstName, middleName, lastName)
-            .saveEmployee()
-            .clearLastName();
+        .navigateToPimModule()
+        .clickAddEmployee()
+        .fillEmployeeDetails(firstName, middleName, lastName)
+        .saveEmployee()
+        .clearLastName();
 
     assertAll(
-            () -> assertEquals(ReadPropertyFile.getProperty("REQUIRED_ALERT"), pimPage.getRequiredAlert()),
-            () -> assertTrue(
-                    driver.getCurrentUrl().contains(ReadPropertyFile.getProperty("BASEURL")
-                            + Endpoints.PIM_ENDPOINT),
-                    "Incorrect Url"),
-            () ->    assertEquals(pimPage.getPersonalDetailTitle(), "Personal Details"));
-
+        () ->
+            assertEquals(
+                ReadPropertyFile.getProperty("REQUIRED_ALERT"), pimPage.getRequiredAlert()),
+        () ->
+            assertTrue(
+                driver
+                    .getCurrentUrl()
+                    .contains(ReadPropertyFile.getProperty("BASEURL") + Endpoints.PIM_ENDPOINT),
+                "Incorrect Url"),
+        () -> assertEquals(pimPage.getPersonalDetailTitle(), "Personal Details"));
   }
 
   @Test
@@ -99,21 +108,23 @@ public class PimTest extends BaseTest {
 
     loginAsUser();
     pimPage
-            .navigateToPimModule()
-            .clickAddEmployee()
-            .fillEmployeeDetails(firstName, middleName, lastName)
-            .saveEmployee()
-            .clearFirstName()
-            .clearLastName()
-            .fillFirstName(firstName)
-            .fillLastName(lastName)
-            .clickSaveDetailFormButton();
+        .navigateToPimModule()
+        .clickAddEmployee()
+        .fillEmployeeDetails(firstName, middleName, lastName)
+        .saveEmployee()
+        .clearFirstName()
+        .clearLastName()
+        .fillFirstName(firstName)
+        .fillLastName(lastName)
+        .clickSaveDetailFormButton();
 
     assertAll(
-            () -> assertTrue(
-                    driver.getCurrentUrl().contains(ReadPropertyFile.getProperty("BASEURL")
-                            + Endpoints.PIM_ENDPOINT),
-                    "Incorrect Url"),
-            () ->    assertEquals(pimPage.getPersonalDetailTitle(), "Personal Details"));
+        () ->
+            assertTrue(
+                driver
+                    .getCurrentUrl()
+                    .contains(ReadPropertyFile.getProperty("BASEURL") + Endpoints.PIM_ENDPOINT),
+                "Incorrect Url"),
+        () -> assertEquals(pimPage.getPersonalDetailTitle(), "Personal Details"));
   }
 }

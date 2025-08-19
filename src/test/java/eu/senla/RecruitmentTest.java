@@ -1,21 +1,20 @@
 package eu.senla;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import com.github.javafaker.Faker;
 import eu.senla.Driver.Driver;
 import eu.senla.Endpoints.Endpoints;
 import eu.senla.PropertyFile.ReadPropertyFile;
 import eu.senla.RecruitmentPage.RecruitmentPage;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import java.util.stream.Stream;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class RecruitmentTest extends BaseTest {
 
@@ -37,27 +36,30 @@ public class RecruitmentTest extends BaseTest {
     RecruitmentPage recruitmentPage = new RecruitmentPage(driver);
     loginAsUser();
     recruitmentPage
-            .navigateToRecruitModule()
-            .clickAddButton()
-            .enterFirstName(firstName)
-            .enterMiddleName(middleName)
-            .enterLastName(lastName)
-            .openDropDownMenu()
-            .chooseFromListVacancies()
-            .enterEmail(email)
-            .enterContactNumber(correctContactNumber)
-            .enterKeywords(keywords)
-            .enterNotes(notes)
-            .clickSaveButton()
-            .isConfimed();
+        .navigateToRecruitModule()
+        .clickAddButton()
+        .enterFirstName(firstName)
+        .enterMiddleName(middleName)
+        .enterLastName(lastName)
+        .openDropDownMenu()
+        .chooseFromListVacancies()
+        .enterEmail(email)
+        .enterContactNumber(correctContactNumber)
+        .enterKeywords(keywords)
+        .enterNotes(notes)
+        .clickSaveButton()
+        .isConfimed();
 
-assertAll(
+    assertAll(
         () -> assertEquals(recruitmentPage.getTitle(), "Recruitment"),
-        () -> assertTrue(
-                Driver.initializeDriver().getCurrentUrl().contains(ReadPropertyFile.getProperty("BASEURL")
-                        + Endpoints.CANDIDATE_ENDPOINT),
+        () ->
+            assertTrue(
+                Driver.initializeDriver()
+                    .getCurrentUrl()
+                    .contains(
+                        ReadPropertyFile.getProperty("BASEURL") + Endpoints.CANDIDATE_ENDPOINT),
                 "Incorrect Url"));
-logoutUser();
+    logoutUser();
   }
 
   @Test
@@ -71,69 +73,82 @@ logoutUser();
     RecruitmentPage recruitmentPage = new RecruitmentPage(driver);
     loginAsUser();
     recruitmentPage
-            .navigateToRecruitModule()
-            .clickAddButton()
-            .fillOnlyRequiredCandidateFields(firstName, lastName, email)
-            .isConfimed();
+        .navigateToRecruitModule()
+        .clickAddButton()
+        .fillOnlyRequiredCandidateFields(firstName, lastName, email)
+        .isConfimed();
     assertAll(
-            () -> assertEquals(recruitmentPage.getTitle(), "Recruitment"),
-            () -> assertTrue(
-                    driver.getCurrentUrl().contains(ReadPropertyFile.getProperty("BASEURL")
-                            + Endpoints.CANDIDATE_ENDPOINT),
-                    "Incorrect Url"));
+        () -> assertEquals(recruitmentPage.getTitle(), "Recruitment"),
+        () ->
+            assertTrue(
+                driver
+                    .getCurrentUrl()
+                    .contains(
+                        ReadPropertyFile.getProperty("BASEURL") + Endpoints.CANDIDATE_ENDPOINT),
+                "Incorrect Url"));
     logoutUser();
   }
-  @ParameterizedTest(name = "Check adding candidate with valid firstName and lastName, and invalid email in {0}")
+
+  @ParameterizedTest(
+      name = "Check adding candidate with valid firstName and lastName, and invalid email in {0}")
   @MethodSource("getCredentials")
-  public void addCandidateWithInvalidData(String description, String firstname, String lastname, String email) {
+  public void addCandidateWithInvalidData(
+      String description, String firstname, String lastname, String email) {
     RecruitmentPage recruitmentPage = new RecruitmentPage(driver);
     loginAsUser();
     recruitmentPage
-            .navigateToRecruitModule()
-            .clickAddButton()
-            .fillOnlyRequiredCandidateFields(firstname, lastname, email);
+        .navigateToRecruitModule()
+        .clickAddButton()
+        .fillOnlyRequiredCandidateFields(firstname, lastname, email);
 
     assertAll(
-            () -> assertEquals(ReadPropertyFile.getProperty("EMAIL_ALERT"), recruitmentPage.getEmailAlertText()),
-            () -> assertEquals(
-                    ReadPropertyFile.getProperty("BASEURL") + Endpoints.CANDIDATE_ENDPOINT,
-                    driver.getCurrentUrl(),
-                    "Url doesn't match"));
+        () ->
+            assertEquals(
+                ReadPropertyFile.getProperty("EMAIL_ALERT"), recruitmentPage.getEmailAlertText()),
+        () ->
+            assertEquals(
+                ReadPropertyFile.getProperty("BASEURL") + Endpoints.CANDIDATE_ENDPOINT,
+                driver.getCurrentUrl(),
+                "Url doesn't match"));
     logoutUser();
   }
 
   @ParameterizedTest(name = "Check adding candidate with empty {0}")
   @MethodSource("getEmptyCredentials")
-  public void addCandidateWithEmptyData(String description, String firstname, String lastname, String email) {
+  public void addCandidateWithEmptyData(
+      String description, String firstname, String lastname, String email) {
     RecruitmentPage recruitmentPage = new RecruitmentPage(driver);
     loginAsUser();
     recruitmentPage
-            .navigateToRecruitModule()
-            .clickAddButton()
-            .fillOnlyRequiredCandidateFields(firstname, lastname, email);
+        .navigateToRecruitModule()
+        .clickAddButton()
+        .fillOnlyRequiredCandidateFields(firstname, lastname, email);
 
     assertAll(
-            () -> assertEquals(ReadPropertyFile.getProperty("REQUIRED_ALERT"), recruitmentPage.getRequiredAlert()),
-            () -> assertEquals(
-                    ReadPropertyFile.getProperty("BASEURL") + Endpoints.CANDIDATE_ENDPOINT,
-                    driver.getCurrentUrl(),
-                    "Url doesn't match"));
+        () ->
+            assertEquals(
+                ReadPropertyFile.getProperty("REQUIRED_ALERT"), recruitmentPage.getRequiredAlert()),
+        () ->
+            assertEquals(
+                ReadPropertyFile.getProperty("BASEURL") + Endpoints.CANDIDATE_ENDPOINT,
+                driver.getCurrentUrl(),
+                "Url doesn't match"));
     logoutUser();
   }
 
   private static Stream<Arguments> getCredentials() {
     return Stream.of(
-            Arguments.of("without @", "John", "Lee", "test.com"),
-            Arguments.of("without comma", "Jack", "Low", "test@testcom"),
-            Arguments.of("with dots in a row", "Adam", "Saimons", "test@test..com"),
-            Arguments.of("with @ in a row", "Charlie", "Coyle", "test@@test.com"));
+        Arguments.of("without @", "John", "Lee", "test.com"),
+        Arguments.of("without comma", "Jack", "Low", "test@testcom"),
+        Arguments.of("with dots in a row", "Adam", "Saimons", "test@test..com"),
+        Arguments.of("with @ in a row", "Charlie", "Coyle", "test@@test.com"));
   }
 
   private static Stream<Arguments> getEmptyCredentials() {
     return Stream.of(
-            Arguments.of("firstname", "", "Lee", "test@test.com"),
-            Arguments.of("lastname", "John", "", "test2@test.com"),
-            Arguments.of("email", "John", "Lee", ""),
-            Arguments.of("all fields", "", "", ""));
+        Arguments.of("firstname", "", "Lee", "test@test.com"),
+        Arguments.of("lastname", "John", "", "test2@test.com"),
+        Arguments.of("email", "John", "Lee", ""),
+        Arguments.of("all fields", "", "", ""));
   }
 }

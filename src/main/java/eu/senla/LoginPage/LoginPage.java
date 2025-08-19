@@ -53,7 +53,7 @@ public class LoginPage extends BasePage {
   }
 
   public String getErrorText() {
-   return Waits.waitVisibilityOfElementLocated(errorColor).getText();
+    return Waits.waitVisibilityOfElementLocated(errorColor).getText();
   }
 
   public String getErrorColor() {

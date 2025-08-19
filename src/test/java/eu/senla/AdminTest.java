@@ -1,15 +1,14 @@
 package eu.senla;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.github.javafaker.Faker;
 import eu.senla.AdminPage.AdminPage;
 import eu.senla.Endpoints.Endpoints;
 import eu.senla.PropertyFile.ReadPropertyFile;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 
 public class AdminTest extends BaseTest {
 
@@ -25,8 +24,7 @@ public class AdminTest extends BaseTest {
         () -> assertEquals(adminPage.getAdminTitle(), "Admin"),
         () ->
             assertEquals(
-                ReadPropertyFile.getProperty("BASEURL")
-                    + Endpoints.ADMIN_ENDPOINT,
+                ReadPropertyFile.getProperty("BASEURL") + Endpoints.ADMIN_ENDPOINT,
                 driver.getCurrentUrl(),
                 "Incorrect URL"));
     logoutUser();
@@ -51,8 +49,7 @@ public class AdminTest extends BaseTest {
         () -> assertEquals(adminPage.getJobTitle(), "Job Titles"),
         () ->
             assertEquals(
-                ReadPropertyFile.getProperty("BASEURL")
-                    + Endpoints.JOB_ENDPOINT,
+                ReadPropertyFile.getProperty("BASEURL") + Endpoints.JOB_ENDPOINT,
                 driver.getCurrentUrl(),
                 "Incorrect URL"));
     logoutUser();
@@ -66,24 +63,23 @@ public class AdminTest extends BaseTest {
     AdminPage adminPage = new AdminPage(driver);
     loginAsUser();
     adminPage
-            .navigateToAdminModule()
-            .clickDropDownMenu()
-            .clickJobTitlesOption()
-            .clickAddButton()
-            .fillJobTitlefield(randomJobTitle)
-            .saveJobTitle()
-            .isConfirmedMessage()
-            .deleteExistingJobTitle(randomJobTitle)
-            .confirmDelete()
-            .isConfirmDeleteMessage();
+        .navigateToAdminModule()
+        .clickDropDownMenu()
+        .clickJobTitlesOption()
+        .clickAddButton()
+        .fillJobTitlefield(randomJobTitle)
+        .saveJobTitle()
+        .isConfirmedMessage()
+        .deleteExistingJobTitle(randomJobTitle)
+        .confirmDelete()
+        .isConfirmDeleteMessage();
     assertAll(
-            () -> assertEquals(adminPage.getJobTitle(), "Job Titles"),
-            () ->
-                    assertEquals(
-                            ReadPropertyFile.getProperty("BASEURL")
-                                    + Endpoints.JOB_ENDPOINT,
-                            driver.getCurrentUrl(),
-                            "Incorrect URL"));
+        () -> assertEquals(adminPage.getJobTitle(), "Job Titles"),
+        () ->
+            assertEquals(
+                ReadPropertyFile.getProperty("BASEURL") + Endpoints.JOB_ENDPOINT,
+                driver.getCurrentUrl(),
+                "Incorrect URL"));
     logoutUser();
   }
 }

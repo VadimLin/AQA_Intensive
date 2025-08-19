@@ -7,6 +7,7 @@ public final class Driver {
   private static WebDriver driver;
 
   private Driver() {
+
   }
 
   public static WebDriver initializeDriver() {

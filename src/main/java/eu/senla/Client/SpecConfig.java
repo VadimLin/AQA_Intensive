@@ -11,22 +11,18 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class SpecConfig {
-    private final int statusCode = 200;
-    public static RequestSpecification requestSpecification() {
-        return new RequestSpecBuilder()
-                .setBaseUri(ReadPropertyFile.getProperty("MAIN_URL"))
-                .addCookie("orangehrm", LoginHelper.getCookie())
-                .setContentType(ContentType.JSON)
-                .log(LogDetail.ALL)
-                .build();
-    }
+  private final int statusCode = 200;
 
-    public static ResponseSpecification responseSpecification() {
-        return new ResponseSpecBuilder()
-                .log(LogDetail.ALL)
-                .expectStatusCode(statusCode)
-                .build();
-    }
+  public static RequestSpecification requestSpecification() {
+    return new RequestSpecBuilder()
+        .setBaseUri(ReadPropertyFile.getProperty("MAIN_URL"))
+        .addCookie("orangehrm", LoginHelper.getCookie())
+        .setContentType(ContentType.JSON)
+        .log(LogDetail.ALL)
+        .build();
+  }
+
+  public static ResponseSpecification responseSpecification() {
+    return new ResponseSpecBuilder().log(LogDetail.ALL).expectStatusCode(statusCode).build();
+  }
 }
-
-

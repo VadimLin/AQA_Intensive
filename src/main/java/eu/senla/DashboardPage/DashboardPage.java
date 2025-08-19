@@ -9,48 +9,67 @@ public class DashboardPage extends BasePage {
   private final By title =
       By.cssSelector(
           "a[class='oxd-main-menu-item active'] span[class='oxd-text oxd-text--span oxd-main-menu-item--name']");
-  private final By timeAtWorkWidget = By.xpath("//div[contains(@class,' orangehrm-dashboard-widget')]"
-          + "//p[text()='Time at Work']");
-  private final By myActionsWidget = By.xpath("//div[contains(@class,' orangehrm-dashboard-widget')]"
-          + "//p[text()='My Actions']");
-  private final By quickLaunchWidget = By.xpath("//div[contains(@class,' orangehrm-dashboard-widget')]"
-          + "//p[text()='Quick Launch']");
-  private final By buzzLatestPostsWidget = By.xpath("//div[contains(@class,' orangehrm-dashboard-widget')]"
-          + "//p[text()='Buzz Latest Posts']");
-  private final By employeesOnLeaveTodayWidget = By.xpath("//div[contains(@class,' orangehrm-dashboard-widget')]"
-          + "//p[text()='Employees on Leave Today']");
-  private final By employeeDistributionBySubWidget = By.xpath("//div[contains(@class,' orangehrm-dashboard-widget')]"
-          + "//p[text()='Employee Distribution by Sub Unit']");
-  private final By employeeDistributionByLocationWidget = By.xpath("//div[contains(@class,' orangehrm-dashboard-widget')]"
-          + "//p[text()='Employee Distribution by Sub Unit']");
+  private final By timeAtWorkWidget =
+      By.xpath(
+          "//div[contains(@class,' orangehrm-dashboard-widget')]" + "//p[text()='Time at Work']");
+  private final By myActionsWidget =
+      By.xpath(
+          "//div[contains(@class,' orangehrm-dashboard-widget')]" + "//p[text()='My Actions']");
+  private final By quickLaunchWidget =
+      By.xpath(
+          "//div[contains(@class,' orangehrm-dashboard-widget')]" + "//p[text()='Quick Launch']");
+  private final By buzzLatestPostsWidget =
+      By.xpath(
+          "//div[contains(@class,' orangehrm-dashboard-widget')]"
+              + "//p[text()='Buzz Latest Posts']");
+  private final By employeesOnLeaveTodayWidget =
+      By.xpath(
+          "//div[contains(@class,' orangehrm-dashboard-widget')]"
+              + "//p[text()='Employees on Leave Today']");
+  private final By employeeDistributionBySubWidget =
+      By.xpath(
+          "//div[contains(@class,' orangehrm-dashboard-widget')]"
+              + "//p[text()='Employee Distribution by Sub Unit']");
+  private final By employeeDistributionByLocationWidget =
+      By.xpath(
+          "//div[contains(@class,' orangehrm-dashboard-widget')]"
+              + "//p[text()='Employee Distribution by Sub Unit']");
+
   public DashboardPage(WebDriver driver) {
 
     super(driver);
   }
+
   public DashboardPage timeAtWorkWidgetIsExists() {
     Waits.waitVisibilityOfElementLocated(timeAtWorkWidget);
     return this;
   }
+
   public DashboardPage myActionsWidgetIsExists() {
     Waits.waitVisibilityOfElementLocated(myActionsWidget);
     return this;
   }
+
   public DashboardPage quickLaunchWidgetIsExists() {
     Waits.waitVisibilityOfElementLocated(quickLaunchWidget);
     return this;
   }
+
   public DashboardPage buzzLatestPostsWidgetIsExists() {
     Waits.waitVisibilityOfElementLocated(buzzLatestPostsWidget);
     return this;
   }
+
   public DashboardPage employeesOnLeaveTodayWidgetIsExists() {
     Waits.waitVisibilityOfElementLocated(employeesOnLeaveTodayWidget);
     return this;
   }
+
   public DashboardPage employeeDistributionBySubWidgetIsExists() {
     Waits.waitVisibilityOfElementLocated(employeeDistributionBySubWidget);
     return this;
   }
+
   public DashboardPage employeeDistributionByLocationWidgetIsExists() {
     Waits.waitVisibilityOfElementLocated(employeeDistributionByLocationWidget);
     return this;

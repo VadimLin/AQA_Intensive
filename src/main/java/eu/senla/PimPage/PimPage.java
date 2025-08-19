@@ -21,8 +21,11 @@ public class PimPage extends BasePage {
           "//a[@class='oxd-main-menu-item active']/span[@class='oxd-text oxd-text--span oxd-main-menu-item--name']");
   private final By personalDetailTitle = By.xpath("//h6[text()='Personal Details']");
   private final By alertMessage = By.xpath("//span[contains(@class, 'oxd-input-group__message')]");
-  private final By saveDetailFormButton = By.xpath("//div[@class='orangehrm-horizontal-padding orangehrm-vertical-padding']"
-          + "//button[@type='submit']");
+  private final By saveDetailFormButton =
+      By.xpath(
+          "//div[@class='orangehrm-horizontal-padding orangehrm-vertical-padding']"
+              + "//button[@type='submit']");
+
   public PimPage(WebDriver driver) {
     super(driver);
   }
@@ -58,10 +61,12 @@ public class PimPage extends BasePage {
     Waits.waitVisibilityOfElementLocated(firstNameInput).sendKeys(firstName);
     return this;
   }
+
   public PimPage fillLastName(String lastName) {
     Waits.waitVisibilityOfElementLocated(lastNameInput).sendKeys(lastName);
     return this;
   }
+
   public PimPage clearFirstName() {
     WebElement firstNameElement = Waits.waitVisibilityOfElementLocated(firstNameInput);
     firstNameElement.click();
@@ -69,6 +74,7 @@ public class PimPage extends BasePage {
     firstNameElement.sendKeys(Keys.BACK_SPACE);
     return this;
   }
+
   public PimPage clearLastName() {
     WebElement lastNameElement = Waits.waitVisibilityOfElementLocated(lastNameInput);
     lastNameElement.click();
@@ -76,12 +82,15 @@ public class PimPage extends BasePage {
     lastNameElement.sendKeys(Keys.BACK_SPACE);
     return this;
   }
+
   public String getRequiredAlert() {
     return Waits.waitVisibilityOfElementLocated(alertMessage).getText();
   }
+
   public String getPersonalDetailTitle() {
     return Waits.waitVisibilityOfElementLocated(personalDetailTitle).getText();
   }
+
   public PimPage clickSaveDetailFormButton() {
     Waits.waitVisibilityOfElementLocated(saveDetailFormButton).click();
     return this;

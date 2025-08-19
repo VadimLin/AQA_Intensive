@@ -15,22 +15,21 @@ public class DashBoardTest extends BaseTest {
   @DisplayName("Check existing widgets on DashboardPage")
   public void dashboardTest() {
     DashboardPage dashboardPage = new DashboardPage(driver);
-//    loginAsUser();
+    //    loginAsUser();
     assertEquals(dashboardPage.getTitle(), "Dashboard");
     dashboardPage
-            .timeAtWorkWidgetIsExists()
-            .myActionsWidgetIsExists()
-            .quickLaunchWidgetIsExists()
-            .buzzLatestPostsWidgetIsExists()
-            .employeesOnLeaveTodayWidgetIsExists()
-            .employeeDistributionBySubWidgetIsExists()
-            .employeeDistributionByLocationWidgetIsExists();
+        .timeAtWorkWidgetIsExists()
+        .myActionsWidgetIsExists()
+        .quickLaunchWidgetIsExists()
+        .buzzLatestPostsWidgetIsExists()
+        .employeesOnLeaveTodayWidgetIsExists()
+        .employeeDistributionBySubWidgetIsExists()
+        .employeeDistributionByLocationWidgetIsExists();
     assertAll(
         () -> assertEquals(dashboardPage.getTitle(), "Dashboard"),
         () ->
             assertEquals(
-                ReadPropertyFile.getProperty("BASEURL")
-                    + Endpoints.DASHBOARD_ENDPOINT,
+                ReadPropertyFile.getProperty("BASEURL") + Endpoints.DASHBOARD_ENDPOINT,
                 driver.getCurrentUrl(),
                 "Incorrect URL"));
     logoutUser();
