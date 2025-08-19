@@ -6,10 +6,6 @@ import io.restassured.specification.RequestSpecification;
 import lombok.experimental.UtilityClass;
 import static io.restassured.RestAssured.given;
 
-
-
-
-
 @UtilityClass
 public final class OrangeHRMClient {
 
