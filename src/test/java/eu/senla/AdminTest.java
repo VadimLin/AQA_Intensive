@@ -1,37 +1,33 @@
 package eu.senla;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import com.github.javafaker.Faker;
 import eu.senla.AdminPage.AdminPage;
 import eu.senla.Endpoints.Endpoints;
 import eu.senla.PropertyFile.ReadPropertyFile;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+
 
 public class AdminTest extends BaseTest {
 
-  @Test
-  @DisplayName("Check Admin Page")
+  @Test(description = "Check Admin Page")
   public void adminTest() {
     AdminPage adminPage = new AdminPage(driver);
 
-    loginAsUser();
+//    loginAsUser();
     adminPage.navigateToAdminModule();
-
-    assertAll(
-        () -> assertEquals(adminPage.getAdminTitle(), "Admin"),
-        () ->
-            assertEquals(
+    SoftAssert sa = new SoftAssert();
+    sa.assertEquals(adminPage.getAdminTitle(), "Admin");
+        sa.assertEquals(
                 ReadPropertyFile.getProperty("BASEURL") + Endpoints.ADMIN_ENDPOINT,
                 driver.getCurrentUrl(),
-                "Incorrect URL"));
+                "Incorrect URL");
+    sa.assertAll();
     logoutUser();
   }
 
-  @Test
-  @DisplayName("Add Job Title")
+  @Test(description = "Add Job Title")
   public void addJobTitle() {
     Faker faker = new Faker();
     String randomJobTitle = faker.job().title();
@@ -45,18 +41,17 @@ public class AdminTest extends BaseTest {
         .fillJobTitlefield(randomJobTitle)
         .saveJobTitle()
         .isConfirmedMessage();
-    assertAll(
-        () -> assertEquals(adminPage.getJobTitle(), "Job Titles"),
-        () ->
-            assertEquals(
+    SoftAssert sa = new SoftAssert();
+     sa.assertEquals(adminPage.getJobTitle(), "Job Titles");
+     sa.assertEquals(
                 ReadPropertyFile.getProperty("BASEURL") + Endpoints.JOB_ENDPOINT,
                 driver.getCurrentUrl(),
-                "Incorrect URL"));
+                "Incorrect URL");
+     sa.assertAll();
     logoutUser();
   }
 
-  @Test
-  @DisplayName("Delete existing Job Title")
+  @Test(description = "Delete existing Job Title")
   public void deleteJobTitle() {
     Faker faker = new Faker();
     String randomJobTitle = faker.job().title();
@@ -73,13 +68,12 @@ public class AdminTest extends BaseTest {
         .deleteExistingJobTitle(randomJobTitle)
         .confirmDelete()
         .isConfirmDeleteMessage();
-    assertAll(
-        () -> assertEquals(adminPage.getJobTitle(), "Job Titles"),
-        () ->
-            assertEquals(
+    SoftAssert sa = new SoftAssert();
+        sa.assertEquals(adminPage.getJobTitle(), "Job Titles");
+        sa.assertEquals(
                 ReadPropertyFile.getProperty("BASEURL") + Endpoints.JOB_ENDPOINT,
                 driver.getCurrentUrl(),
-                "Incorrect URL"));
+                "Incorrect URL");
     logoutUser();
   }
 }

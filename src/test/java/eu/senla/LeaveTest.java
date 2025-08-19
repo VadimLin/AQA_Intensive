@@ -3,7 +3,7 @@ package eu.senla;
 import com.github.javafaker.Faker;
 import eu.senla.Leave.LeavePage;
 import eu.senla.PimPage.PimPage;
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.Test;
 
 public class LeaveTest extends BaseTest {
   @Test

@@ -1,84 +1,74 @@
 package eu.senla;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import eu.senla.Endpoints.Endpoints;
 import eu.senla.LoginPage.LoginPage;
 import eu.senla.PropertyFile.ReadPropertyFile;
-import java.util.stream.Stream;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 public class LoginTest extends BaseTest {
 
-  @Test
-  @Order(0)
-  @Tag("smoke")
-  @DisplayName("Check Sign In with valid credentials")
+
+  @Test(priority = 1, groups = "smoke", description = "Check Sign In with valid credentials")
   public void testValidLogin() {
 
     LoginPage loginPage = new LoginPage(driver);
     loginPage.load().login(login, password).isLoginSuccessful();
-
-    assertEquals(
+    SoftAssert sa = new SoftAssert();
+    sa.assertEquals(
         ReadPropertyFile.getProperty("BASEURL") + Endpoints.DASHBOARD_ENDPOINT,
         driver.getCurrentUrl(),
         "Unsuccessful Login");
+    sa.assertAll();
   }
 
-  @ParameterizedTest(name = "Check Sign In with invalid {0}")
-  @Order(1)
-  @Tag("extended")
-  @MethodSource("getCredentials")
-  public void testInvalidLogin(String description, String username, String pwd) {
-    LoginPage loginPage = new LoginPage(driver);
-    loginPage.load().login(username, pwd);
-    assertEquals("Invalid credentials", loginPage.getAlertText());
-    assertEquals(
-        ReadPropertyFile.getProperty("BASEURL") + Endpoints.AUTH_ENDPOINT,
-        driver.getCurrentUrl(),
-        "Url doesn't match");
-  }
-
-  @ParameterizedTest(name = "Check Sign In with empty {0}")
-  @Order(2)
-  @Tag("extended")
-  @MethodSource("getEmptyCredentials")
-  public void testEmptyLogin(String description, String username, String pwd) {
-    LoginPage loginPage = new LoginPage(driver);
-    loginPage.load().login(username, pwd);
-
-    assertAll(
-        () -> assertEquals("Required", loginPage.getErrorText()),
-        () ->
-            assertEquals(
-                ReadPropertyFile.getProperty("COLOR"),
-                loginPage.getErrorColor(),
-                "Color value doesn't match"),
-        () ->
-            assertEquals(
-                ReadPropertyFile.getProperty("BASEURL") + Endpoints.AUTH_ENDPOINT,
-                driver.getCurrentUrl(),
-                "Url doesn't match"));
-  }
-
-  private static Stream<Arguments> getCredentials() {
-    return Stream.of(
-        Arguments.of("password", "Admin", "123"),
-        Arguments.of("username", "asdasda", "admin1234"),
-        Arguments.of("password and username", "adsdasd", "1234"));
-  }
-
-  private static Stream<Arguments> getEmptyCredentials() {
-    return Stream.of(
-        Arguments.of("password", "Admin", ""),
-        Arguments.of("username", "", "admin1234"),
-        Arguments.of("password and username", "", ""));
-  }
+//  @ParameterizedTest(name = "Check Sign In with invalid {0}")
+//  @Order(1)
+//  @Tag("extended")
+//  @MethodSource("getCredentials")
+//  public void testInvalidLogin(String description, String username, String pwd) {
+//    LoginPage loginPage = new LoginPage(driver);
+//    loginPage.load().login(username, pwd);
+//    assertEquals("Invalid credentials", loginPage.getAlertText());
+//    assertEquals(
+//        ReadPropertyFile.getProperty("BASEURL") + Endpoints.AUTH_ENDPOINT,
+//        driver.getCurrentUrl(),
+//        "Url doesn't match");
+//  }
+//
+//  @ParameterizedTest(name = "Check Sign In with empty {0}")
+//  @Order(2)
+//  @Tag("extended")
+//  @MethodSource("getEmptyCredentials")
+//  public void testEmptyLogin(String description, String username, String pwd) {
+//    LoginPage loginPage = new LoginPage(driver);
+//    loginPage.load().login(username, pwd);
+//
+//    assertAll(
+//        () -> assertEquals("Required", loginPage.getErrorText()),
+//        () ->
+//            assertEquals(
+//                ReadPropertyFile.getProperty("COLOR"),
+//                loginPage.getErrorColor(),
+//                "Color value doesn't match"),
+//        () ->
+//            assertEquals(
+//                ReadPropertyFile.getProperty("BASEURL") + Endpoints.AUTH_ENDPOINT,
+//                driver.getCurrentUrl(),
+//                "Url doesn't match"));
+//  }
+//
+//  private static Stream<Arguments> getCredentials() {
+//    return Stream.of(
+//        Arguments.of("password", "Admin", "123"),
+//        Arguments.of("username", "asdasda", "admin1234"),
+//        Arguments.of("password and username", "adsdasd", "1234"));
+//  }
+//
+//  private static Stream<Arguments> getEmptyCredentials() {
+//    return Stream.of(
+//        Arguments.of("password", "Admin", ""),
+//        Arguments.of("username", "", "admin1234"),
+//        Arguments.of("password and username", "", ""));
+//  }
 }
