@@ -23,14 +23,14 @@ public class BaseTest {
     driver = Driver.initializeDriver();
   }
 
-  @BeforeEach
-  final void apiLogin() {
-    init();
-
-    ApiLogin authenticate = new ApiLogin(Endpoints.MAIN_URL + Endpoints.WEB_EP + Endpoints.DASHBOARD_URL);
-
-    authenticate.login();
-  }
+//  @BeforeEach
+//  final void apiLogin() {
+//    init();
+//
+//    ApiLogin authenticate = new ApiLogin(Endpoints.MAIN_URL + Endpoints.WEB_EP + Endpoints.DASHBOARD_URL);
+//
+//    authenticate.login();
+//  }
 
   final void init() {
     Driver.initializeDriver().get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
