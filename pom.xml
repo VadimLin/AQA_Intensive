@@ -17,7 +17,7 @@
     <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
     <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
     <spotless-maven-plugin.version>2.44.3</spotless-maven-plugin.version>
-    <selenium.version>4.32.0</selenium.version>
+    <selenium.version>4.35.0</selenium.version>
     <junit.suite.version>1.12.1</junit.suite.version>
     <javafaker.version>1.0.2</javafaker.version>
     <jsoup.version>1.20.1</jsoup.version>
