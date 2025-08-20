@@ -15,7 +15,7 @@ public class AdminTest extends BaseTest {
   public void adminTest() {
     AdminPage adminPage = new AdminPage(driver);
 
-//    loginAsUser();
+    loginAsUser();
     adminPage.navigateToAdminModule();
     SoftAssert sa = new SoftAssert();
     sa.assertEquals(adminPage.getAdminTitle(), "Admin");

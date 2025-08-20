@@ -1,5 +1,6 @@
 package eu.senla.Driver;
 
+import eu.senla.Constants.DriverType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -12,11 +13,11 @@ public final class Driver {
   }
 
   public static WebDriver initializeDriver() {
-    String browser = System.getProperty("browser");
+    String browser = System.getProperty("browser", "CHROME");
     if (driver.get() == null) {
-      switch (browser.toLowerCase()) {
-        case "chrome" -> driver.set(new ChromeDriver());
-        case "firefox" -> driver.set(new FirefoxDriver());
+      switch (DriverType.valueOf(browser.toUpperCase())) {
+        case CHROME -> driver.set(new ChromeDriver());
+        case FIREFOX -> driver.set(new FirefoxDriver());
         default -> throw new IllegalArgumentException("Invalid browser name: " + browser);
       }
       driver.get().manage().window().maximize();

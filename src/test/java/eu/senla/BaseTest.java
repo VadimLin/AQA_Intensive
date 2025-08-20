@@ -28,10 +28,10 @@ public class BaseTest {
 //    authenticate.login();
 //  }
 
-  final void init() {
-    Driver.initializeDriver()
-        .get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
-  }
+//  final void init() {
+//    Driver.initializeDriver()
+//        .get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+//  }
 
   @AfterMethod
   void tearDown() {
