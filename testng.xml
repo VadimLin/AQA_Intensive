@@ -1,0 +1,17 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="All Test Suite" parallel="methods" thread-count="2">
+    <listeners>
+        <listener class-name="eu.senla.listeners.SuiteXmlTransformer"/>
+        <listener class-name="eu.senla.listeners.ScreenshotListener"/>
+    </listeners>
+    <test name="Regression1">
+<!--        <packages>-->
+<!--            <package name="eu.senla"/>-->
+<!--        </packages>-->
+        <classes>
+            <class name="eu.senla.AdminTest"/>
+            <class name="eu.senla.DashBoardTest"/>
+        </classes>
+    </test>
+</suite>
