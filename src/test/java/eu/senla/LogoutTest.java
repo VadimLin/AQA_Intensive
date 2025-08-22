@@ -1,6 +1,5 @@
 package eu.senla;
 
-
 import eu.senla.Endpoints.Endpoints;
 import eu.senla.LogoutPage.LogoutPage;
 import eu.senla.PropertyFile.ReadPropertyFile;

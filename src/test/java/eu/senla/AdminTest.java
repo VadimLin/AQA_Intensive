@@ -1,13 +1,11 @@
 package eu.senla;
 
-import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
-
 import com.github.javafaker.Faker;
 import eu.senla.AdminPage.AdminPage;
 import eu.senla.Endpoints.Endpoints;
 import eu.senla.PropertyFile.ReadPropertyFile;
-
+import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 public class AdminTest extends BaseTest {
 
@@ -19,10 +17,10 @@ public class AdminTest extends BaseTest {
     adminPage.navigateToAdminModule();
     SoftAssert sa = new SoftAssert();
     sa.assertEquals(adminPage.getAdminTitle(), "Admin");
-        sa.assertEquals(
-                ReadPropertyFile.getProperty("BASEURL") + Endpoints.ADMIN_ENDPOINT,
-                driver.getCurrentUrl(),
-                "Incorrect URL");
+    sa.assertEquals(
+        ReadPropertyFile.getProperty("BASEURL") + Endpoints.ADMIN_ENDPOINT,
+        driver.getCurrentUrl(),
+        "Incorrect URL");
     sa.assertAll();
     logoutUser();
   }
@@ -42,12 +40,12 @@ public class AdminTest extends BaseTest {
         .saveJobTitle()
         .isConfirmedMessage();
     SoftAssert sa = new SoftAssert();
-     sa.assertEquals(adminPage.getJobTitle(), "Job Titles");
-     sa.assertEquals(
-                ReadPropertyFile.getProperty("BASEURL") + Endpoints.JOB_ENDPOINT,
-                driver.getCurrentUrl(),
-                "Incorrect URL");
-     sa.assertAll();
+    sa.assertEquals(adminPage.getJobTitle(), "Job Titles");
+    sa.assertEquals(
+        ReadPropertyFile.getProperty("BASEURL") + Endpoints.JOB_ENDPOINT,
+        driver.getCurrentUrl(),
+        "Incorrect URL");
+    sa.assertAll();
     logoutUser();
   }
 
@@ -69,11 +67,11 @@ public class AdminTest extends BaseTest {
         .confirmDelete()
         .isConfirmDeleteMessage();
     SoftAssert sa = new SoftAssert();
-        sa.assertEquals(adminPage.getJobTitle(), "Job Titles");
-        sa.assertEquals(
-                ReadPropertyFile.getProperty("BASEURL") + Endpoints.JOB_ENDPOINT,
-                driver.getCurrentUrl(),
-                "Incorrect URL");
+    sa.assertEquals(adminPage.getJobTitle(), "Job Titles");
+    sa.assertEquals(
+        ReadPropertyFile.getProperty("BASEURL") + Endpoints.JOB_ENDPOINT,
+        driver.getCurrentUrl(),
+        "Incorrect URL");
     logoutUser();
   }
 }

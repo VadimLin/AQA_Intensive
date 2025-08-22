@@ -18,20 +18,20 @@ public class BaseTest {
     driver = Driver.initializeDriver();
   }
 
-//  @BeforeMethod
-//  final void apiLogin() {
-//    init();
-//
-//    ApiLogin authenticate =
-//        new ApiLogin(Endpoints.MAIN_URL + Endpoints.WEB_EP + Endpoints.DASHBOARD_URL);
-//
-//    authenticate.login();
-//  }
+  //  @BeforeMethod
+  //  final void apiLogin() {
+  //    init();
+  //
+  //    ApiLogin authenticate =
+  //        new ApiLogin(Endpoints.MAIN_URL + Endpoints.WEB_EP + Endpoints.DASHBOARD_URL);
+  //
+  //    authenticate.login();
+  //  }
 
-//  final void init() {
-//    Driver.initializeDriver()
-//        .get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
-//  }
+  //  final void init() {
+  //    Driver.initializeDriver()
+  //        .get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+  //  }
 
   @AfterMethod
   void tearDown() {

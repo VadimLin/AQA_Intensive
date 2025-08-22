@@ -7,8 +7,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 public class LoginTest extends BaseTest {
-
-
+private final int priorityNumber = 3;
   @Test(priority = 1, groups = "smoke", description = "Check Sign In with valid credentials")
   public void testValidLogin() {
 
@@ -22,53 +21,43 @@ public class LoginTest extends BaseTest {
     sa.assertAll();
   }
 
-//  @ParameterizedTest(name = "Check Sign In with invalid {0}")
-//  @Order(1)
-//  @Tag("extended")
-//  @MethodSource("getCredentials")
-//  public void testInvalidLogin(String description, String username, String pwd) {
-//    LoginPage loginPage = new LoginPage(driver);
-//    loginPage.load().login(username, pwd);
-//    assertEquals("Invalid credentials", loginPage.getAlertText());
-//    assertEquals(
-//        ReadPropertyFile.getProperty("BASEURL") + Endpoints.AUTH_ENDPOINT,
-//        driver.getCurrentUrl(),
-//        "Url doesn't match");
-//  }
-//
-//  @ParameterizedTest(name = "Check Sign In with empty {0}")
-//  @Order(2)
-//  @Tag("extended")
-//  @MethodSource("getEmptyCredentials")
-//  public void testEmptyLogin(String description, String username, String pwd) {
-//    LoginPage loginPage = new LoginPage(driver);
-//    loginPage.load().login(username, pwd);
-//
-//    assertAll(
-//        () -> assertEquals("Required", loginPage.getErrorText()),
-//        () ->
-//            assertEquals(
-//                ReadPropertyFile.getProperty("COLOR"),
-//                loginPage.getErrorColor(),
-//                "Color value doesn't match"),
-//        () ->
-//            assertEquals(
-//                ReadPropertyFile.getProperty("BASEURL") + Endpoints.AUTH_ENDPOINT,
-//                driver.getCurrentUrl(),
-//                "Url doesn't match"));
-//  }
-//
-//  private static Stream<Arguments> getCredentials() {
-//    return Stream.of(
-//        Arguments.of("password", "Admin", "123"),
-//        Arguments.of("username", "asdasda", "admin1234"),
-//        Arguments.of("password and username", "adsdasd", "1234"));
-//  }
-//
-//  private static Stream<Arguments> getEmptyCredentials() {
-//    return Stream.of(
-//        Arguments.of("password", "Admin", ""),
-//        Arguments.of("username", "", "admin1234"),
-//        Arguments.of("password and username", "", ""));
-//  }
+  @Test(
+      description = "Check Sign In with invalid {0}",
+      priority = 2,
+      groups = "extended",
+      dataProvider = "getCredentials",
+      dataProviderClass = ProjectDataProvider.class)
+  public void testInvalidLogin(String description, String username, String pwd) {
+    LoginPage loginPage = new LoginPage(driver);
+    loginPage.load().login(username, pwd);
+    SoftAssert sa = new SoftAssert();
+    sa.assertEquals("Invalid credentials", loginPage.getAlertText());
+    sa.assertEquals(
+        ReadPropertyFile.getProperty("BASEURL") + Endpoints.AUTH_ENDPOINT,
+        driver.getCurrentUrl(),
+        "Url doesn't match");
+    sa.assertAll();
+  }
+
+  @Test(
+      description = "Check Sign In with empty {0}",
+      priority = priorityNumber,
+      groups = "extended",
+      dataProvider = "getEmptyCredentials",
+      dataProviderClass = ProjectDataProvider.class)
+  public void testEmptyLogin(String description, String username, String pwd) {
+    LoginPage loginPage = new LoginPage(driver);
+    loginPage.load().login(username, pwd);
+    SoftAssert sa = new SoftAssert();
+    sa.assertEquals("Required", loginPage.getErrorText());
+    sa.assertEquals(
+        ReadPropertyFile.getProperty("COLOR"),
+        loginPage.getErrorColor(),
+        "Color value doesn't match");
+    sa.assertEquals(
+        ReadPropertyFile.getProperty("BASEURL") + Endpoints.AUTH_ENDPOINT,
+        driver.getCurrentUrl(),
+        "Url doesn't match");
+    sa.assertAll();
+  }
 }

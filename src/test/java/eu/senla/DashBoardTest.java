@@ -1,4 +1,5 @@
 package eu.senla;
+
 import eu.senla.DashboardPage.DashboardPage;
 import eu.senla.Endpoints.Endpoints;
 import eu.senla.PropertyFile.ReadPropertyFile;
@@ -10,7 +11,7 @@ public class DashBoardTest extends BaseTest {
   @Test(description = "Check existing widgets on DashboardPage")
   public void dashboardTest() {
     DashboardPage dashboardPage = new DashboardPage(driver);
-   loginAsUser();
+    loginAsUser();
     SoftAssert sa = new SoftAssert();
     sa.assertEquals(dashboardPage.getTitle(), "Dashboard");
     dashboardPage
@@ -23,9 +24,9 @@ public class DashBoardTest extends BaseTest {
         .employeeDistributionByLocationWidgetIsExists();
     sa.assertEquals(dashboardPage.getTitle(), "Dashboard");
     sa.assertEquals(
-                ReadPropertyFile.getProperty("BASEURL") + Endpoints.DASHBOARD_ENDPOINT,
-                driver.getCurrentUrl(),
-                "Incorrect URL");
+        ReadPropertyFile.getProperty("BASEURL") + Endpoints.DASHBOARD_ENDPOINT,
+        driver.getCurrentUrl(),
+        "Incorrect URL");
     sa.assertAll();
     logoutUser();
   }
