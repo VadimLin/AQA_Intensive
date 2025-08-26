@@ -12,6 +12,8 @@
         <classes>
             <class name="eu.senla.AdminTest"/>
             <class name="eu.senla.DashBoardTest"/>
+            <class name="eu.senla.LeaveTest"/>
+            <class name="eu.senla.LogoutTest"/>
         </classes>
     </test>
 </suite>

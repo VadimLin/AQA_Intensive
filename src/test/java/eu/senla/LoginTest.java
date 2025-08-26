@@ -7,7 +7,8 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 public class LoginTest extends BaseTest {
-private final int priorityNumber = 3;
+  private final int priorityNumber = 3;
+
   @Test(priority = 1, groups = "smoke", description = "Check Sign In with valid credentials")
   public void testValidLogin() {
 

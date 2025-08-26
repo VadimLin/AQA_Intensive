@@ -29,6 +29,9 @@
     <browser.name>chrome</browser.name>
     <thread.count.value>2</thread.count.value>
     <parallel.value>methods</parallel.value>
+    <selenoid.enable>true</selenoid.enable>
+    <selenoid.url>http://192.168.99.100:4444/wd/hub</selenoid.url>
+    <headless>false</headless>
   </properties>
 
   <dependencies>
@@ -129,6 +132,9 @@
             <browser>${browser.name}</browser>
             <thread-count>${thread.count.value}</thread-count>
             <parallel>${parallel.value}</parallel>
+            <selenoidEnable>${selenoid.enable}</selenoidEnable>
+            <selenoidUrl>${selenoid.url}</selenoidUrl>
+            <headless>${headless}</headless>
           </systemPropertyVariables>
         </configuration>
         <executions>
