@@ -40,7 +40,6 @@ public final class Driver {
       switch (DriverType.valueOf(browser.toUpperCase())) {
         case CHROME -> {
           ChromeOptions chromeOptions = new ChromeOptions();
-          // required for Docker/Selenoid stability. (info by ChatGPT)
           chromeOptions.addArguments("--no-sandbox");
           chromeOptions.addArguments("--disable-dev-shm-usage");
           chromeOptions.addArguments("--start-maximized");
@@ -51,7 +50,8 @@ public final class Driver {
               "selenoid:options",
               Map.of(
                   "enableVNC", true,
-                  "enableVideo", true));
+                  "enableVideo", true,
+                  "enableLog", true));
           capabilities.merge(chromeOptions);
         }
         case FIREFOX -> {
@@ -63,7 +63,8 @@ public final class Driver {
               "selenoid:options",
               Map.of(
                   "enableVNC", true,
-                  "enableVideo", true));
+                  "enableVideo", true,
+                  "enableLog", true));
           capabilities.merge(firefoxOptions);
         }
         default -> throw new IllegalArgumentException("Unsupported remote browser: " + browser);
