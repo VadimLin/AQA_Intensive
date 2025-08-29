@@ -2,6 +2,7 @@ package eu.senla.LogoutPage;
 
 import eu.senla.BasePage.BasePage;
 import eu.senla.Waits.Waits;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -15,11 +16,13 @@ public class LogoutPage extends BasePage {
     super(driver);
   }
 
+  @Step("Click Dropdown menu ")
   public LogoutPage openDropDownMenu() {
     Waits.waitVisibilityOfElementLocated(dropDownMenu).click();
     return this;
   }
 
+  @Step("Click Logout button")
   public LogoutPage clickLogoutButton() {
     Waits.waitVisibilityOfElementLocated(logoutButton).click();
     return this;

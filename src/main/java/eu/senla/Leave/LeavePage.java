@@ -1,6 +1,7 @@
 package eu.senla.Leave;
 
 import eu.senla.Waits.Waits;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 
@@ -33,55 +34,61 @@ public class LeavePage {
   private final By assignButton = By.xpath("//button[@type='submit']");
   private final By confirmationMessage = By.id("oxd-toaster_1");
 
+  @Step("Navigate to Leave tab")
   public LeavePage navigateToLeavePage() {
     Waits.waitVisibilityOfElementLocated(leaveModuleLink).click();
     return this;
   }
 
+  @Step("Click entitlements Dropdown")
   public LeavePage openEntitlementsMenu() {
     Waits.waitVisibilityOfElementLocated(entitlementsDropDown).click();
     return this;
   }
 
+  @Step("Click add entitlements")
   public LeavePage clickAddEntitlements() {
     Waits.waitVisibilityOfElementLocated(addEntitlementsButton).click();
     return this;
   }
 
+  @Step("Fill entitlement field")
   public LeavePage fillEntitlementField(int days) {
     Waits.waitVisibilityOfElementLocated(entitlementField).sendKeys(String.valueOf(days));
     return this;
   }
 
+  @Step("Click save button")
   public LeavePage clickSaveButton() {
     Waits.waitVisibilityOfElementLocated(saveButton).click();
     return this;
   }
 
-  // public LeavePage getTotalDays() {
-  //
-  // }
-
+  @Step("Click confirmation button")
   public LeavePage clickConfirmButton() {
     Waits.waitVisibilityOfElementLocated(confirmButton).click();
     return this;
   }
 
+  @Step("Click Assign Leave tab")
   public LeavePage openAssignLeaveMenu() {
     Waits.waitVisibilityOfElementLocated(assignLeaveMenu).click();
     return this;
   }
 
+  @Step("Fill employee name field")
   public LeavePage fillEmployeeName(String employee) {
     Waits.waitVisibilityOfElementLocated(assignEmployeeNameField).sendKeys(employee);
     return this;
   }
 
+  @Step("Click Leave Type")
   public LeavePage clickListbox() {
     Waits.waitVisibilityOfElementLocated(assignEmployeeSearchBox).click();
     return this;
   }
 
+  @Step("Choose Leave Type")
   public LeavePage openLeaveTypeDropDown(String leaveType) {
     By leaveTypeFromListbox = By.xpath("//span[text()='" + leaveType + "']");
     Waits.waitVisibilityOfElementLocated(assignLeaveTypeField).click();
@@ -89,11 +96,13 @@ public class LeavePage {
     return this;
   }
 
+  @Step("Fill From Date field")
   public final LeavePage inputDateFrom(String date) {
     Waits.waitVisibilityOfElementLocated(fromDateInput).sendKeys(date);
     return this;
   }
 
+  @Step("Fill To Date field")
   public final LeavePage inputDateTo(String date) {
     Waits.waitVisibilityOfElementLocated(toDateInput).sendKeys(Keys.CONTROL + "a");
     Waits.waitVisibilityOfElementLocated(toDateInput).sendKeys(Keys.DELETE);
@@ -101,11 +110,13 @@ public class LeavePage {
     return this;
   }
 
+  @Step("Click Assign button")
   public final LeavePage clickAssignButton() {
     Waits.waitVisibilityOfElementLocated(assignButton).click();
     return this;
   }
 
+  @Step("Confirmation message")
   public final LeavePage isConfirmed() {
     Waits.waitVisibilityOfElementLocated(confirmationMessage).isDisplayed();
     return this;

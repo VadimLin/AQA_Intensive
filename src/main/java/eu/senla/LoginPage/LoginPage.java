@@ -3,6 +3,7 @@ package eu.senla.LoginPage;
 import eu.senla.BasePage.BasePage;
 import eu.senla.Endpoints.Endpoints;
 import eu.senla.Waits.Waits;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -28,21 +29,25 @@ public class LoginPage extends BasePage {
     return this;
   }
 
+  @Step("Enter Username")
   public final LoginPage enterUserName(String userName) {
     Waits.waitVisibilityOfElementLocated(usernameField).sendKeys(userName);
     return this;
   }
 
+  @Step("Enter password")
   public final LoginPage enterPassword(String password) {
     Waits.waitVisibilityOfElementLocated(passwordField).sendKeys(password);
     return this;
   }
 
+  @Step("Submit credentials")
   public final LoginPage clickSubmitButton() {
     Waits.waitVisibilityOfElementLocated(submitButton).click();
     return this;
   }
 
+  @Step("Login to app")
   public LoginPage login(String username, String password) {
     enterUserName(username).enterPassword(password).clickSubmitButton();
     return new LoginPage(driver);
@@ -61,6 +66,7 @@ public class LoginPage extends BasePage {
     return color.getCssValue("color");
   }
 
+  @Step
   public LoginPage isLoginSuccessful() {
     Waits.waitVisibilityOfElementLocated(dashboardIndicator);
     return this;

@@ -2,6 +2,7 @@ package eu.senla.PimPage;
 
 import eu.senla.BasePage.BasePage;
 import eu.senla.Waits.Waits;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -30,16 +31,19 @@ public class PimPage extends BasePage {
     super(driver);
   }
 
+  @Step("Navigate to Pim tab")
   public PimPage navigateToPimModule() {
     Waits.waitVisibilityOfElementLocated(pimModuleLink).click();
     return this;
   }
 
+  @Step("Click Add button")
   public PimPage clickAddEmployee() {
     Waits.waitVisibilityOfElementLocated(addEmployeeButton).click();
     return this;
   }
 
+  @Step("Fill First Name, Middle Name and Last Name fields")
   public PimPage fillEmployeeDetails(String firstName, String middleName, String lastName) {
     Waits.waitVisibilityOfElementLocated(firstNameInput).sendKeys(firstName);
     Waits.waitVisibilityOfElementLocated(middleNameInput).sendKeys(middleName);
@@ -51,22 +55,26 @@ public class PimPage extends BasePage {
     return Waits.waitVisibilityOfElementLocated(dashboardIndicator).getText();
   }
 
+  @Step("Click save button")
   public PimPage saveEmployee() {
     Waits.waitVisibilityOfElementLocated(saveButton).click();
     Waits.waitVisibilityOfElementLocated(employeeListUrl);
     return this;
   }
 
+  @Step("Fill First Name field")
   public PimPage fillFirstName(String firstName) {
     Waits.waitVisibilityOfElementLocated(firstNameInput).sendKeys(firstName);
     return this;
   }
 
+  @Step("Fill Last Name field")
   public PimPage fillLastName(String lastName) {
     Waits.waitVisibilityOfElementLocated(lastNameInput).sendKeys(lastName);
     return this;
   }
 
+  @Step("Clear First Name field")
   public PimPage clearFirstName() {
     WebElement firstNameElement = Waits.waitVisibilityOfElementLocated(firstNameInput);
     firstNameElement.click();
@@ -75,6 +83,7 @@ public class PimPage extends BasePage {
     return this;
   }
 
+  @Step("Clear Last Name field")
   public PimPage clearLastName() {
     WebElement lastNameElement = Waits.waitVisibilityOfElementLocated(lastNameInput);
     lastNameElement.click();
@@ -91,6 +100,7 @@ public class PimPage extends BasePage {
     return Waits.waitVisibilityOfElementLocated(personalDetailTitle).getText();
   }
 
+  @Step("Click save button")
   public PimPage clickSaveDetailFormButton() {
     Waits.waitVisibilityOfElementLocated(saveDetailFormButton).click();
     return this;

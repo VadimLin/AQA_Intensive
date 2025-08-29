@@ -2,6 +2,7 @@ package eu.senla.DashboardPage;
 
 import eu.senla.BasePage.BasePage;
 import eu.senla.Waits.Waits;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -40,36 +41,43 @@ public class DashboardPage extends BasePage {
     super(driver);
   }
 
+  @Step("Check that widget timeAtWorkWidgetIsExists is exist on the page")
   public DashboardPage timeAtWorkWidgetIsExists() {
     Waits.waitVisibilityOfElementLocated(timeAtWorkWidget);
     return this;
   }
 
+  @Step("Check that widget myActionsWidgetIsExists is exist on the page")
   public DashboardPage myActionsWidgetIsExists() {
     Waits.waitVisibilityOfElementLocated(myActionsWidget);
     return this;
   }
 
+  @Step("Check that widget quickLaunchWidgetIsExists is exist on the page")
   public DashboardPage quickLaunchWidgetIsExists() {
     Waits.waitVisibilityOfElementLocated(quickLaunchWidget);
     return this;
   }
 
+  @Step("Check that widget buzzLatestPostsWidgetIsExists is exist on the page")
   public DashboardPage buzzLatestPostsWidgetIsExists() {
     Waits.waitVisibilityOfElementLocated(buzzLatestPostsWidget);
     return this;
   }
 
+  @Step("Check that widget employeesOnLeaveTodayWidgetIsExists is exist on the page")
   public DashboardPage employeesOnLeaveTodayWidgetIsExists() {
     Waits.waitVisibilityOfElementLocated(employeesOnLeaveTodayWidget);
     return this;
   }
 
+  @Step("Check that widget employeeDistributionBySubWidgetIsExists is exist on the page")
   public DashboardPage employeeDistributionBySubWidgetIsExists() {
     Waits.waitVisibilityOfElementLocated(employeeDistributionBySubWidget);
     return this;
   }
 
+  @Step("Check that widget employeeDistributionByLocationWidgetIsExists is exist on the page")
   public DashboardPage employeeDistributionByLocationWidgetIsExists() {
     Waits.waitVisibilityOfElementLocated(employeeDistributionByLocationWidget);
     return this;
