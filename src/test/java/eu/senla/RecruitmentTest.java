@@ -1,25 +1,16 @@
 package eu.senla;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import com.github.javafaker.Faker;
 import eu.senla.Driver.Driver;
 import eu.senla.Endpoints.Endpoints;
 import eu.senla.PropertyFile.ReadPropertyFile;
 import eu.senla.RecruitmentPage.RecruitmentPage;
-import java.util.stream.Stream;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 public class RecruitmentTest extends BaseTest {
 
-  @Test
-  @DisplayName("Successful add candidate with all fields")
+  @Test(description = "Successful add candidate with all fields")
   public void addCandidateTest() {
     Faker faker = new Faker();
     final int words = 5;
@@ -49,21 +40,18 @@ public class RecruitmentTest extends BaseTest {
         .enterNotes(notes)
         .clickSaveButton()
         .isConfimed();
-
-    assertAll(
-        () -> assertEquals(recruitmentPage.getTitle(), "Recruitment"),
-        () ->
-            assertTrue(
-                Driver.initializeDriver()
-                    .getCurrentUrl()
-                    .contains(
-                        ReadPropertyFile.getProperty("BASEURL") + Endpoints.CANDIDATE_ENDPOINT),
-                "Incorrect Url"));
+    SoftAssert sa = new SoftAssert();
+    sa.assertEquals(recruitmentPage.getTitle(), "Recruitment");
+    sa.assertTrue(
+        Driver.initializeDriver()
+            .getCurrentUrl()
+            .contains(ReadPropertyFile.getProperty("BASEURL") + Endpoints.CANDIDATE_ENDPOINT),
+        "Incorrect Url");
+    sa.assertAll();
     logoutUser();
   }
 
-  @Test
-  @DisplayName("Successful adding only with required fields")
+  @Test(description = "Successful adding only with required fields")
   public void successfulAddCandidateOnlyWithRequiredFields() {
     Faker faker = new Faker();
     String firstName = faker.name().firstName();
@@ -77,21 +65,22 @@ public class RecruitmentTest extends BaseTest {
         .clickAddButton()
         .fillOnlyRequiredCandidateFields(firstName, lastName, email)
         .isConfimed();
-    assertAll(
-        () -> assertEquals(recruitmentPage.getTitle(), "Recruitment"),
-        () ->
-            assertTrue(
-                driver
-                    .getCurrentUrl()
-                    .contains(
-                        ReadPropertyFile.getProperty("BASEURL") + Endpoints.CANDIDATE_ENDPOINT),
-                "Incorrect Url"));
+    SoftAssert sa = new SoftAssert();
+    sa.assertEquals(recruitmentPage.getTitle(), "Recruitment");
+    sa.assertTrue(
+        driver
+            .getCurrentUrl()
+            .contains(ReadPropertyFile.getProperty("BASEURL") + Endpoints.CANDIDATE_ENDPOINT),
+        "Incorrect Url");
+    sa.assertAll();
     logoutUser();
   }
 
-  @ParameterizedTest(
-      name = "Check adding candidate with valid firstName and lastName, and invalid email in {0}")
-  @MethodSource("getCredentials")
+  @Test(
+      description =
+          "Check adding candidate with valid firstName and lastName, and invalid email in {0}",
+      dataProvider = "getRecruitmentCredentials",
+      dataProviderClass = ProjectDataProvider.class)
   public void addCandidateWithInvalidData(
       String description, String firstname, String lastname, String email) {
     RecruitmentPage recruitmentPage = new RecruitmentPage(driver);
@@ -100,21 +89,21 @@ public class RecruitmentTest extends BaseTest {
         .navigateToRecruitModule()
         .clickAddButton()
         .fillOnlyRequiredCandidateFields(firstname, lastname, email);
-
-    assertAll(
-        () ->
-            assertEquals(
-                ReadPropertyFile.getProperty("EMAIL_ALERT"), recruitmentPage.getEmailAlertText()),
-        () ->
-            assertEquals(
-                ReadPropertyFile.getProperty("BASEURL") + Endpoints.CANDIDATE_ENDPOINT,
-                driver.getCurrentUrl(),
-                "Url doesn't match"));
+    SoftAssert sa = new SoftAssert();
+    sa.assertEquals(
+        ReadPropertyFile.getProperty("EMAIL_ALERT"), recruitmentPage.getEmailAlertText());
+    sa.assertEquals(
+        ReadPropertyFile.getProperty("BASEURL") + Endpoints.CANDIDATE_ENDPOINT,
+        driver.getCurrentUrl(),
+        "Url doesn't match");
+    sa.assertAll();
     logoutUser();
   }
 
-  @ParameterizedTest(name = "Check adding candidate with empty {0}")
-  @MethodSource("getEmptyCredentials")
+  @Test(
+      description = "Check adding candidate with empty {0}",
+      dataProvider = "getRecruitmentEmptyCredentials",
+      dataProviderClass = ProjectDataProvider.class)
   public void addCandidateWithEmptyData(
       String description, String firstname, String lastname, String email) {
     RecruitmentPage recruitmentPage = new RecruitmentPage(driver);
@@ -123,32 +112,14 @@ public class RecruitmentTest extends BaseTest {
         .navigateToRecruitModule()
         .clickAddButton()
         .fillOnlyRequiredCandidateFields(firstname, lastname, email);
-
-    assertAll(
-        () ->
-            assertEquals(
-                ReadPropertyFile.getProperty("REQUIRED_ALERT"), recruitmentPage.getRequiredAlert()),
-        () ->
-            assertEquals(
-                ReadPropertyFile.getProperty("BASEURL") + Endpoints.CANDIDATE_ENDPOINT,
-                driver.getCurrentUrl(),
-                "Url doesn't match"));
+    SoftAssert sa = new SoftAssert();
+    sa.assertEquals(
+        ReadPropertyFile.getProperty("REQUIRED_ALERT"), recruitmentPage.getRequiredAlert());
+    sa.assertEquals(
+        ReadPropertyFile.getProperty("BASEURL") + Endpoints.CANDIDATE_ENDPOINT,
+        driver.getCurrentUrl(),
+        "Url doesn't match");
+    sa.assertAll();
     logoutUser();
-  }
-
-  private static Stream<Arguments> getCredentials() {
-    return Stream.of(
-        Arguments.of("without @", "John", "Lee", "test.com"),
-        Arguments.of("without comma", "Jack", "Low", "test@testcom"),
-        Arguments.of("with dots in a row", "Adam", "Saimons", "test@test..com"),
-        Arguments.of("with @ in a row", "Charlie", "Coyle", "test@@test.com"));
-  }
-
-  private static Stream<Arguments> getEmptyCredentials() {
-    return Stream.of(
-        Arguments.of("firstname", "", "Lee", "test@test.com"),
-        Arguments.of("lastname", "John", "", "test2@test.com"),
-        Arguments.of("email", "John", "Lee", ""),
-        Arguments.of("all fields", "", "", ""));
   }
 }
