@@ -21,12 +21,12 @@ pipeline {
 
         stage('build & Test') {
             steps {
-                bat '''
-                    ./mvn clean test \
-                        -Dbrowser=${params.browser} \
-                        -DthreadCount=${params.threadCount} \
+                bat """
+                    ./mvn clean test
+                        -Dbrowser=${params.browser} ^
+                        -DthreadCount=${params.threadCount} ^
                         -DselenoidEnable=${params.selenoidEnable}
-                '''
+                """
             }
             post {
                 always {
