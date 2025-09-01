@@ -15,7 +15,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: "${params.branchName}", url: 'https://github.com/VadimLin/AQA_Intensive.git', credentialsId: 'github-token'
+                git branch: "${params.branchName}", url: 'https://github.com/VadimLin/AQA_Intensive.git', credentialsId: 'gh'
             }
         }
 
