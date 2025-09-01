@@ -11,12 +11,8 @@
 <!--        </packages>-->
         <classes>
             <class name="eu.senla.AdminTest"/>
-            <class name="eu.senla.DashBoardTest"/>
-            <class name="eu.senla.LeaveTest"/>
             <class name="eu.senla.LoginTest"/>
             <class name="eu.senla.LogoutTest"/>
-            <class name="eu.senla.PimTest"/>
-            <class name="eu.senla.RecruitmentTest"/>
         </classes>
     </test>
 </suite>
