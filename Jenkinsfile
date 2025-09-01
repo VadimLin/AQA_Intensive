@@ -21,7 +21,7 @@ pipeline {
 
         stage('build & Test') {
             steps {
-                sh '''
+                bat '''
                     ./mvn clean test \
                         -Dbrowser=${params.browser} \
                         -DthreadCount=${params.threadCount} \
