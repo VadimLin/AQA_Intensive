@@ -157,9 +157,6 @@
           <argLine>
             -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
           </argLine>
-          <suiteXmlFiles>
-            <suiteXmlFile>src/test/resources/config/AllTest.xml</suiteXmlFile>
-          </suiteXmlFiles>
           <systemPropertyVariables>
             <browser>${browser.name}</browser>
             <thread-count>${thread.count.value}</thread-count>

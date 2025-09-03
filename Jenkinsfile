@@ -24,9 +24,9 @@ pipeline {
             steps {
                 bat """
                     mvn clean test
-                        -Dbrowser=${params.browser} ^
-                        -Dconfig=${params.config} ^
-                        -DthreadCount=${params.threadCount} ^
+                        -Dbrowser=${params.browser}
+                        -Dconfig=${params.config}
+                        -DthreadCount=${params.threadCount}
                         -DselenoidEnable=${params.selenoidEnable}
                 """
             }
