@@ -36,6 +36,8 @@
     <allure-maven.version>2.12.0</allure-maven.version>
     <aspectj.version>1.9.20.1</aspectj.version>
     <suite.name>AllTest</suite.name>
+    <suite.name>SmokeTest</suite.name>
+    <suite.name>ExtendedTest</suite.name>
   </properties>
 
   <dependencies>
