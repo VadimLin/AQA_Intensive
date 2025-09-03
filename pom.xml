@@ -158,7 +158,9 @@
             -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
           </argLine>
           <suiteXmlFiles>
-            <suiteXmlFile>testng.xml</suiteXmlFile>
+            <suiteXmlFile>AllTest.xml</suiteXmlFile>
+            <suiteXmlFile>SmokeTest.xml</suiteXmlFile>
+            <suiteXmlFile>ExtendedTest.xml</suiteXmlFile>
           </suiteXmlFiles>
           <systemPropertyVariables>
             <browser>${browser.name}</browser>
