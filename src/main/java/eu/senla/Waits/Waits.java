@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Waits {
-  static final Duration TIMEOUT = Duration.ofSeconds(10);
+  static final Duration TIMEOUT = Duration.ofSeconds(30);
 
   public static WebElement wait(final ExpectedCondition<WebElement> expectedCondition) {
     return new WebDriverWait(Driver.getDriver(), TIMEOUT)
