@@ -21,7 +21,7 @@ public class AdminTest extends BaseTest {
   @Story("User is able to open Admin tab with valid information on the page")
   @Description("Verify that user is able to open Admin tab with valid information")
   @Severity(SeverityLevel.CRITICAL)
-  @Test(description = "Check Admin Page")
+  @Test(description = "Check Admin Page", groups = "smoke")
   public void adminTest() {
     AdminPage adminPage = new AdminPage();
     loginAsUser();
