@@ -35,7 +35,6 @@
     <allure-testng.version>2.27.0</allure-testng.version>
     <allure-maven.version>2.12.0</allure-maven.version>
     <aspectj.version>1.9.20.1</aspectj.version>
-
   </properties>
 
   <dependencies>
@@ -159,7 +158,7 @@
             -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
           </argLine>
           <suiteXmlFiles>
-            <suiteXmlFile>src/test/resources/config/${testngXml}</suiteXmlFile>
+            <suiteXmlFile>src/test/resources/config/AllTest.xml</suiteXmlFile>
           </suiteXmlFiles>
           <systemPropertyVariables>
             <browser>${browser.name}</browser>
