@@ -22,13 +22,16 @@ pipeline {
 
         stage('build & Test') {
             steps {
-                bat """
+                script {
+                    def testngFile = "src/test/resources/config/${params.config}.xml"
+                    bat """
                     mvn clean test
-                        -Dbrowser=${params.browser}
-                        -Dconfig=${params.config}
-                        -DthreadCount=${params.threadCount}
+                        -Dbrowser=${params.browser} ^
+                        -DtestngXml=${testngFile} ^
+                        -DthreadCount=${params.threadCount} ^
                         -DselenoidEnable=${params.selenoidEnable}
                 """
+                }
             }
             post {
                 always {
