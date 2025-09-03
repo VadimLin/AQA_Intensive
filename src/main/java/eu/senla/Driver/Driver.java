@@ -21,15 +21,23 @@ public final class Driver {
 
   }
 
+  public static WebDriver getDriver() {
+    if (driver.get() == null) {
+      initializeDriver();
+    }
+    return driver.get();
+  }
+
   public static WebDriver initializeDriver() {
 
     if (driver.get() == null) {
-      String browser = System.getProperty("browser", "CHROME");
+      String browser = System.getProperty("browser".toLowerCase());
       if (Boolean.parseBoolean(getProperty("selenoidEnable"))) {
         initRemoteDriver(browser);
       } else {
         initLocalDriver(browser);
       }
+      driver.get().manage().window().maximize();
     }
     return driver.get();
   }
@@ -46,6 +54,7 @@ public final class Driver {
           if (Boolean.parseBoolean(getProperty("headless"))) {
             chromeOptions.addArguments("--headless=new");
           }
+          chromeOptions.setCapability("browserVersion", "128.0");
           chromeOptions.setCapability(
               "selenoid:options",
               Map.of(
@@ -69,7 +78,7 @@ public final class Driver {
         }
         default -> throw new IllegalArgumentException("Unsupported remote browser: " + browser);
       }
-      driver.set(new RemoteWebDriver(new URL(getProperty("selenoidUrl")), capabilities));
+      driver.set(new RemoteWebDriver(new URL(System.getProperty("selenoidUrl")), capabilities));
 
     } catch (MalformedURLException e) {
       throw new RuntimeException("Invalid Selenoid URL", e);
@@ -101,7 +110,7 @@ public final class Driver {
   }
 
   public static void quitDriver() {
-    if (driver != null) {
+    if (driver.get() != null) {
       driver.get().quit();
       driver.remove();
     }

@@ -1,11 +1,11 @@
 package eu.senla.LoginPage;
 
 import eu.senla.BasePage.BasePage;
+import eu.senla.Driver.Driver;
 import eu.senla.Endpoints.Endpoints;
 import eu.senla.Waits.Waits;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class LoginPage extends BasePage {
@@ -19,10 +19,6 @@ public class LoginPage extends BasePage {
   private final By dashboardIndicator =
       By.xpath(
           "//a[@class='oxd-main-menu-item active']/span[@class='oxd-text oxd-text--span oxd-main-menu-item--name']");
-
-  public LoginPage(WebDriver driver) {
-    super(driver);
-  }
 
   public LoginPage load() {
     load(Endpoints.AUTH_ENDPOINT);
@@ -50,7 +46,7 @@ public class LoginPage extends BasePage {
   @Step("Login to app")
   public LoginPage login(String username, String password) {
     enterUserName(username).enterPassword(password).clickSubmitButton();
-    return new LoginPage(driver);
+    return new LoginPage();
   }
 
   public String getAlertText() {
@@ -62,7 +58,7 @@ public class LoginPage extends BasePage {
   }
 
   public String getErrorColor() {
-    WebElement color = driver.findElement(errorColor);
+    WebElement color = Driver.getDriver().findElement(errorColor);
     return color.getCssValue("color");
   }
 

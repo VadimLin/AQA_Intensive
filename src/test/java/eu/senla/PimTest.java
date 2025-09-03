@@ -1,6 +1,7 @@
 package eu.senla;
 
 import com.github.javafaker.Faker;
+import eu.senla.Driver.Driver;
 import eu.senla.Endpoints.Endpoints;
 import eu.senla.PimPage.PimPage;
 import eu.senla.PropertyFile.ReadPropertyFile;
@@ -23,7 +24,7 @@ public class PimTest extends BaseTest {
   @Test(description = "Check successful adding of employee")
   public void testAddEmployee() {
 
-    PimPage pimPage = new PimPage(driver);
+    PimPage pimPage = new PimPage();
     Faker faker = new Faker();
     String firstName = faker.name().firstName();
     String lastName = faker.name().lastName();
@@ -40,7 +41,7 @@ public class PimTest extends BaseTest {
         "Validate url",
         () ->
             sa.assertTrue(
-                driver
+                Driver.getDriver()
                     .getCurrentUrl()
                     .contains(ReadPropertyFile.getProperty("BASEURL") + Endpoints.PIM_ENDPOINT),
                 "Incorrect Url"));
@@ -57,7 +58,7 @@ public class PimTest extends BaseTest {
   @Severity(SeverityLevel.NORMAL)
   @Test
   public void testEmptyFirstNameField() {
-    PimPage pimPage = new PimPage(driver);
+    PimPage pimPage = new PimPage();
     Faker faker = new Faker();
     String firstName = faker.name().firstName();
     String lastName = faker.name().lastName();
@@ -80,7 +81,7 @@ public class PimTest extends BaseTest {
         "Validate url",
         () ->
             sa.assertTrue(
-                driver
+                Driver.getDriver()
                     .getCurrentUrl()
                     .contains(ReadPropertyFile.getProperty("BASEURL") + Endpoints.PIM_ENDPOINT),
                 "Incorrect Url"));
@@ -98,7 +99,7 @@ public class PimTest extends BaseTest {
   @Severity(SeverityLevel.NORMAL)
   @Test
   public void testEmptyLastNameField() {
-    PimPage pimPage = new PimPage(driver);
+    PimPage pimPage = new PimPage();
     Faker faker = new Faker();
     String firstName = faker.name().firstName();
     String lastName = faker.name().lastName();
@@ -121,7 +122,7 @@ public class PimTest extends BaseTest {
         "Validate url",
         () ->
             sa.assertTrue(
-                driver
+                Driver.getDriver()
                     .getCurrentUrl()
                     .contains(ReadPropertyFile.getProperty("BASEURL") + Endpoints.PIM_ENDPOINT),
                 "Incorrect Url"));
@@ -139,7 +140,7 @@ public class PimTest extends BaseTest {
   @Severity(SeverityLevel.NORMAL)
   @Test
   public void testEditFirstNameAndLastNameFields() {
-    PimPage pimPage = new PimPage(driver);
+    PimPage pimPage = new PimPage();
     Faker faker = new Faker();
     String firstName = faker.name().firstName();
     String lastName = faker.name().lastName();
@@ -161,7 +162,7 @@ public class PimTest extends BaseTest {
         "Validate url",
         () ->
             sa.assertTrue(
-                driver
+                Driver.getDriver()
                     .getCurrentUrl()
                     .contains(ReadPropertyFile.getProperty("BASEURL") + Endpoints.PIM_ENDPOINT),
                 "Incorrect Url"));

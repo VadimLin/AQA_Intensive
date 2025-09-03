@@ -20,7 +20,7 @@ public class LeaveTest extends BaseTest {
   @Test
   public void addAssignLeaveTest() throws InterruptedException {
 
-    PimPage pimPage = new PimPage(driver);
+    PimPage pimPage = new PimPage();
     Faker faker = new Faker();
     String firstName = faker.name().firstName();
     String lastName = faker.name().lastName();

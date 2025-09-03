@@ -1,6 +1,7 @@
 package eu.senla;
 
 import eu.senla.DashboardPage.DashboardPage;
+import eu.senla.Driver.Driver;
 import eu.senla.Endpoints.Endpoints;
 import eu.senla.PropertyFile.ReadPropertyFile;
 import io.qameta.allure.Allure;
@@ -21,7 +22,7 @@ public class DashBoardTest extends BaseTest {
   @Severity(SeverityLevel.NORMAL)
   @Test(description = "Check existing widgets on DashboardPage")
   public void dashboardTest() {
-    DashboardPage dashboardPage = new DashboardPage(driver);
+    DashboardPage dashboardPage = new DashboardPage();
     loginAsUser();
     SoftAssert sa = new SoftAssert();
     Allure.step(
@@ -41,7 +42,7 @@ public class DashBoardTest extends BaseTest {
         () ->
             sa.assertEquals(
                 ReadPropertyFile.getProperty("BASEURL") + Endpoints.DASHBOARD_ENDPOINT,
-                driver.getCurrentUrl(),
+                Driver.getDriver().getCurrentUrl(),
                 "Incorrect URL"));
     sa.assertAll();
     logoutUser();

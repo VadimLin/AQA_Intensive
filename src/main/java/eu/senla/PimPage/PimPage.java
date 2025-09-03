@@ -5,7 +5,6 @@ import eu.senla.Waits.Waits;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class PimPage extends BasePage {
@@ -26,10 +25,6 @@ public class PimPage extends BasePage {
       By.xpath(
           "//div[@class='orangehrm-horizontal-padding orangehrm-vertical-padding']"
               + "//button[@type='submit']");
-
-  public PimPage(WebDriver driver) {
-    super(driver);
-  }
 
   @Step("Navigate to Pim tab")
   public PimPage navigateToPimModule() {

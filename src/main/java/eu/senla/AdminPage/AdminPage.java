@@ -4,7 +4,6 @@ import eu.senla.BasePage.BasePage;
 import eu.senla.Waits.Waits;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 public class AdminPage extends BasePage {
 
@@ -26,10 +25,6 @@ public class AdminPage extends BasePage {
   private final By confirmDeleteButton = By.xpath("//button[normalize-space()='Yes, Delete']");
   private final By confirmDeleteMessage =
       By.xpath("//div[@id='oxd-toaster_1']//p[text()='Success']");
-
-  public AdminPage(WebDriver driver) {
-    super(driver);
-  }
 
   @Step("Navigate to Admin Module")
   public AdminPage navigateToAdminModule() {
@@ -78,7 +73,7 @@ public class AdminPage extends BasePage {
   @Step("Confirmation Message")
   public AdminPage isConfirmedMessage() {
     Waits.waitVisibilityOfElementLocated(confirmationMessage);
-    return new AdminPage(driver);
+    return new AdminPage();
   }
 
   @Step("Delete existing Job Title")

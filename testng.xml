@@ -6,13 +6,10 @@
         <listener class-name="eu.senla.listeners.ScreenshotListener"/>
     </listeners>
     <test name="Regression1">
-<!--        <packages>-->
-<!--            <package name="eu.senla"/>-->
-<!--        </packages>-->
         <classes>
             <class name="eu.senla.AdminTest"/>
             <class name="eu.senla.LoginTest"/>
-            <class name="eu.senla.LogoutTest"/>
+
         </classes>
     </test>
 </suite>

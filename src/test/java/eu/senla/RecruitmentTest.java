@@ -35,7 +35,7 @@ public class RecruitmentTest extends BaseTest {
 
     String correctContactNumber = contactNumber.replaceAll("[^0-9+\\-\\/()]", "");
 
-    RecruitmentPage recruitmentPage = new RecruitmentPage(driver);
+    RecruitmentPage recruitmentPage = new RecruitmentPage();
     loginAsUser();
     recruitmentPage
         .navigateToRecruitModule()
@@ -79,7 +79,7 @@ public class RecruitmentTest extends BaseTest {
     String lastName = faker.name().lastName();
     String email = faker.internet().emailAddress();
 
-    RecruitmentPage recruitmentPage = new RecruitmentPage(driver);
+    RecruitmentPage recruitmentPage = new RecruitmentPage();
     loginAsUser();
     recruitmentPage
         .navigateToRecruitModule()
@@ -93,7 +93,7 @@ public class RecruitmentTest extends BaseTest {
         "Validate url",
         () ->
             sa.assertTrue(
-                driver
+                Driver.initializeDriver()
                     .getCurrentUrl()
                     .contains(
                         ReadPropertyFile.getProperty("BASEURL") + Endpoints.CANDIDATE_ENDPOINT),
@@ -115,7 +115,7 @@ public class RecruitmentTest extends BaseTest {
       dataProviderClass = ProjectDataProvider.class)
   public void addCandidateWithInvalidData(
       String description, String firstname, String lastname, String email) {
-    RecruitmentPage recruitmentPage = new RecruitmentPage(driver);
+    RecruitmentPage recruitmentPage = new RecruitmentPage();
     loginAsUser();
     recruitmentPage
         .navigateToRecruitModule()
@@ -132,7 +132,7 @@ public class RecruitmentTest extends BaseTest {
         () ->
             sa.assertEquals(
                 ReadPropertyFile.getProperty("BASEURL") + Endpoints.CANDIDATE_ENDPOINT,
-                driver.getCurrentUrl(),
+                Driver.getDriver().getCurrentUrl(),
                 "Url doesn't match"));
     sa.assertAll();
     logoutUser();
@@ -150,7 +150,7 @@ public class RecruitmentTest extends BaseTest {
       dataProviderClass = ProjectDataProvider.class)
   public void addCandidateWithEmptyData(
       String description, String firstname, String lastname, String email) {
-    RecruitmentPage recruitmentPage = new RecruitmentPage(driver);
+    RecruitmentPage recruitmentPage = new RecruitmentPage();
     loginAsUser();
     recruitmentPage
         .navigateToRecruitModule()
@@ -168,7 +168,7 @@ public class RecruitmentTest extends BaseTest {
         () ->
             sa.assertEquals(
                 ReadPropertyFile.getProperty("BASEURL") + Endpoints.CANDIDATE_ENDPOINT,
-                driver.getCurrentUrl(),
+                Driver.initializeDriver().getCurrentUrl(),
                 "Url doesn't match"));
     sa.assertAll();
     logoutUser();

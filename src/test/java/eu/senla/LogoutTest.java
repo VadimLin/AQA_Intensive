@@ -1,5 +1,6 @@
 package eu.senla;
 
+import eu.senla.Driver.Driver;
 import eu.senla.Endpoints.Endpoints;
 import eu.senla.LogoutPage.LogoutPage;
 import eu.senla.PropertyFile.ReadPropertyFile;
@@ -21,7 +22,7 @@ public class LogoutTest extends BaseTest {
   @Severity(SeverityLevel.CRITICAL)
   @Test
   public void logoutTest() {
-    LogoutPage logoutPage = new LogoutPage(driver);
+    LogoutPage logoutPage = new LogoutPage();
     loginAsUser();
     logoutPage.openDropDownMenu().clickLogoutButton().getLoginTitle();
     SoftAssert sa = new SoftAssert();
@@ -30,7 +31,7 @@ public class LogoutTest extends BaseTest {
         () ->
             sa.assertEquals(
                 ReadPropertyFile.getProperty("BASEURL") + Endpoints.AUTH_ENDPOINT,
-                driver.getCurrentUrl(),
+                Driver.getDriver().getCurrentUrl(),
                 "Url doesn't match"));
     sa.assertAll();
   }

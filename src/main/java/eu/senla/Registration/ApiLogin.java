@@ -21,8 +21,8 @@ public class ApiLogin {
             .sameSite("Lax")
             .build();
 
-    Driver.initializeDriver().manage().deleteCookieNamed("orangehrm");
-    Driver.initializeDriver().manage().addCookie(cookie);
-    Driver.initializeDriver().get(this.targetUrl);
+    Driver.getDriver().manage().deleteCookieNamed("orangehrm");
+    Driver.getDriver().manage().addCookie(cookie);
+    Driver.getDriver().get(this.targetUrl);
   }
 }

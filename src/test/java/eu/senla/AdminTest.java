@@ -2,6 +2,7 @@ package eu.senla;
 
 import com.github.javafaker.Faker;
 import eu.senla.AdminPage.AdminPage;
+import eu.senla.Driver.Driver;
 import eu.senla.Endpoints.Endpoints;
 import eu.senla.PropertyFile.ReadPropertyFile;
 import io.qameta.allure.Allure;
@@ -22,7 +23,7 @@ public class AdminTest extends BaseTest {
   @Severity(SeverityLevel.CRITICAL)
   @Test(description = "Check Admin Page")
   public void adminTest() {
-    AdminPage adminPage = new AdminPage(driver);
+    AdminPage adminPage = new AdminPage();
     loginAsUser();
     adminPage.navigateToAdminModule();
     SoftAssert sa = new SoftAssert();
@@ -32,7 +33,7 @@ public class AdminTest extends BaseTest {
         () ->
             sa.assertEquals(
                 ReadPropertyFile.getProperty("BASEURL") + Endpoints.ADMIN_ENDPOINT,
-                driver.getCurrentUrl(),
+                Driver.getDriver().getCurrentUrl(),
                 "Incorrect URL"));
     sa.assertAll();
     logoutUser();
@@ -47,7 +48,7 @@ public class AdminTest extends BaseTest {
   public void addJobTitle() {
     Faker faker = new Faker();
     String randomJobTitle = faker.job().title();
-    AdminPage adminPage = new AdminPage(driver);
+    AdminPage adminPage = new AdminPage();
     loginAsUser();
     adminPage
         .navigateToAdminModule()
@@ -65,7 +66,7 @@ public class AdminTest extends BaseTest {
         () ->
             sa.assertEquals(
                 ReadPropertyFile.getProperty("BASEURL") + Endpoints.JOB_ENDPOINT,
-                driver.getCurrentUrl(),
+                Driver.getDriver().getCurrentUrl(),
                 "Incorrect URL"));
     sa.assertAll();
     logoutUser();
@@ -80,7 +81,7 @@ public class AdminTest extends BaseTest {
   public void deleteJobTitle() {
     Faker faker = new Faker();
     String randomJobTitle = faker.job().title();
-    AdminPage adminPage = new AdminPage(driver);
+    AdminPage adminPage = new AdminPage();
     loginAsUser();
     adminPage
         .navigateToAdminModule()
@@ -101,7 +102,7 @@ public class AdminTest extends BaseTest {
         () ->
             sa.assertEquals(
                 ReadPropertyFile.getProperty("BASEURL") + Endpoints.JOB_ENDPOINT,
-                driver.getCurrentUrl(),
+                Driver.getDriver().getCurrentUrl(),
                 "Incorrect URL"));
     logoutUser();
   }

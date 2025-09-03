@@ -1,5 +1,6 @@
 package eu.senla;
 
+import eu.senla.Driver.Driver;
 import eu.senla.Endpoints.Endpoints;
 import eu.senla.LoginPage.LoginPage;
 import eu.senla.PropertyFile.ReadPropertyFile;
@@ -24,12 +25,12 @@ public class LoginTest extends BaseTest {
   @Severity(SeverityLevel.CRITICAL)
   public void testValidLogin() {
 
-    LoginPage loginPage = new LoginPage(driver);
+    LoginPage loginPage = new LoginPage();
     loginPage.load().login(login, password).isLoginSuccessful();
     SoftAssert sa = new SoftAssert();
     sa.assertEquals(
         ReadPropertyFile.getProperty("BASEURL") + Endpoints.DASHBOARD_ENDPOINT,
-        driver.getCurrentUrl(),
+        Driver.getDriver().getCurrentUrl(),
         "Unsuccessful Login");
     sa.assertAll();
   }
@@ -46,7 +47,7 @@ public class LoginTest extends BaseTest {
       dataProvider = "getCredentials",
       dataProviderClass = ProjectDataProvider.class)
   public void testInvalidLogin(String description, String username, String pwd) {
-    LoginPage loginPage = new LoginPage(driver);
+    LoginPage loginPage = new LoginPage();
     loginPage.load().login(username, pwd);
     SoftAssert sa = new SoftAssert();
 
@@ -59,7 +60,7 @@ public class LoginTest extends BaseTest {
         () ->
             sa.assertEquals(
                 ReadPropertyFile.getProperty("BASEURL") + Endpoints.AUTH_ENDPOINT,
-                driver.getCurrentUrl(),
+                Driver.getDriver().getCurrentUrl(),
                 "Url doesn't match"));
     sa.assertAll();
   }
@@ -76,7 +77,7 @@ public class LoginTest extends BaseTest {
       dataProvider = "getEmptyCredentials",
       dataProviderClass = ProjectDataProvider.class)
   public void testEmptyLogin(String description, String username, String pwd) {
-    LoginPage loginPage = new LoginPage(driver);
+    LoginPage loginPage = new LoginPage();
     loginPage.load().login(username, pwd);
     SoftAssert sa = new SoftAssert();
     Allure.step(
@@ -93,7 +94,7 @@ public class LoginTest extends BaseTest {
         () ->
             sa.assertEquals(
                 ReadPropertyFile.getProperty("BASEURL") + Endpoints.AUTH_ENDPOINT,
-                driver.getCurrentUrl(),
+                Driver.getDriver().getCurrentUrl(),
                 "Url doesn't match"));
     sa.assertAll();
   }

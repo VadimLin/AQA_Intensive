@@ -4,7 +4,6 @@ import eu.senla.BasePage.BasePage;
 import eu.senla.Waits.Waits;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 public class RecruitmentPage extends BasePage {
 
@@ -36,10 +35,6 @@ public class RecruitmentPage extends BasePage {
       By.xpath(
           "//input[@class='oxd-input oxd-input--active "
               + "oxd-input--error']/ancestor::div/span[contains(@class, 'oxd-input-group__message')]");
-
-  public RecruitmentPage(WebDriver driver) {
-    super(driver);
-  }
 
   @Step("Navigate to Recruitment tab")
   public RecruitmentPage navigateToRecruitModule() {

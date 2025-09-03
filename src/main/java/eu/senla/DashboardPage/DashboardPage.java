@@ -4,7 +4,6 @@ import eu.senla.BasePage.BasePage;
 import eu.senla.Waits.Waits;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 public class DashboardPage extends BasePage {
   private final By title =
@@ -35,11 +34,6 @@ public class DashboardPage extends BasePage {
       By.xpath(
           "//div[contains(@class,' orangehrm-dashboard-widget')]"
               + "//p[text()='Employee Distribution by Sub Unit']");
-
-  public DashboardPage(WebDriver driver) {
-
-    super(driver);
-  }
 
   @Step("Check that widget timeAtWorkWidgetIsExists is exist on the page")
   public DashboardPage timeAtWorkWidgetIsExists() {

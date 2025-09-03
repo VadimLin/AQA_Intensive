@@ -12,7 +12,7 @@ public class Waits {
   static final Duration TIMEOUT = Duration.ofSeconds(10);
 
   public static WebElement wait(final ExpectedCondition<WebElement> expectedCondition) {
-    return new WebDriverWait(Driver.initializeDriver(), TIMEOUT)
+    return new WebDriverWait(Driver.getDriver(), TIMEOUT)
         .withMessage("The element isn't visible")
         .until(expectedCondition);
   }
