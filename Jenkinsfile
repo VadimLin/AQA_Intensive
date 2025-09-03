@@ -27,7 +27,8 @@ pipeline {
                         -Dbrowser=${params.browser} ^
                         -Dconfig=${params.config} ^
                         -DthreadCount=${params.threadCount} ^
-                        -DselenoidEnable=${params.selenoidEnable}
+                        -DselenoidEnable=${params.selenoidEnable} ^
+                        -DsuiteXmlFileName=${params.config}
                 """
             }
             post {
