@@ -1,11 +1,9 @@
 package eu.senla;
 
 import eu.senla.Driver.Driver;
-import eu.senla.Endpoints.Endpoints;
 import eu.senla.LoginPage.LoginPage;
 import eu.senla.LogoutPage.LogoutPage;
 import eu.senla.PropertyFile.ReadPropertyFile;
-import eu.senla.Registration.ApiLogin;
 import groovy.util.logging.Slf4j;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
