@@ -1,9 +1,11 @@
 package eu.senla;
 
 import eu.senla.Driver.Driver;
+import eu.senla.Endpoints.Endpoints;
 import eu.senla.LoginPage.LoginPage;
 import eu.senla.LogoutPage.LogoutPage;
 import eu.senla.PropertyFile.ReadPropertyFile;
+import eu.senla.Registration.ApiLogin;
 import groovy.util.logging.Slf4j;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -18,20 +20,20 @@ public class BaseTest {
     Driver.getDriver();
   }
 
-  //  @BeforeMethod
-  //  final void apiLogin() {
-  //    init();
-  //
-  //    ApiLogin authenticate =
-  //        new ApiLogin(Endpoints.MAIN_URL + Endpoints.WEB_EP + Endpoints.DASHBOARD_URL);
-  //
-  //    authenticate.login();
-  //  }
-
-  //  final void init() {
-  //    Driver.initializeDriver()
-  //        .get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
-  //  }
+//    @BeforeMethod
+//    final void apiLogin() {
+//      init();
+//
+//      ApiLogin authenticate =
+//          new ApiLogin(Endpoints.MAIN_URL + Endpoints.WEB_EP + Endpoints.DASHBOARD_URL);
+//
+//      authenticate.login();
+//    }
+//
+//    final void init() {
+//      Driver.initializeDriver()
+//          .get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+//    }
 
   @AfterMethod
   public void tearDown() {
