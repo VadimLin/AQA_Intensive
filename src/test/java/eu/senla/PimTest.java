@@ -1,10 +1,10 @@
 package eu.senla;
 
-import com.github.javafaker.Faker;
 import eu.senla.Driver.Driver;
 import eu.senla.Endpoints.Endpoints;
 import eu.senla.PimPage.PimPage;
 import eu.senla.PropertyFile.ReadPropertyFile;
+import eu.senla.Util.FakerUtil;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -25,10 +25,9 @@ public class PimTest extends BaseTest {
   public void testAddEmployee() {
 
     PimPage pimPage = new PimPage();
-    Faker faker = new Faker();
-    String firstName = faker.name().firstName();
-    String lastName = faker.name().lastName();
-    String middleName = faker.funnyName().name();
+    String firstName = new FakerUtil().generateRandomFirstName();
+    String lastName = new FakerUtil().generateRandomLastName();
+    String middleName = new FakerUtil().generateRandomMiddleName();
 
     loginAsUser();
     pimPage
@@ -59,10 +58,9 @@ public class PimTest extends BaseTest {
   @Test
   public void testEmptyFirstNameField() {
     PimPage pimPage = new PimPage();
-    Faker faker = new Faker();
-    String firstName = faker.name().firstName();
-    String lastName = faker.name().lastName();
-    String middleName = faker.funnyName().name();
+    String firstName = new FakerUtil().generateRandomFirstName();
+    String lastName = new FakerUtil().generateRandomLastName();
+    String middleName = new FakerUtil().generateRandomMiddleName();
 
     loginAsUser();
     pimPage
@@ -100,10 +98,9 @@ public class PimTest extends BaseTest {
   @Test
   public void testEmptyLastNameField() {
     PimPage pimPage = new PimPage();
-    Faker faker = new Faker();
-    String firstName = faker.name().firstName();
-    String lastName = faker.name().lastName();
-    String middleName = faker.funnyName().name();
+    String firstName = new FakerUtil().generateRandomFirstName();
+    String lastName = new FakerUtil().generateRandomLastName();
+    String middleName = new FakerUtil().generateRandomMiddleName();
 
     loginAsUser();
     pimPage
@@ -141,11 +138,9 @@ public class PimTest extends BaseTest {
   @Test
   public void testEditFirstNameAndLastNameFields() {
     PimPage pimPage = new PimPage();
-    Faker faker = new Faker();
-    String firstName = faker.name().firstName();
-    String lastName = faker.name().lastName();
-    String middleName = faker.funnyName().name();
-
+    String firstName = new FakerUtil().generateRandomFirstName();
+    String lastName = new FakerUtil().generateRandomLastName();
+    String middleName = new FakerUtil().generateRandomMiddleName();
     loginAsUser();
     pimPage
         .navigateToPimModule()

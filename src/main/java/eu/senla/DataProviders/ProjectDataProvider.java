@@ -1,4 +1,4 @@
-package eu.senla;
+package eu.senla.DataProviders;
 
 import org.testng.annotations.DataProvider;
 

@@ -1,10 +1,10 @@
 package eu.senla;
 
-import com.github.javafaker.Faker;
 import eu.senla.AdminPage.AdminPage;
 import eu.senla.Driver.Driver;
 import eu.senla.Endpoints.Endpoints;
 import eu.senla.PropertyFile.ReadPropertyFile;
+import eu.senla.Util.FakerUtil;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -46,8 +46,6 @@ public class AdminTest extends BaseTest {
   @Severity(SeverityLevel.CRITICAL)
   @Test(description = "Add Job Title")
   public void addJobTitle() {
-    Faker faker = new Faker();
-    String randomJobTitle = faker.job().title();
     AdminPage adminPage = new AdminPage();
     loginAsUser();
     adminPage
@@ -55,7 +53,7 @@ public class AdminTest extends BaseTest {
         .clickDropDownMenu()
         .clickJobTitlesOption()
         .clickAddButton()
-        .fillJobTitlefield(randomJobTitle)
+        .fillJobTitlefield(new FakerUtil().generateRandomTitle())
         .saveJobTitle()
         .isConfirmedMessage();
     SoftAssert sa = new SoftAssert();
@@ -79,8 +77,7 @@ public class AdminTest extends BaseTest {
   @Severity(SeverityLevel.CRITICAL)
   @Test(description = "Delete existing Job Title")
   public void deleteJobTitle() {
-    Faker faker = new Faker();
-    String randomJobTitle = faker.job().title();
+    String jobTitleName = new FakerUtil().generateRandomTitle();
     AdminPage adminPage = new AdminPage();
     loginAsUser();
     adminPage
@@ -88,10 +85,10 @@ public class AdminTest extends BaseTest {
         .clickDropDownMenu()
         .clickJobTitlesOption()
         .clickAddButton()
-        .fillJobTitlefield(randomJobTitle)
+        .fillJobTitlefield(jobTitleName)
         .saveJobTitle()
         .isConfirmedMessage()
-        .deleteExistingJobTitle(randomJobTitle)
+        .deleteExistingJobTitle(jobTitleName)
         .confirmDelete()
         .isConfirmDeleteMessage();
     SoftAssert sa = new SoftAssert();

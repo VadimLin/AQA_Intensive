@@ -1,5 +1,6 @@
 package eu.senla;
 
+import eu.senla.DataProviders.ProjectDataProvider;
 import eu.senla.Driver.Driver;
 import eu.senla.Endpoints.Endpoints;
 import eu.senla.LoginPage.LoginPage;

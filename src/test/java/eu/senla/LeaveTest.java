@@ -1,8 +1,8 @@
 package eu.senla;
 
-import com.github.javafaker.Faker;
 import eu.senla.Leave.LeavePage;
 import eu.senla.PimPage.PimPage;
+import eu.senla.Util.FakerUtil;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
@@ -21,10 +21,9 @@ public class LeaveTest extends BaseTest {
   public void addAssignLeaveTest() throws InterruptedException {
 
     PimPage pimPage = new PimPage();
-    Faker faker = new Faker();
-    String firstName = faker.name().firstName();
-    String lastName = faker.name().lastName();
-    String middleName = faker.funnyName().name();
+    String firstName = new FakerUtil().generateRandomFirstName();
+    String lastName = new FakerUtil().generateRandomLastName();
+    String middleName = new FakerUtil().generateRandomMiddleName();
     String fullName = firstName + " " + middleName + " " + lastName;
 
     loginAsUser();
