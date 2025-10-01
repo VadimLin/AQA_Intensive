@@ -24,7 +24,6 @@ public class AdminTest extends BaseTest {
   @Test(description = "Check Admin Page", groups = "smoke")
   public void adminTest() {
     AdminPage adminPage = new AdminPage();
-    loginAsUser();
     adminPage.navigateToAdminModule();
     SoftAssert sa = new SoftAssert();
     Allure.step("Validate title name", () -> sa.assertEquals(adminPage.getAdminTitle(), "Admin"));
@@ -47,7 +46,6 @@ public class AdminTest extends BaseTest {
   @Test(description = "Add Job Title")
   public void addJobTitle() {
     AdminPage adminPage = new AdminPage();
-    loginAsUser();
     adminPage
         .navigateToAdminModule()
         .clickDropDownMenu()
@@ -79,7 +77,6 @@ public class AdminTest extends BaseTest {
   public void deleteJobTitle() {
     String jobTitleName = new FakerUtil().generateRandomTitle();
     AdminPage adminPage = new AdminPage();
-    loginAsUser();
     adminPage
         .navigateToAdminModule()
         .clickDropDownMenu()

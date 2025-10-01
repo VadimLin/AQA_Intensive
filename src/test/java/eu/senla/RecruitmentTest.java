@@ -35,7 +35,6 @@ public class RecruitmentTest extends BaseTest {
     String correctContactNumber = contactNumber.replaceAll("[^0-9+\\-\\/()]", "");
 
     RecruitmentPage recruitmentPage = new RecruitmentPage();
-    loginAsUser();
     recruitmentPage
         .navigateToRecruitModule()
         .clickAddButton()
@@ -78,7 +77,6 @@ public class RecruitmentTest extends BaseTest {
     String email = new FakerUtil().generateRandomEmailAddress();
 
     RecruitmentPage recruitmentPage = new RecruitmentPage();
-    loginAsUser();
     recruitmentPage
         .navigateToRecruitModule()
         .clickAddButton()
@@ -114,7 +112,6 @@ public class RecruitmentTest extends BaseTest {
   public void addCandidateWithInvalidData(
       String description, String firstname, String lastname, String email) {
     RecruitmentPage recruitmentPage = new RecruitmentPage();
-    loginAsUser();
     recruitmentPage
         .navigateToRecruitModule()
         .clickAddButton()
@@ -149,7 +146,6 @@ public class RecruitmentTest extends BaseTest {
   public void addCandidateWithEmptyData(
       String description, String firstname, String lastname, String email) {
     RecruitmentPage recruitmentPage = new RecruitmentPage();
-    loginAsUser();
     recruitmentPage
         .navigateToRecruitModule()
         .clickAddButton()

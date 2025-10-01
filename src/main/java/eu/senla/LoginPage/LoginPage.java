@@ -62,6 +62,11 @@ public class LoginPage extends BasePage {
     return color.getCssValue("color");
   }
 
+  public final LoginPage loginAsUser(String userName, String password) {
+    enterUserName(userName).enterPassword(password).clickSubmitButton();
+    return new LoginPage();
+  }
+
   @Step
   public LoginPage isLoginSuccessful() {
     Waits.waitVisibilityOfElementLocated(dashboardIndicator);

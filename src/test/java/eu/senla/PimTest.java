@@ -28,8 +28,6 @@ public class PimTest extends BaseTest {
     String firstName = new FakerUtil().generateRandomFirstName();
     String lastName = new FakerUtil().generateRandomLastName();
     String middleName = new FakerUtil().generateRandomMiddleName();
-
-    loginAsUser();
     pimPage
         .navigateToPimModule()
         .clickAddEmployee()
@@ -61,8 +59,6 @@ public class PimTest extends BaseTest {
     String firstName = new FakerUtil().generateRandomFirstName();
     String lastName = new FakerUtil().generateRandomLastName();
     String middleName = new FakerUtil().generateRandomMiddleName();
-
-    loginAsUser();
     pimPage
         .navigateToPimModule()
         .clickAddEmployee()
@@ -101,8 +97,6 @@ public class PimTest extends BaseTest {
     String firstName = new FakerUtil().generateRandomFirstName();
     String lastName = new FakerUtil().generateRandomLastName();
     String middleName = new FakerUtil().generateRandomMiddleName();
-
-    loginAsUser();
     pimPage
         .navigateToPimModule()
         .clickAddEmployee()
@@ -141,7 +135,6 @@ public class PimTest extends BaseTest {
     String firstName = new FakerUtil().generateRandomFirstName();
     String lastName = new FakerUtil().generateRandomLastName();
     String middleName = new FakerUtil().generateRandomMiddleName();
-    loginAsUser();
     pimPage
         .navigateToPimModule()
         .clickAddEmployee()

@@ -4,7 +4,7 @@ import eu.senla.Client.LoginHelper;
 import eu.senla.Driver.Driver;
 import org.openqa.selenium.Cookie;
 
-public class ApiLogin {
+public class ApiLogin implements LoginStrategy{
 
   private String targetUrl;
 
