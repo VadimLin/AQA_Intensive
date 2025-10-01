@@ -2,8 +2,8 @@ package eu.senla.RecruitmentPage;
 
 import eu.senla.BasePage.BasePage;
 import eu.senla.Waits.Waits;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 public class RecruitmentPage extends BasePage {
 
@@ -36,10 +36,7 @@ public class RecruitmentPage extends BasePage {
           "//input[@class='oxd-input oxd-input--active "
               + "oxd-input--error']/ancestor::div/span[contains(@class, 'oxd-input-group__message')]");
 
-  public RecruitmentPage(WebDriver driver) {
-    super(driver);
-  }
-
+  @Step("Navigate to Recruitment tab")
   public RecruitmentPage navigateToRecruitModule() {
     Waits.waitVisibilityOfElementLocated(recruitModuleLink).click();
     return this;
@@ -49,66 +46,79 @@ public class RecruitmentPage extends BasePage {
     return Waits.waitVisibilityOfElementLocated(recruitTitle).getText();
   }
 
+  @Step("Click save button")
   public RecruitmentPage clickAddButton() {
     Waits.waitVisibilityOfElementLocated(addButton).click();
     return this;
   }
 
+  @Step("Fill First Name field")
   public RecruitmentPage enterFirstName(String firstname) {
     Waits.waitVisibilityOfElementLocated(firstNameField).sendKeys(firstname);
     return this;
   }
 
+  @Step("Fill Middle Name field")
   public RecruitmentPage enterMiddleName(String middlename) {
     Waits.waitVisibilityOfElementLocated(middleNameField).sendKeys(middlename);
     return this;
   }
 
+  @Step("Fill Last Name field")
   public RecruitmentPage enterLastName(String lastname) {
     Waits.waitVisibilityOfElementLocated(lastNameField).sendKeys(lastname);
     return this;
   }
 
+  @Step("Open dropdown vacancy menu")
   public RecruitmentPage openDropDownMenu() {
     Waits.waitVisibilityOfElementLocated(dropDownVacancyMenu).click();
     return this;
   }
 
+  @Step("Click on vacancy")
   public RecruitmentPage chooseFromListVacancies() {
     Waits.waitVisibilityOfElementLocated(listOfVacancies).click();
     return this;
   }
 
+  @Step("Fill email field")
   public RecruitmentPage enterEmail(String email) {
     Waits.waitVisibilityOfElementLocated(emailField).sendKeys(email);
     return this;
   }
 
+  @Step("Fill contact number field")
   public RecruitmentPage enterContactNumber(String number) {
     Waits.waitVisibilityOfElementLocated(contactNumberField).sendKeys(number);
     return this;
   }
 
+  @Step("Fill keywords field")
   public RecruitmentPage enterKeywords(String keywords) {
     Waits.waitVisibilityOfElementLocated(keywordsField).sendKeys(keywords);
     return this;
   }
 
+  @Step("Fill notes field")
   public RecruitmentPage enterNotes(String notes) {
     Waits.waitVisibilityOfElementLocated(notesField).sendKeys(notes);
     return this;
   }
 
+  @Step("Confirmation message")
   public RecruitmentPage isConfimed() {
     Waits.waitVisibilityOfElementLocated(confirmMessage);
     return this;
   }
 
+  @Step("Click save button")
   public RecruitmentPage clickSaveButton() {
     Waits.waitVisibilityOfElementLocated(saveButton).click();
     return this;
   }
 
+  @Step("Fill required fields")
   public RecruitmentPage fillOnlyRequiredCandidateFields(
       String firstName, String lastName, String email) {
     Waits.waitVisibilityOfElementLocated(firstNameField).sendKeys(firstName);

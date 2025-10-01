@@ -1,16 +1,19 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 
-<suite name="All Test Suite" parallel="methods" thread-count="2">
+<suite name="SmokeGroupTests" parallel="classes" thread-count="2">
     <listeners>
         <listener class-name="eu.senla.listeners.SuiteXmlTransformer"/>
         <listener class-name="eu.senla.listeners.ScreenshotListener"/>
     </listeners>
-    <test name="Regression1">
-<!--        <packages>-->
-<!--            <package name="eu.senla"/>-->
-<!--        </packages>-->
+    <test name="Regression2">
+        <groups>
+            <run>
+                <include name="smoke"/>
+            </run>
+        </groups>
         <classes>
             <class name="eu.senla.AdminTest"/>
+            <class name="eu.senla.LoginTest"/>
 
         </classes>
     </test>

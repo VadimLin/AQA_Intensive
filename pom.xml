@@ -28,10 +28,13 @@
     <maven.compiler.target>17</maven.compiler.target>
     <browser.name>chrome</browser.name>
     <thread.count.value>2</thread.count.value>
-    <parallel.value>methods</parallel.value>
+    <parallel.value>classes</parallel.value>
     <selenoid.enable>true</selenoid.enable>
-    <selenoid.url>http://192.168.99.100:4444/wd/hub</selenoid.url>
+    <selenoid.url>http://192.168.99.101:4444/wd/hub</selenoid.url>
     <headless>false</headless>
+    <allure-testng.version>2.27.0</allure-testng.version>
+    <allure-maven.version>2.12.0</allure-maven.version>
+    <aspectj.version>1.9.20.1</aspectj.version>
   </properties>
 
   <dependencies>
@@ -81,10 +84,36 @@
       <version>${jackson.version}</version>
     </dependency>
 
+    <dependency>
+      <groupId>io.qameta.allure</groupId>
+      <artifactId>allure-testng</artifactId>
+      <version>${allure-testng.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjweaver</artifactId>
+      <version>${aspectj.version}</version>
+    </dependency>
+
   </dependencies>
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>io.qameta.allure</groupId>
+        <artifactId>allure-maven</artifactId>
+        <version>${allure-maven.version}</version>
+         <executions>
+          <execution>
+            <id>allure-serve</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>serve</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
@@ -125,8 +154,11 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>${surefire.version}</version>
         <configuration>
+          <argLine>
+            -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+          </argLine>
           <suiteXmlFiles>
-            <suiteXmlFile>testng.xml</suiteXmlFile>
+            <suiteXmlFile>src/test/resources/config/AllTest.xml</suiteXmlFile>
           </suiteXmlFiles>
           <systemPropertyVariables>
             <browser>${browser.name}</browser>

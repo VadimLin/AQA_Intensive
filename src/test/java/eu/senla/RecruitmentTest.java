@@ -1,31 +1,40 @@
 package eu.senla;
 
-import com.github.javafaker.Faker;
+import eu.senla.DataProviders.ProjectDataProvider;
 import eu.senla.Driver.Driver;
 import eu.senla.Endpoints.Endpoints;
 import eu.senla.PropertyFile.ReadPropertyFile;
 import eu.senla.RecruitmentPage.RecruitmentPage;
+import eu.senla.Util.FakerUtil;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 public class RecruitmentTest extends BaseTest {
-
+  @Epic("Recruitment tab")
+  @Feature("Add candidate")
+  @Story("User is  able to add new candidate with all fields")
+  @Description("Verify that user is able to add new candidate to the app with all fields")
+  @Severity(SeverityLevel.CRITICAL)
   @Test(description = "Successful add candidate with all fields")
   public void addCandidateTest() {
-    Faker faker = new Faker();
-    final int words = 5;
-    String firstName = faker.name().firstName();
-    String middleName = faker.name().nameWithMiddle();
-    String lastName = faker.name().lastName();
-    String email = faker.internet().emailAddress();
-    String contactNumber = faker.phoneNumber().phoneNumber();
-    String keywords = faker.lorem().words(words).toString();
-    String notes = faker.lorem().sentence();
+    String firstName = new FakerUtil().generateRandomFirstName();
+    String lastName = new FakerUtil().generateRandomLastName();
+    String middleName = new FakerUtil().generateRandomMiddleName();
+    String email = new FakerUtil().generateRandomEmailAddress();
+    String contactNumber = new FakerUtil().generateRandomPhoneNumber();
+    String keywords = new FakerUtil().generateRandomKeywords();
+    String notes = new FakerUtil().generateRandomNotes();
 
     String correctContactNumber = contactNumber.replaceAll("[^0-9+\\-\\/()]", "");
 
-    RecruitmentPage recruitmentPage = new RecruitmentPage(driver);
-    loginAsUser();
+    RecruitmentPage recruitmentPage = new RecruitmentPage();
     recruitmentPage
         .navigateToRecruitModule()
         .clickAddButton()
@@ -41,41 +50,60 @@ public class RecruitmentTest extends BaseTest {
         .clickSaveButton()
         .isConfimed();
     SoftAssert sa = new SoftAssert();
-    sa.assertEquals(recruitmentPage.getTitle(), "Recruitment");
-    sa.assertTrue(
-        Driver.initializeDriver()
-            .getCurrentUrl()
-            .contains(ReadPropertyFile.getProperty("BASEURL") + Endpoints.CANDIDATE_ENDPOINT),
-        "Incorrect Url");
+    Allure.step(
+        "Validate title name", () -> sa.assertEquals(recruitmentPage.getTitle(), "Recruitment"));
+    Allure.step(
+        "Validate url",
+        () ->
+            sa.assertTrue(
+                Driver.initializeDriver()
+                    .getCurrentUrl()
+                    .contains(
+                        ReadPropertyFile.getProperty("BASEURL") + Endpoints.CANDIDATE_ENDPOINT),
+                "Incorrect Url"));
     sa.assertAll();
     logoutUser();
   }
 
+  @Epic("Recruitment tab")
+  @Feature("Add candidate")
+  @Story("User is  able to add new candidate with required fields")
+  @Description("Verify that user is able to add new candidate to the app with required fields")
+  @Severity(SeverityLevel.CRITICAL)
   @Test(description = "Successful adding only with required fields")
   public void successfulAddCandidateOnlyWithRequiredFields() {
-    Faker faker = new Faker();
-    String firstName = faker.name().firstName();
-    String lastName = faker.name().lastName();
-    String email = faker.internet().emailAddress();
+    String firstName = new FakerUtil().generateRandomFirstName();
+    String lastName = new FakerUtil().generateRandomLastName();
+    String email = new FakerUtil().generateRandomEmailAddress();
 
-    RecruitmentPage recruitmentPage = new RecruitmentPage(driver);
-    loginAsUser();
+    RecruitmentPage recruitmentPage = new RecruitmentPage();
     recruitmentPage
         .navigateToRecruitModule()
         .clickAddButton()
         .fillOnlyRequiredCandidateFields(firstName, lastName, email)
         .isConfimed();
     SoftAssert sa = new SoftAssert();
-    sa.assertEquals(recruitmentPage.getTitle(), "Recruitment");
-    sa.assertTrue(
-        driver
-            .getCurrentUrl()
-            .contains(ReadPropertyFile.getProperty("BASEURL") + Endpoints.CANDIDATE_ENDPOINT),
-        "Incorrect Url");
+    Allure.step(
+        "Validate title name", () -> sa.assertEquals(recruitmentPage.getTitle(), "Recruitment"));
+    Allure.step(
+        "Validate url",
+        () ->
+            sa.assertTrue(
+                Driver.initializeDriver()
+                    .getCurrentUrl()
+                    .contains(
+                        ReadPropertyFile.getProperty("BASEURL") + Endpoints.CANDIDATE_ENDPOINT),
+                "Incorrect Url"));
     sa.assertAll();
     logoutUser();
   }
 
+  @Epic("Recruitment tab")
+  @Feature("Add candidate")
+  @Story("User is not able to add new candidate with invalid data in fields")
+  @Description(
+      "Verify that user is not able to add new candidate to the app with with invalid data in fields")
+  @Severity(SeverityLevel.CRITICAL)
   @Test(
       description =
           "Check adding candidate with valid firstName and lastName, and invalid email in {0}",
@@ -83,42 +111,59 @@ public class RecruitmentTest extends BaseTest {
       dataProviderClass = ProjectDataProvider.class)
   public void addCandidateWithInvalidData(
       String description, String firstname, String lastname, String email) {
-    RecruitmentPage recruitmentPage = new RecruitmentPage(driver);
-    loginAsUser();
+    RecruitmentPage recruitmentPage = new RecruitmentPage();
     recruitmentPage
         .navigateToRecruitModule()
         .clickAddButton()
         .fillOnlyRequiredCandidateFields(firstname, lastname, email);
     SoftAssert sa = new SoftAssert();
-    sa.assertEquals(
-        ReadPropertyFile.getProperty("EMAIL_ALERT"), recruitmentPage.getEmailAlertText());
-    sa.assertEquals(
-        ReadPropertyFile.getProperty("BASEURL") + Endpoints.CANDIDATE_ENDPOINT,
-        driver.getCurrentUrl(),
-        "Url doesn't match");
+    Allure.step(
+        "Validate alert text",
+        () ->
+            sa.assertEquals(
+                ReadPropertyFile.getProperty("EMAIL_ALERT"), recruitmentPage.getEmailAlertText()));
+    Allure.step(
+        "Validate url",
+        () ->
+            sa.assertEquals(
+                ReadPropertyFile.getProperty("BASEURL") + Endpoints.CANDIDATE_ENDPOINT,
+                Driver.getDriver().getCurrentUrl(),
+                "Url doesn't match"));
     sa.assertAll();
     logoutUser();
   }
 
+  @Epic("Recruitment tab")
+  @Feature("Add candidate")
+  @Story("User is not able to add new candidate with empty data in fields")
+  @Description(
+      "Verify that user is not able to add new candidate to the app with with empty data in fields")
+  @Severity(SeverityLevel.NORMAL)
   @Test(
       description = "Check adding candidate with empty {0}",
       dataProvider = "getRecruitmentEmptyCredentials",
       dataProviderClass = ProjectDataProvider.class)
   public void addCandidateWithEmptyData(
       String description, String firstname, String lastname, String email) {
-    RecruitmentPage recruitmentPage = new RecruitmentPage(driver);
-    loginAsUser();
+    RecruitmentPage recruitmentPage = new RecruitmentPage();
     recruitmentPage
         .navigateToRecruitModule()
         .clickAddButton()
         .fillOnlyRequiredCandidateFields(firstname, lastname, email);
     SoftAssert sa = new SoftAssert();
-    sa.assertEquals(
-        ReadPropertyFile.getProperty("REQUIRED_ALERT"), recruitmentPage.getRequiredAlert());
-    sa.assertEquals(
-        ReadPropertyFile.getProperty("BASEURL") + Endpoints.CANDIDATE_ENDPOINT,
-        driver.getCurrentUrl(),
-        "Url doesn't match");
+    Allure.step(
+        "Validate alert text",
+        () ->
+            sa.assertEquals(
+                ReadPropertyFile.getProperty("REQUIRED_ALERT"),
+                recruitmentPage.getRequiredAlert()));
+    Allure.step(
+        "Validate url",
+        () ->
+            sa.assertEquals(
+                ReadPropertyFile.getProperty("BASEURL") + Endpoints.CANDIDATE_ENDPOINT,
+                Driver.initializeDriver().getCurrentUrl(),
+                "Url doesn't match"));
     sa.assertAll();
     logoutUser();
   }

@@ -2,9 +2,10 @@ package eu.senla.Registration;
 
 import eu.senla.Client.LoginHelper;
 import eu.senla.Driver.Driver;
+import eu.senla.PropertyFile.ReadPropertyFile;
 import org.openqa.selenium.Cookie;
 
-public class ApiLogin {
+public class ApiLogin implements LoginStrategy{
 
   private String targetUrl;
 
@@ -15,14 +16,14 @@ public class ApiLogin {
   public final void login() {
     Cookie cookie =
         new Cookie.Builder("orangehrm", LoginHelper.getCookie())
-            .domain("opensource-demo.orangehrmlive.com")
+            .domain(ReadPropertyFile.getProperty("DOMAIN"))
             .path("/web")
             .isHttpOnly(true)
             .sameSite("Lax")
             .build();
 
-    Driver.initializeDriver().manage().deleteCookieNamed("orangehrm");
-    Driver.initializeDriver().manage().addCookie(cookie);
-    Driver.initializeDriver().get(this.targetUrl);
+    Driver.getDriver().manage().deleteCookieNamed("orangehrm");
+    Driver.getDriver().manage().addCookie(cookie);
+    Driver.getDriver().get(this.targetUrl);
   }
 }

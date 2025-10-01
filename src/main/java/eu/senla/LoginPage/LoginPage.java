@@ -1,10 +1,11 @@
 package eu.senla.LoginPage;
 
 import eu.senla.BasePage.BasePage;
+import eu.senla.Driver.Driver;
 import eu.senla.Endpoints.Endpoints;
 import eu.senla.Waits.Waits;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class LoginPage extends BasePage {
@@ -19,33 +20,33 @@ public class LoginPage extends BasePage {
       By.xpath(
           "//a[@class='oxd-main-menu-item active']/span[@class='oxd-text oxd-text--span oxd-main-menu-item--name']");
 
-  public LoginPage(WebDriver driver) {
-    super(driver);
-  }
-
   public LoginPage load() {
     load(Endpoints.AUTH_ENDPOINT);
     return this;
   }
 
+  @Step("Enter Username")
   public final LoginPage enterUserName(String userName) {
     Waits.waitVisibilityOfElementLocated(usernameField).sendKeys(userName);
     return this;
   }
 
+  @Step("Enter password")
   public final LoginPage enterPassword(String password) {
     Waits.waitVisibilityOfElementLocated(passwordField).sendKeys(password);
     return this;
   }
 
+  @Step("Submit credentials")
   public final LoginPage clickSubmitButton() {
     Waits.waitVisibilityOfElementLocated(submitButton).click();
     return this;
   }
 
+  @Step("Login to app")
   public LoginPage login(String username, String password) {
     enterUserName(username).enterPassword(password).clickSubmitButton();
-    return new LoginPage(driver);
+    return new LoginPage();
   }
 
   public String getAlertText() {
@@ -57,10 +58,16 @@ public class LoginPage extends BasePage {
   }
 
   public String getErrorColor() {
-    WebElement color = driver.findElement(errorColor);
+    WebElement color = Driver.getDriver().findElement(errorColor);
     return color.getCssValue("color");
   }
 
+  public final LoginPage loginAsUser(String userName, String password) {
+    enterUserName(userName).enterPassword(password).clickSubmitButton();
+    return new LoginPage();
+  }
+
+  @Step
   public LoginPage isLoginSuccessful() {
     Waits.waitVisibilityOfElementLocated(dashboardIndicator);
     return this;

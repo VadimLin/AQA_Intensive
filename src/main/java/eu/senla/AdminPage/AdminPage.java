@@ -2,8 +2,8 @@ package eu.senla.AdminPage;
 
 import eu.senla.BasePage.BasePage;
 import eu.senla.Waits.Waits;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 public class AdminPage extends BasePage {
 
@@ -26,10 +26,7 @@ public class AdminPage extends BasePage {
   private final By confirmDeleteMessage =
       By.xpath("//div[@id='oxd-toaster_1']//p[text()='Success']");
 
-  public AdminPage(WebDriver driver) {
-    super(driver);
-  }
-
+  @Step("Navigate to Admin Module")
   public AdminPage navigateToAdminModule() {
     Waits.waitVisibilityOfElementLocated(adminModuleLink).click();
     return this;
@@ -39,26 +36,31 @@ public class AdminPage extends BasePage {
     return Waits.waitVisibilityOfElementLocated(adminTitle).getText();
   }
 
+  @Step("Click Dropdown Menu")
   public AdminPage clickDropDownMenu() {
     Waits.waitVisibilityOfElementLocated(jobDropDown).click();
     return this;
   }
 
+  @Step("Click JobTitles option")
   public AdminPage clickJobTitlesOption() {
     Waits.waitVisibilityOfElementLocated(jobTitlesOption).click();
     return this;
   }
 
+  @Step("Click add button")
   public AdminPage clickAddButton() {
     Waits.waitVisibilityOfElementLocated(addButton).click();
     return this;
   }
 
+  @Step("Fill JobTitle field")
   public AdminPage fillJobTitlefield(String jobTitle) {
     Waits.waitVisibilityOfElementLocated(jobTitleField).sendKeys(jobTitle);
     return this;
   }
 
+  @Step("Click Save button")
   public AdminPage saveJobTitle() {
     Waits.waitVisibilityOfElementLocated(saveButton).click();
     return this;
@@ -68,11 +70,13 @@ public class AdminPage extends BasePage {
     return Waits.waitVisibilityOfElementLocated(jobTitle).getText();
   }
 
+  @Step("Confirmation Message")
   public AdminPage isConfirmedMessage() {
     Waits.waitVisibilityOfElementLocated(confirmationMessage);
-    return new AdminPage(driver);
+    return new AdminPage();
   }
 
+  @Step("Delete existing Job Title")
   public AdminPage deleteExistingJobTitle(String jobTitle) {
     By deleteJobButton =
         By.xpath(
@@ -84,11 +88,13 @@ public class AdminPage extends BasePage {
     return this;
   }
 
+  @Step("Click delete confirmation")
   public AdminPage confirmDelete() {
     Waits.waitVisibilityOfElementLocated(confirmDeleteButton).click();
     return this;
   }
 
+  @Step("Delete confirmation")
   public AdminPage isConfirmDeleteMessage() {
     Waits.waitVisibilityOfElementLocated(confirmDeleteMessage);
     return this;
