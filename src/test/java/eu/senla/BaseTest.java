@@ -19,33 +19,12 @@ public class BaseTest {
   public void setUp() {
     Driver.getDriver();
     loginStrategy = new ChooseLoginStrategy();
-      // Выбор стратегии логина перед каждым тестом
       loginStrategy.chooseLoginStrategy();
   }
-
-//    @BeforeMethod
-//    final void apiLogin() {
-//      init();
-//
-//      ApiLogin authenticate =
-//          new ApiLogin(Endpoints.MAIN_URL + Endpoints.WEB_EP + Endpoints.DASHBOARD_URL);
-//
-//      authenticate.login();
-//    }
-//
-//    final void init() {
-//      Driver.initializeDriver()
-//          .get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
-//    }
 
   @AfterMethod
   public void tearDown() {
     Driver.quitDriver();
-  }
-
-  public void loginAsUser() {
-    LoginPage loginPage = new LoginPage();
-    loginPage.load().login(login, password);
   }
 
   public void logoutUser() {
